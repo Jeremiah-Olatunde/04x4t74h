@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: Sora;
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/Sora/Sora-VariableFont_wght.ttf");
+}
+
+@font-face {
+  font-family: Fredoka;
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/Fredoka/Fredoka-VariableFont_wdth,wght.ttf");
+}
+
+@theme {
+  --font-sora: Sora;
+  --font-fredoka: Fredoka;
+}
