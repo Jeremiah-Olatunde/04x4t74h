@@ -17,6 +17,9 @@
 }
 
 @theme {
+  --color-primary: #6d28d9;
+  --color-secondary: #fcd34d;
+
   --font-sora: Sora;
   --font-fredoka: Fredoka;
 }
