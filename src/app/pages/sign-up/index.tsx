@@ -47,12 +47,10 @@ export function SignUp() {
             placeholder="Enter your password"
             type={passwordVisible ? "text" : "password"}
           >
-            <div className="absolute top-0 right-0 p-4">
-              <TogglePasswordVisibility
-                visible={passwordVisible}
-                handleClick={() => setPasswordVisible(Boolean.invert)}
-              />
-            </div>
+            <TogglePasswordVisibility
+              visible={passwordVisible}
+              handleClick={() => setPasswordVisible(Boolean.invert)}
+            />
           </FieldInput>
         </FormField>
 
