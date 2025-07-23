@@ -1,3 +1,4 @@
+import { BadgePrimary } from "@/components/badge"
 import {
   FormHeader,
   Form,
@@ -24,13 +25,8 @@ export function RequestToken() {
         <FormField>
           <FieldLabel text="email address" htmlFor="email" />
           <FieldInput name="email" type="email" placeholder="example@gmail.com">
-            <button
-              type="submit"
-              className="bg-primary/10 flex cursor-pointer items-center justify-center rounded-s-full rounded-e-full px-3 py-1"
-            >
-              <span className="text-xxs text-primary font-sora font-medium">
-                Send Token
-              </span>
+            <button type="submit" className="cursor-pointer">
+              <BadgePrimary />
             </button>
           </FieldInput>
         </FormField>
