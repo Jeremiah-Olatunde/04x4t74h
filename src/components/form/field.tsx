@@ -1,7 +1,4 @@
-import { useState } from "react"
 import { Eye as IconEye, EyeOff as IconEyeOff } from "lucide-react"
-
-import * as Boolean from "@/lib/fp-ts/Boolean.ts"
 
 export function FormField({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-2">{children}</div>
@@ -50,32 +47,20 @@ export function FieldInput({
   )
 }
 
-export function FieldInputPassword({
-  name,
-  placeholder,
+export function TogglePasswordVisibility({
+  visible,
+  handleClick,
 }: {
-  name: string
-  placeholder: string
+  visible: boolean
+  handleClick: () => void
 }) {
-  const [visible, setVisible] = useState(false)
-
   return (
-    <FieldInput
-      name={name}
-      placeholder={placeholder}
-      type={visible ? "text" : "password"}
-    >
-      <button
-        type="button"
-        onClick={() => setVisible(Boolean.invert)}
-        className="absolute top-0 right-0 cursor-pointer p-4"
-      >
-        {visible ? (
-          <IconEye className="size-5 text-neutral-400" />
-        ) : (
-          <IconEyeOff className="size-5 text-neutral-400" />
-        )}
-      </button>
-    </FieldInput>
+    <button type="button" onClick={handleClick} className="cursor-pointer">
+      {visible ? (
+        <IconEye className="size-5 text-neutral-400" />
+      ) : (
+        <IconEyeOff className="size-5 text-neutral-400" />
+      )}
+    </button>
   )
 }

@@ -1,16 +1,22 @@
+import { useState } from "react"
+
+import * as Boolean from "@/lib/fp-ts/Boolean.ts"
+
 import {
   FormHeader,
   Form,
   FormField,
   FieldLabel,
-  FieldInputPassword,
   FormSubmit,
   FieldInput,
+  TogglePasswordVisibility,
 } from "@/components/form"
 import { LinkPrimary } from "@/components/link"
 import { Logo } from "@/components/logo"
 
 export function Login() {
+  const [passwordVisible, setPasswordVisible] = useState(false)
+
   return (
     <section className="flex flex-col gap-4 px-6 py-8">
       <Logo />
@@ -34,10 +40,18 @@ export function Login() {
 
         <FormField>
           <FieldLabel text="password" htmlFor="password" />
-          <FieldInputPassword name="password" placeholder="Your password" />
-          <div className="flex justify-end">
-            <LinkPrimary href="#" text="forgot password?" />
-          </div>
+          <FieldInput
+            name="password"
+            placeholder="Enter your password"
+            type={passwordVisible ? "text" : "password"}
+          >
+            <div className="absolute top-0 right-0 p-4">
+              <TogglePasswordVisibility
+                visible={passwordVisible}
+                handleClick={() => setPasswordVisible(Boolean.invert)}
+              />
+            </div>
+          </FieldInput>
         </FormField>
 
         <FormSubmit text="log in" />
