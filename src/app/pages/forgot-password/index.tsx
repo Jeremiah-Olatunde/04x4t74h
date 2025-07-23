@@ -25,9 +25,9 @@ export function ForgotPassword() {
         <FormField>
           <FieldLabel text="email address" htmlFor="email" />
           <FieldInput name="email" type="email" placeholder="example@gmail.com">
-            <button type="submit" className="cursor-pointer">
+            <a href="./reset-password" className="cursor-pointer">
               <Badge text={"Send Token"} variant="primary" />
-            </button>
+            </a>
           </FieldInput>
         </FormField>
       </Form>
