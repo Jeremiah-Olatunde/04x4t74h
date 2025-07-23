@@ -1,3 +1,5 @@
+import { Logo } from "@/components/logo"
+
 export function App() {
   return (
     <section className="flex flex-col gap-4 p-6">
@@ -17,6 +19,7 @@ export function App() {
         loosed upon the land the blood dimmed tide is loosed and everywhere the
         ceremony of innocence is drown
       </p>
+      <Logo />
     </section>
   )
 }
