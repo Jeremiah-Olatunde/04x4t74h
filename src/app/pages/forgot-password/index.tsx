@@ -1,4 +1,4 @@
-import { BadgePrimary } from "@/components/badge"
+import { Badge } from "@/components/badge"
 import {
   FormHeader,
   Form,
@@ -26,7 +26,7 @@ export function ForgotPassword() {
           <FieldLabel text="email address" htmlFor="email" />
           <FieldInput name="email" type="email" placeholder="example@gmail.com">
             <button type="submit" className="cursor-pointer">
-              <BadgePrimary />
+              <Badge text={"Send Token"} variant="primary" />
             </button>
           </FieldInput>
         </FormField>
