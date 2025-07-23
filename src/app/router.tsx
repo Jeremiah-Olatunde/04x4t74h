@@ -14,7 +14,7 @@ export function Router() {
         <Route path="/home" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/sign-up" component={SignUp} />
-        <Route path="/request-token" component={ForgotPassword} />
+        <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/reset-password" component={ResetPassword} />
       </Switch>
     </>
