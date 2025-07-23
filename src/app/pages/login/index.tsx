@@ -51,7 +51,7 @@ export function Login() {
             />
           </FieldInput>
           <div className="flex justify-end">
-            <LinkPrimary href="./forgot-password" text="forgot password?" />
+            <LinkPrimary href="./forgot-password" text="Forgot Password?" />
           </div>
         </FormField>
 
@@ -61,7 +61,7 @@ export function Login() {
           <span className="font-sora text-xs text-neutral-400">
             Don't have an account?
           </span>
-          <LinkPrimary href="./sign-up" text="sign up" />
+          <LinkPrimary href="./sign-up" text="Sign Up" />
         </div>
       </Form>
     </section>

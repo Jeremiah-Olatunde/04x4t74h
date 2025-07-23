@@ -74,7 +74,7 @@ export function SignUp() {
           <span className="font-sora text-xs text-neutral-400">
             Already have an account?
           </span>
-          <LinkPrimary href="./login" text="log in" />
+          <LinkPrimary href="./login" text="Log In" />
         </div>
       </Form>
     </section>
