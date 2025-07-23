@@ -1,6 +1,11 @@
 import { type ReactNode } from "react"
 
-export * from "./field.tsx"
+export {
+  FieldInput,
+  FieldLabel,
+  FormField,
+  TogglePasswordVisibility,
+} from "./field.tsx"
 
 export function FormHeader({
   title,
