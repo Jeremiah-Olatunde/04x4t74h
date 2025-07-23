@@ -1,10 +1,10 @@
 import { Route, Switch } from "wouter"
 
 import { Home } from "./pages/home"
-import { Login } from "./pages/login"
-import { SignUp } from "./pages/sign-up"
-import { ForgotPassword } from "./pages/forgot-password"
-import { ResetPassword } from "./pages/reset-password"
+import { Login } from "./pages/auth/login"
+import { SignUp } from "./pages/auth/sign-up"
+import { ResetPassword } from "./pages/auth/password/reset"
+import { ForgotPassword } from "./pages/auth/password/forgot"
 
 export function Router() {
   return (
