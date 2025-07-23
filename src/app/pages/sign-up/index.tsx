@@ -23,7 +23,7 @@ export function SignUp() {
 
       <div className="h-8" />
 
-      <FormHeader textMain="Sign Up" textSub="Create your account" />
+      <FormHeader title="Sign Up" description="Create your account" />
 
       <Form>
         <FormField>

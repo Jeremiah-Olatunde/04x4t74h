@@ -17,8 +17,8 @@ export function RequestToken() {
       <div className="h-8" />
 
       <FormHeader
-        textMain="Request Token"
-        textSub="Enter your email address to recieve a token"
+        title="Request Token"
+        description="Enter your email address to recieve a token"
       />
 
       <Form>

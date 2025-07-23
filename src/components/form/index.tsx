@@ -1,23 +1,30 @@
+import { type ReactNode } from "react"
+
 export * from "./field.tsx"
 
 export function FormHeader({
-  textMain,
-  textSub,
+  title,
+  description,
+  children,
 }: {
-  textMain: string
-  textSub: string
+  title: string
+  description: string
+  children?: ReactNode
 }) {
   return (
     <header className="flex flex-col items-center gap-1">
       <h1>
         <span className="font-sora text-xl font-bold text-neutral-700">
-          {textMain}
+          {title}
         </span>
       </h1>
 
       <h2>
-        <span className="font-sora text-sm text-neutral-400">{textSub}</span>
+        <span className="font-sora text-sm text-neutral-400">
+          {description}
+        </span>
       </h2>
+      {children}
     </header>
   )
 }

@@ -24,8 +24,8 @@ export function Login() {
       <div className="h-8" />
 
       <FormHeader
-        textMain="Log In"
-        textSub="Welcome back! Please log in to continue"
+        title="Log In"
+        description="Welcome back! Please log in to continue"
       />
 
       <Form>

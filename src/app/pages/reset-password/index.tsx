@@ -24,8 +24,8 @@ export function ResetPassword() {
       <div className="h-8" />
 
       <FormHeader
-        textMain="Reset Password"
-        textSub="Set a new password for your account"
+        title="Reset Password"
+        description="Set a new password for your account"
       />
 
       <Form>
