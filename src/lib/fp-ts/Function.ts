@@ -1,1 +1,1 @@
-export { pipe } from "fp-ts/function";
+export { pipe, constant, constVoid, flow } from "fp-ts/function"
