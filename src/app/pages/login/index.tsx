@@ -45,13 +45,14 @@ export function Login() {
             placeholder="Enter your password"
             type={passwordVisible ? "text" : "password"}
           >
-            <div className="absolute top-0 right-0 p-4">
-              <TogglePasswordVisibility
-                visible={passwordVisible}
-                handleClick={() => setPasswordVisible(Boolean.invert)}
-              />
-            </div>
+            <TogglePasswordVisibility
+              visible={passwordVisible}
+              handleClick={() => setPasswordVisible(Boolean.invert)}
+            />
           </FieldInput>
+          <div className="flex justify-end">
+            <LinkPrimary href="./forgot-password" text="forgot password?" />
+          </div>
         </FormField>
 
         <FormSubmit text="log in" />
