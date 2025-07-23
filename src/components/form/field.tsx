@@ -25,7 +25,7 @@ export function FieldInput({
   children,
 }: {
   name: string
-  type: "text" | "email" | "password"
+  type: "text" | "email" | "password" | "tel"
   placeholder: string
   children?: React.ReactNode
 }) {
