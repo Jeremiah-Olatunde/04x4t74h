@@ -60,7 +60,7 @@ export function Login() {
           <span className="font-sora text-xs text-neutral-400">
             Don't have an account?
           </span>
-          <LinkPrimary href="#" text="sign up" />
+          <LinkPrimary href="./sign-up" text="sign up" />
         </div>
       </Form>
     </section>
