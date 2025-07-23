@@ -39,9 +39,7 @@ export function FieldInput({
         className="font-sora grow border-none text-xs text-neutral-600 outline-none placeholder:text-neutral-400"
       />
       {children ? (
-        <div className="flex cursor-pointer items-center justify-center">
-          {children}
-        </div>
+        <div className="flex items-center justify-center">{children}</div>
       ) : null}
     </div>
   )
