@@ -13,6 +13,7 @@ import {
 } from "@/components/form"
 import { LinkPrimary } from "@/components/link"
 import { Logo } from "@/components/logo"
+import { Link } from "wouter"
 
 export function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -74,7 +75,9 @@ export function SignUp() {
           <span className="font-sora text-xs text-neutral-400">
             Already have an account?
           </span>
-          <LinkPrimary href="./login" text="Log In" />
+          <Link href="/login">
+            <LinkPrimary text="Login" />
+          </Link>
         </div>
       </Form>
     </section>

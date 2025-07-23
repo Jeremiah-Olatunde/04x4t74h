@@ -8,6 +8,7 @@ import {
 } from "@/components/form"
 
 import { Logo } from "@/components/logo"
+import { Link } from "wouter"
 
 export function ForgotPassword() {
   return (
@@ -25,9 +26,9 @@ export function ForgotPassword() {
         <FormField>
           <FieldLabel text="email address" htmlFor="email" />
           <FieldInput name="email" type="email" placeholder="example@gmail.com">
-            <a href="./reset-password" className="cursor-pointer">
+            <Link href="/reset" className="cursor-pointer">
               <Badge text={"Send Token"} variant="primary" />
-            </a>
+            </Link>
           </FieldInput>
         </FormField>
       </Form>

@@ -20,6 +20,7 @@ export function Router() {
             <Route path="/reset" component={ResetPassword} />
           </Route>
         </Route>
+        <Route>page not found</Route>
       </Switch>
     </>
   )

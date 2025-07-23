@@ -13,6 +13,7 @@ import {
 } from "@/components/form"
 import { LinkPrimary } from "@/components/link"
 import { Logo } from "@/components/logo"
+import { Link } from "wouter"
 
 export function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -51,7 +52,9 @@ export function Login() {
             />
           </FieldInput>
           <div className="flex justify-end">
-            <LinkPrimary href="./forgot-password" text="Forgot Password?" />
+            <Link href="/password/forgot">
+              <LinkPrimary text="Forgot Password?" />
+            </Link>
           </div>
         </FormField>
 
@@ -61,7 +64,9 @@ export function Login() {
           <span className="font-sora text-xs text-neutral-400">
             Don't have an account?
           </span>
-          <LinkPrimary href="./sign-up" text="Sign Up" />
+          <Link href="/sign-up">
+            <LinkPrimary text="Sign Up" />
+          </Link>
         </div>
       </Form>
     </section>

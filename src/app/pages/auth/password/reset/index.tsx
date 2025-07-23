@@ -12,6 +12,7 @@ import {
   TogglePasswordVisibility,
 } from "@/components/form/field"
 import { Badge } from "@/components/badge"
+import { Link } from "wouter"
 
 export function ResetPassword() {
   const [email] = useState("jolatunde@luminara.io")
@@ -34,9 +35,9 @@ export function ResetPassword() {
         </span>
         <div />
 
-        <a href="./forgot-password">
+        <Link href="/forgot">
           <Badge text="Chage Email" variant="secondary" />
-        </a>
+        </Link>
       </FormHeader>
 
       <div />
@@ -80,7 +81,9 @@ export function ResetPassword() {
           <span className="font-sora text-xs text-neutral-400">
             Didn't recieve an OTP?
           </span>
-          <LinkPrimary href="#" text="Resend it" />
+          <Link href="/forgot">
+            <LinkPrimary text="Resend it" />
+          </Link>
         </div>
 
         <FormSubmit text="Reset Password" />
