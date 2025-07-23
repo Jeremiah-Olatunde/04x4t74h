@@ -30,6 +30,35 @@ export function FieldInput({
   children?: React.ReactNode
 }) {
   return (
+    <div className="has-focus:outline-primary flex justify-center gap-2 rounded-xl border-1 border-neutral-200 bg-neutral-50 p-4 outline-2 outline-transparent transition has-focus:border-neutral-400 has-focus:shadow-md/10">
+      <input
+        id={name}
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        className="font-sora grow border-none text-xs text-neutral-600 outline-none placeholder:text-neutral-400"
+      />
+      {children ? (
+        <div className="flex cursor-pointer items-center justify-center">
+          {children}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
+export function FieldInput_({
+  name,
+  type,
+  placeholder,
+  children,
+}: {
+  name: string
+  type: "text" | "email" | "password"
+  placeholder: string
+  children?: React.ReactNode
+}) {
+  return (
     <div className="relative">
       <input
         id={name}
@@ -39,7 +68,7 @@ export function FieldInput({
         className="font-sora focus:outline-primary w-full rounded-xl border-1 border-neutral-200 bg-neutral-50 p-4 text-xs text-neutral-600 outline-2 outline-transparent transition placeholder:text-neutral-400 focus:border-neutral-400 focus:shadow-md/10"
       />
       {children ? (
-        <div className="absolute top-0 right-0 cursor-pointer p-4">
+        <div className="absolute right-0 bottom-1/2 flex translate-y-1/2 cursor-pointer items-center justify-center pr-4">
           {children}
         </div>
       ) : null}
