@@ -9,7 +9,7 @@ import {
 
 import { Logo } from "@/components/logo"
 
-export function RequestToken() {
+export function ForgotPassword() {
   return (
     <section className="flex flex-col gap-4 px-6 py-8">
       <Logo />
@@ -17,7 +17,7 @@ export function RequestToken() {
       <div className="h-8" />
 
       <FormHeader
-        title="Request Token"
+        title="Forgot Password?"
         description="Enter your email address to recieve a token"
       />
 
