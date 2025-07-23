@@ -12,10 +12,14 @@ export function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/home" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/sign-up" component={SignUp} />
-        <Route path="/forgot-password" component={ForgotPassword} />
-        <Route path="/reset-password" component={ResetPassword} />
+        <Route path="/auth" nest>
+          <Route path="/login" component={Login} />
+          <Route path="/sign-up" component={SignUp} />
+          <Route path="/password" nest>
+            <Route path="/forgot" component={ForgotPassword} />
+            <Route path="/reset" component={ResetPassword} />
+          </Route>
+        </Route>
       </Switch>
     </>
   )
