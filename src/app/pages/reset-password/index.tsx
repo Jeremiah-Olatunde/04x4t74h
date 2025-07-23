@@ -2,19 +2,19 @@ import { useState } from "react"
 
 import * as Boolean from "@/lib/fp-ts/Boolean.ts"
 
-import {
-  FormHeader,
-  Form,
-  FormField,
-  FieldLabel,
-  FormSubmit,
-  FieldInput,
-  TogglePasswordVisibility,
-} from "@/components/form"
+import { FormHeader, Form, FormField, FormSubmit } from "@/components/form"
 
 import { Logo } from "@/components/logo"
+import { LinkPrimary } from "@/components/link"
+import {
+  FieldInput,
+  FieldLabel,
+  TogglePasswordVisibility,
+} from "@/components/form/field"
+import { Badge } from "@/components/badge"
 
 export function ResetPassword() {
+  const [email] = useState("jolatunde@luminara.io")
   const [passwordVisible, setPasswordVisible] = useState(false)
 
   return (
@@ -25,10 +25,30 @@ export function ResetPassword() {
 
       <FormHeader
         title="Reset Password"
-        description="Set a new password for your account"
-      />
+        description="A reset token was sent to this email"
+      >
+        <div className="h-1" />
+
+        <span className="font-sora text-sm font-medium text-neutral-600">
+          {email}
+        </span>
+        <div />
+
+        <a href="./forgot-password">
+          <Badge text="Chage Email" variant="secondary" />
+        </a>
+      </FormHeader>
+
+      <div />
 
       <Form>
+        <FormField>
+          <FieldLabel text="Enter OTP" htmlFor="otp" />
+          <FieldInput name="otp" placeholder="Enter code" type="tel">
+            <Badge text="OTP" variant="tertiary" />
+          </FieldInput>
+        </FormField>
+
         <FormField>
           <FieldLabel text="password" htmlFor="password" />
           <FieldInput
@@ -36,12 +56,10 @@ export function ResetPassword() {
             placeholder="Enter your password"
             type={passwordVisible ? "text" : "password"}
           >
-            <div className="absolute top-0 right-0 p-4">
-              <TogglePasswordVisibility
-                visible={passwordVisible}
-                handleClick={() => setPasswordVisible(Boolean.invert)}
-              />
-            </div>
+            <TogglePasswordVisibility
+              visible={passwordVisible}
+              handleClick={() => setPasswordVisible(Boolean.invert)}
+            />
           </FieldInput>
         </FormField>
 
@@ -58,8 +76,14 @@ export function ResetPassword() {
             />
           </FieldInput>
         </FormField>
+        <div className="flex items-center justify-end gap-1">
+          <span className="font-sora text-xs text-neutral-400">
+            Didn't recieve an OTP?
+          </span>
+          <LinkPrimary href="#" text="Resend it" />
+        </div>
 
-        <FormSubmit text="reset password" />
+        <FormSubmit text="Reset Password" />
       </Form>
     </section>
   )
