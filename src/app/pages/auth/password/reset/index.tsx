@@ -78,25 +78,28 @@ export function ResetPassword() {
             />
           </FieldInput>
         </FormField>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center justify-between gap-1">
-            <span className="font-sora text-xs text-neutral-400">
-              Didn't recieve an OTP?
-            </span>
-            <Link href="/forgot">
-              <LinkPrimary text="Resend it" />
-            </Link>
-          </div>
 
-          <div className="flex items-center justify-between gap-1">
-            <IconClock12 className="size-5 text-neutral-400" />
-            <span className="font-sora text-primary text-xs font-semibold">
-              45s
-            </span>
+        <div className="flex flex-col gap-4">
+          <FormSubmit text="Reset Password" />
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-1">
+              <span className="font-sora text-xs text-neutral-400">
+                Didn't recieve an OTP?
+              </span>
+              <Link href="/forgot">
+                <LinkPrimary text="Resend it" />
+              </Link>
+            </div>
+
+            <div className="flex items-center justify-between gap-1">
+              <IconClock12 className="size-5 text-neutral-400" />
+              <span className="font-sora text-primary text-xs font-semibold">
+                45s
+              </span>
+            </div>
           </div>
         </div>
-
-        <FormSubmit text="Reset Password" />
       </Form>
     </section>
   )
