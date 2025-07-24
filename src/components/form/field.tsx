@@ -12,7 +12,7 @@ export function FieldLabel({
   text: string
 }) {
   return (
-    <label htmlFor={htmlFor}>
+    <label htmlFor={htmlFor} className="justifi-center flex items-center">
       <span className="font-sora text-xs font-medium capitalize">{text}</span>
     </label>
   )
