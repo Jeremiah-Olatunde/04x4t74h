@@ -1,4 +1,8 @@
+import * as Array from "@/lib/fp-ts/ReadonlyArray"
+import * as Function from "@/lib/fp-ts/Function"
+
 import { Eye as IconEye, EyeOff as IconEyeOff } from "lucide-react"
+import { Badge } from "../badge"
 
 export function FormField({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-2">{children}</div>
@@ -58,5 +62,21 @@ export function TogglePasswordVisibility({
         <IconEyeOff className="size-5 text-neutral-400" />
       )}
     </button>
+  )
+}
+
+export function FieldErrors({ errors }: { errors: readonly string[] }) {
+  return (
+    <ul className="flex flex-row flex-wrap gap-2">
+      {Function.pipe(errors, Array.map(FieldErrorItem))}
+    </ul>
+  )
+}
+
+function FieldErrorItem(error: string) {
+  return (
+    <li className="">
+      <Badge text={error} variant="warning" />
+    </li>
   )
 }

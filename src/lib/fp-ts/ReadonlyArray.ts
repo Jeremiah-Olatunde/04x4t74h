@@ -1,4 +1,5 @@
 export {
+  map,
   last,
   findIndex,
   makeBy,
