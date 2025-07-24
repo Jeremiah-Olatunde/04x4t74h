@@ -47,7 +47,9 @@ export function ResetPassword() {
         <FormField>
           <FieldLabel text="Enter OTP" htmlFor="otp" />
           <FieldInput name="otp" placeholder="Enter code" type="tel">
-            <Badge text="OTP" variant="tertiary" />
+            <button type="button" className="cursor-pointer">
+              <Badge text="Paste" variant="tertiary" />
+            </button>
           </FieldInput>
         </FormField>
 
