@@ -62,7 +62,7 @@ export function Login() {
 
           <Button
             tag="button"
-            text="log in"
+            text="Log In"
             variant="primary"
             type="submit"
             handleClick={() => {}}
