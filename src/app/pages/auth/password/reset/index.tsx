@@ -3,13 +3,7 @@ import { Clock12 as IconClock12 } from "lucide-react"
 
 import * as Boolean from "@/lib/fp-ts/Boolean.ts"
 
-import {
-  FormHeader,
-  Form,
-  FormField,
-  FormSubmit,
-  FormContainer,
-} from "@/components/form"
+import { FormHeader, Form, FormField, FormContainer } from "@/components/form"
 
 import { Logo } from "@/components/logo"
 import { LinkPrimary } from "@/components/link"
@@ -20,7 +14,7 @@ import {
 } from "@/components/form/field"
 import { Badge } from "@/components/badge"
 import { Link } from "wouter"
-import { ButtonPrimary } from "@/components/button"
+import { Button } from "@/components/button"
 
 export function ResetPassword() {
   const [email] = useState("jolatunde@luminara.io")
@@ -90,7 +84,7 @@ export function ResetPassword() {
           </FormField>
 
           <div className="flex flex-col gap-4">
-            <ButtonPrimary type="submit" text="Reset Password" />
+            <Button text="Reset Password" variant="primary" type="submit" />
 
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-between gap-1">

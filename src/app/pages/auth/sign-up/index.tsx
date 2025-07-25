@@ -9,14 +9,13 @@ import {
   Form,
   FormField,
   FieldLabel,
-  FormSubmit,
   FieldInput,
   TogglePasswordVisibility,
   FormContainer,
 } from "@/components/form"
 import { LinkPrimary } from "@/components/link"
 import { Logo } from "@/components/logo"
-import { ButtonPrimary } from "@/components/button"
+import { Button } from "@/components/button"
 
 export function SignUp() {
   const [stage, setStage] = useState("details-personal")
@@ -95,9 +94,10 @@ export function SignUp() {
                   </FieldInput>
                 </FormField>
 
-                <ButtonPrimary
+                <Button
                   type="button"
                   text="next"
+                  variant="primary"
                   handleClick={() => setStage("details-account")}
                 />
 
@@ -154,7 +154,15 @@ export function SignUp() {
                   </FieldInput>
                 </FormField>
 
-                <ButtonPrimary type="submit" text="submit" />
+                <div className="flex gap-2">
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    text="back"
+                    handleClick={() => setStage("details-personal")}
+                  />
+                  <Button variant="primary" type="submit" text="submit" />
+                </div>
 
                 <div className="flex items-center justify-center gap-1">
                   <span className="font-sora text-xs text-neutral-400">

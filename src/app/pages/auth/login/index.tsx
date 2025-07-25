@@ -7,7 +7,6 @@ import {
   Form,
   FormField,
   FieldLabel,
-  FormSubmit,
   FieldInput,
   TogglePasswordVisibility,
   FormContainer,
@@ -15,7 +14,7 @@ import {
 import { LinkPrimary } from "@/components/link"
 import { Logo } from "@/components/logo"
 import { Link } from "wouter"
-import { ButtonPrimary } from "@/components/button"
+import { Button } from "@/components/button"
 
 export function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -61,7 +60,7 @@ export function Login() {
             </div>
           </FormField>
 
-          <ButtonPrimary type="submit" text="log in" />
+          <Button text="log in" variant="primary" type="submit" />
 
           <div className="flex items-center justify-center gap-1">
             <span className="font-sora text-xs text-neutral-400">
