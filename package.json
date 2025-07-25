@@ -15,6 +15,7 @@
     "fp-ts": "^2.16.10",
     "fp-ts-std": "^1.0.0",
     "lucide-react": "^0.525.0",
+    "radix-ui": "^1.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.11",
