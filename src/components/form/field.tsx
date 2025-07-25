@@ -57,7 +57,11 @@ export function TogglePasswordVisibility({
 }) {
   return (
     <button type="button" onClick={handleClick} className="cursor-pointer">
-      {visible ? <Icon icon={IconEye} /> : <Icon icon={IconEyeOff} />}
+      {visible ? (
+        <Icon icon={IconEye} label="toggle password" />
+      ) : (
+        <Icon icon={IconEyeOff} label="toggle password" />
+      )}
     </button>
   )
 }
