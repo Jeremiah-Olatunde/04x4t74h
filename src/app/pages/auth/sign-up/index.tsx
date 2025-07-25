@@ -84,7 +84,7 @@ export function SignUp() {
 
                 <Button
                   type="button"
-                  text="next"
+                  text="Next"
                   variant="primary"
                   handleClick={() => setStage("details-account")}
                 />
@@ -146,10 +146,10 @@ export function SignUp() {
                   <Button
                     variant="secondary"
                     type="button"
-                    text="back"
+                    text="Back"
                     handleClick={() => setStage("details-personal")}
                   />
-                  <Button variant="primary" type="submit" text="submit" />
+                  <Button text="Submit" variant="primary" type="submit" />
                 </div>
 
                 <div className="flex items-center justify-center gap-1">
