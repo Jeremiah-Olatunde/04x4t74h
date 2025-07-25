@@ -34,13 +34,13 @@ export function FieldInput({
   children?: React.ReactNode
 }) {
   return (
-    <div className="has-focus:outline-primary flex justify-center gap-2 rounded-xl border-1 border-neutral-200 bg-neutral-50 p-4 outline-2 outline-transparent transition has-focus:border-neutral-400 has-focus:shadow-md/10">
+    <div className="flex justify-center gap-2 rounded-xl border-1 border-neutral-200 bg-neutral-50 p-4 outline-2 outline-transparent transition has-focus:border-neutral-400 has-focus:shadow-md/10 has-focus:outline-primary">
       <input
         id={name}
         name={name}
         type={type}
         placeholder={placeholder}
-        className="font-sora w-0 grow border-none text-xs text-neutral-600 outline-none placeholder:text-neutral-400"
+        className="w-0 grow border-none font-sora text-xs text-neutral-600 outline-none placeholder:text-neutral-400"
       />
       <div className="flex items-center justify-center gap-1">{children}</div>
     </div>
@@ -76,7 +76,7 @@ export function FieldErrors({ errors }: { errors: readonly string[] }) {
 function FieldErrorItem(error: string) {
   return (
     <li className="">
-      <Badge text={error} variant="warning" />
+      <Badge text={error} variant="secondary" />
     </li>
   )
 }

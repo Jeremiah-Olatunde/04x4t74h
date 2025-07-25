@@ -1,19 +1,49 @@
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { tw } from "@/utils/tailwind"
+
+const cvaContainer = (function () {
+  const base = tw`flex items-center justify-center rounded-s-full rounded-e-full px-3 py-1`
+  const primary = tw`bg-primary/10`
+  const secondary = tw`bg-secondary`
+  const neutral = tw`bg-neutral-100`
+  const red = tw`bg-red-100`
+  const green = tw`bg-green-100`
+
+  const variants = {
+    variant: { primary, secondary, neutral, red, green },
+  } as const
+  const defaultVariants = { variant: "neutral" } as const
+
+  return cva(base, { variants, defaultVariants })
+})()
+
+const cvaTypography = (function () {
+  const base = tw`font-sora text-xxs font-medium whitespace-nowrap`
+  const primary = tw`text-primary`
+  const secondary = tw`text-neutral-600`
+  const neutral = tw`text-neutral-600`
+  const red = tw`text-red-600`
+  const green = tw`text-green-600`
+
+  const variants = {
+    variant: { primary, secondary, neutral, red, green },
+  } as const
+  const defaultVariants = { variant: "neutral" } as const
+
+  return cva(base, { variants, defaultVariants })
+})()
+
 export function Badge({
   text,
   variant,
 }: {
   text: string
-  variant: "primary" | "secondary" | "tertiary" | "warning"
+  variant: VariantProps<typeof cvaContainer>["variant"]
 }) {
   return (
-    <div
-      className={`${variant === "primary" ? "bg-primary/10" : variant === "secondary" ? "bg-secondary" : variant === "tertiary" ? "bg-neutral-100" : variant === "warning" ? "bg-red-100" : null} flex items-center justify-center rounded-s-full rounded-e-full px-3 py-1`}
-    >
-      <span
-        className={`text-xxs whitespace-nowrap ${variant === "primary" ? "text-primary" : variant === "secondary" ? "text-neutral-600" : variant === "tertiary" ? "text-neutral-600" : variant === "warning" ? "text-red-600" : null} font-sora font-medium`}
-      >
-        {text}
-      </span>
+    <div className={cvaContainer({ variant })}>
+      <span className={cvaTypography({ variant })}>{text}</span>
     </div>
   )
 }
