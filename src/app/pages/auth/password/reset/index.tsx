@@ -13,10 +13,11 @@ import {
   TogglePasswordVisibility,
 } from "@/components/form/field"
 import { Badge } from "@/components/badge"
-import { Link } from "wouter"
+import { Link, useLocation } from "wouter"
 import { Button } from "@/components/button"
 
 export function ResetPassword() {
+  const [, setLocation] = useLocation()
   const [email] = useState("jolatunde@luminara.io")
   const [passwordVisible, setPasswordVisible] = useState(false)
 
@@ -84,7 +85,12 @@ export function ResetPassword() {
           </FormField>
 
           <div className="flex flex-col gap-4">
-            <Button text="Reset Password" variant="primary" type="submit" />
+            <Button
+              handleClick={() => setLocation("~/auth/login")}
+              text="Reset Password"
+              variant="primary"
+              type="submit"
+            />
 
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-between gap-1">
