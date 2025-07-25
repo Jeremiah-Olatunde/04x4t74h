@@ -60,7 +60,13 @@ export function Login() {
             </div>
           </FormField>
 
-          <Button text="log in" variant="primary" type="submit" />
+          <Button
+            tag="button"
+            text="log in"
+            variant="primary"
+            type="submit"
+            handleClick={() => {}}
+          />
 
           <div className="flex items-center justify-center gap-1">
             <span className="font-sora text-xs text-neutral-400">

@@ -83,6 +83,7 @@ export function SignUp() {
                 </FormField>
 
                 <Button
+                  tag="button"
                   type="button"
                   text="Next"
                   variant="primary"
@@ -144,12 +145,19 @@ export function SignUp() {
 
                 <div className="flex gap-2">
                   <Button
-                    variant="secondary"
-                    type="button"
+                    tag="button"
+                    type="submit"
                     text="Back"
+                    variant="secondary"
                     handleClick={() => setStage("details-personal")}
                   />
-                  <Button text="Submit" variant="primary" type="submit" />
+                  <Button
+                    tag="button"
+                    type="submit"
+                    text="Submit"
+                    variant="primary"
+                    handleClick={() => {}}
+                  />
                 </div>
 
                 <div className="flex items-center justify-center gap-1">

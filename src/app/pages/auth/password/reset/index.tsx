@@ -86,10 +86,11 @@ export function ResetPassword() {
 
           <div className="flex flex-col gap-4">
             <Button
-              handleClick={() => setLocation("~/auth/login")}
+              tag="button"
+              type="submit"
               text="Reset Password"
               variant="primary"
-              type="submit"
+              handleClick={() => setLocation("~/auth/login")}
             />
 
             <div className="flex items-center justify-between">
@@ -104,7 +105,7 @@ export function ResetPassword() {
 
               <div className="flex items-center justify-between gap-1">
                 <IconClock12 className="size-5 text-neutral-400" />
-                <span className="font-sora text-primary text-xs font-semibold">
+                <span className="font-sora text-xs font-semibold text-primary">
                   45s
                 </span>
               </div>
