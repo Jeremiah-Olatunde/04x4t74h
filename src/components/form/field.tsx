@@ -3,6 +3,7 @@ import * as Function from "@/lib/fp-ts/Function"
 
 import { Eye as IconEye, EyeOff as IconEyeOff } from "lucide-react"
 import { Badge } from "../badge"
+import { Icon } from "../icon"
 
 export function FormField({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-2">{children}</div>
@@ -56,11 +57,7 @@ export function TogglePasswordVisibility({
 }) {
   return (
     <button type="button" onClick={handleClick} className="cursor-pointer">
-      {visible ? (
-        <IconEye className="size-5 text-neutral-400" />
-      ) : (
-        <IconEyeOff className="size-5 text-neutral-400" />
-      )}
+      {visible ? <Icon icon={IconEye} /> : <Icon icon={IconEyeOff} />}
     </button>
   )
 }

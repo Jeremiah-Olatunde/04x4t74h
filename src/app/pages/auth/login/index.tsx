@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "wouter"
 
 import * as Boolean from "@/lib/fp-ts/Boolean.ts"
 
@@ -13,7 +14,6 @@ import {
 } from "@/components/form"
 import { LinkPrimary } from "@/components/link"
 import { Logo } from "@/components/logo"
-import { Link } from "wouter"
 import { Button } from "@/components/button"
 
 export function Login() {

@@ -15,6 +15,7 @@ import {
 import { Badge } from "@/components/badge"
 import { Link, useLocation } from "wouter"
 import { Button } from "@/components/button"
+import { Icon } from "@/components/icon"
 
 export function ResetPassword() {
   const [, setLocation] = useLocation()
@@ -104,7 +105,7 @@ export function ResetPassword() {
               </div>
 
               <div className="flex items-center justify-between gap-1">
-                <IconClock12 className="size-5 text-neutral-400" />
+                <Icon icon={IconClock12} />
                 <span className="font-sora text-xs font-semibold text-primary">
                   45s
                 </span>
