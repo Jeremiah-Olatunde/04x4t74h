@@ -13,9 +13,11 @@ export function Router() {
         <Route path="/" component={Home} />
         <Route path="/home" component={Home} />
         <Route path="/auth" nest>
+          <Route path="/" component={Login} />
           <Route path="/login" component={Login} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/password" nest>
+            <Route path="/" component={ForgotPassword} />
             <Route path="/forgot" component={ForgotPassword} />
             <Route path="/reset" component={ResetPassword} />
           </Route>
