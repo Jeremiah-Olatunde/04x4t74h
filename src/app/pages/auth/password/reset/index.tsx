@@ -20,6 +20,7 @@ import {
 } from "@/components/form/field"
 import { Badge } from "@/components/badge"
 import { Link } from "wouter"
+import { ButtonPrimary } from "@/components/button"
 
 export function ResetPassword() {
   const [email] = useState("jolatunde@luminara.io")
@@ -89,7 +90,7 @@ export function ResetPassword() {
           </FormField>
 
           <div className="flex flex-col gap-4">
-            <FormSubmit text="Reset Password" />
+            <ButtonPrimary type="submit" text="Reset Password" />
 
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-between gap-1">
