@@ -10,6 +10,7 @@ import {
   FormSubmit,
   FieldInput,
   TogglePasswordVisibility,
+  FormContainer,
 } from "@/components/form"
 import { LinkPrimary } from "@/components/link"
 import { Logo } from "@/components/logo"
@@ -30,44 +31,46 @@ export function Login() {
       />
 
       <Form>
-        <FormField>
-          <FieldLabel text="email address" htmlFor="email" />
-          <FieldInput
-            name="email"
-            type="email"
-            placeholder="example@email.com"
-          />
-        </FormField>
-
-        <FormField>
-          <FieldLabel text="password" htmlFor="password" />
-          <FieldInput
-            name="password"
-            placeholder="Enter your password"
-            type={passwordVisible ? "text" : "password"}
-          >
-            <TogglePasswordVisibility
-              visible={passwordVisible}
-              handleClick={() => setPasswordVisible(Boolean.invert)}
+        <FormContainer>
+          <FormField>
+            <FieldLabel text="email address" htmlFor="email" />
+            <FieldInput
+              name="email"
+              type="email"
+              placeholder="example@email.com"
             />
-          </FieldInput>
-          <div className="flex justify-end">
-            <Link href="/password/forgot">
-              <LinkPrimary text="Forgot Password?" />
+          </FormField>
+
+          <FormField>
+            <FieldLabel text="password" htmlFor="password" />
+            <FieldInput
+              name="password"
+              placeholder="Enter your password"
+              type={passwordVisible ? "text" : "password"}
+            >
+              <TogglePasswordVisibility
+                visible={passwordVisible}
+                handleClick={() => setPasswordVisible(Boolean.invert)}
+              />
+            </FieldInput>
+            <div className="flex justify-end">
+              <Link href="/password/forgot">
+                <LinkPrimary text="Forgot Password?" />
+              </Link>
+            </div>
+          </FormField>
+
+          <FormSubmit text="log in" />
+
+          <div className="flex items-center justify-center gap-1">
+            <span className="font-sora text-xs text-neutral-400">
+              Don't have an account?
+            </span>
+            <Link href="/sign-up">
+              <LinkPrimary text="Sign Up" />
             </Link>
           </div>
-        </FormField>
-
-        <FormSubmit text="log in" />
-
-        <div className="flex items-center justify-center gap-1">
-          <span className="font-sora text-xs text-neutral-400">
-            Don't have an account?
-          </span>
-          <Link href="/sign-up">
-            <LinkPrimary text="Sign Up" />
-          </Link>
-        </div>
+        </FormContainer>
       </Form>
     </section>
   )

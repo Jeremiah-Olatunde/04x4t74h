@@ -3,7 +3,13 @@ import { Clock12 as IconClock12 } from "lucide-react"
 
 import * as Boolean from "@/lib/fp-ts/Boolean.ts"
 
-import { FormHeader, Form, FormField, FormSubmit } from "@/components/form"
+import {
+  FormHeader,
+  Form,
+  FormField,
+  FormSubmit,
+  FormContainer,
+} from "@/components/form"
 
 import { Logo } from "@/components/logo"
 import { LinkPrimary } from "@/components/link"
@@ -44,64 +50,66 @@ export function ResetPassword() {
       <div />
 
       <Form>
-        <FormField>
-          <FieldLabel text="Enter OTP" htmlFor="otp" />
-          <FieldInput name="otp" placeholder="Enter code" type="tel">
-            <button type="button" className="cursor-pointer">
-              <Badge text="Paste" variant="tertiary" />
-            </button>
-          </FieldInput>
-        </FormField>
+        <FormContainer>
+          <FormField>
+            <FieldLabel text="Enter OTP" htmlFor="otp" />
+            <FieldInput name="otp" placeholder="Enter code" type="tel">
+              <button type="button" className="cursor-pointer">
+                <Badge text="Paste" variant="tertiary" />
+              </button>
+            </FieldInput>
+          </FormField>
 
-        <FormField>
-          <FieldLabel text="password" htmlFor="password" />
-          <FieldInput
-            name="password"
-            placeholder="Enter your password"
-            type={passwordVisible ? "text" : "password"}
-          >
-            <TogglePasswordVisibility
-              visible={passwordVisible}
-              handleClick={() => setPasswordVisible(Boolean.invert)}
-            />
-          </FieldInput>
-        </FormField>
+          <FormField>
+            <FieldLabel text="password" htmlFor="password" />
+            <FieldInput
+              name="password"
+              placeholder="Enter your password"
+              type={passwordVisible ? "text" : "password"}
+            >
+              <TogglePasswordVisibility
+                visible={passwordVisible}
+                handleClick={() => setPasswordVisible(Boolean.invert)}
+              />
+            </FieldInput>
+          </FormField>
 
-        <FormField>
-          <FieldLabel text="confirm password" htmlFor="confirm-password" />
-          <FieldInput
-            name="confirm-password"
-            placeholder="Re-enter your password"
-            type={passwordVisible ? "text" : "password"}
-          >
-            <TogglePasswordVisibility
-              visible={passwordVisible}
-              handleClick={() => setPasswordVisible(Boolean.invert)}
-            />
-          </FieldInput>
-        </FormField>
+          <FormField>
+            <FieldLabel text="confirm password" htmlFor="confirm-password" />
+            <FieldInput
+              name="confirm-password"
+              placeholder="Re-enter your password"
+              type={passwordVisible ? "text" : "password"}
+            >
+              <TogglePasswordVisibility
+                visible={passwordVisible}
+                handleClick={() => setPasswordVisible(Boolean.invert)}
+              />
+            </FieldInput>
+          </FormField>
 
-        <div className="flex flex-col gap-4">
-          <FormSubmit text="Reset Password" />
+          <div className="flex flex-col gap-4">
+            <FormSubmit text="Reset Password" />
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center justify-between gap-1">
-              <span className="font-sora text-xs text-neutral-400">
-                Didn't recieve an OTP?
-              </span>
-              <Link href="/forgot">
-                <LinkPrimary text="Resend it" />
-              </Link>
-            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-1">
+                <span className="font-sora text-xs text-neutral-400">
+                  Didn't recieve an OTP?
+                </span>
+                <Link href="/forgot">
+                  <LinkPrimary text="Resend it" />
+                </Link>
+              </div>
 
-            <div className="flex items-center justify-between gap-1">
-              <IconClock12 className="size-5 text-neutral-400" />
-              <span className="font-sora text-primary text-xs font-semibold">
-                45s
-              </span>
+              <div className="flex items-center justify-between gap-1">
+                <IconClock12 className="size-5 text-neutral-400" />
+                <span className="font-sora text-primary text-xs font-semibold">
+                  45s
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        </FormContainer>
       </Form>
     </section>
   )

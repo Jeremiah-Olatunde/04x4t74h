@@ -37,7 +37,6 @@ export function FormHeader({
 export function Form({ children }: { children: React.ReactNode }) {
   return (
     <form
-      className="flex flex-col gap-6"
       onSubmit={(event) => {
         event.preventDefault()
         event.stopPropagation()
@@ -46,6 +45,10 @@ export function Form({ children }: { children: React.ReactNode }) {
       {children}
     </form>
   )
+}
+
+export function FormContainer({ children }: { children: React.ReactNode }) {
+  return <div className="flex flex-col gap-6">{children}</div>
 }
 
 export function FormSubmit({ text }: { text: string }) {

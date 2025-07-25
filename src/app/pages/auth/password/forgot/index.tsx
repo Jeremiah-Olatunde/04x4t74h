@@ -5,6 +5,7 @@ import {
   FieldInput,
   FormField,
   FieldLabel,
+  FormContainer,
 } from "@/components/form"
 
 import { Logo } from "@/components/logo"
@@ -23,14 +24,20 @@ export function ForgotPassword() {
       />
 
       <Form>
-        <FormField>
-          <FieldLabel text="email address" htmlFor="email" />
-          <FieldInput name="email" type="email" placeholder="example@gmail.com">
-            <Link href="/reset" className="cursor-pointer">
-              <Badge text={"Send Token"} variant="primary" />
-            </Link>
-          </FieldInput>
-        </FormField>
+        <FormContainer>
+          <FormField>
+            <FieldLabel text="email address" htmlFor="email" />
+            <FieldInput
+              name="email"
+              type="email"
+              placeholder="example@gmail.com"
+            >
+              <Link href="/reset" className="cursor-pointer">
+                <Badge text={"Send Token"} variant="primary" />
+              </Link>
+            </FieldInput>
+          </FormField>
+        </FormContainer>
       </Form>
     </section>
   )
