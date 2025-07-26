@@ -1,9 +1,18 @@
 import * as Array from "@/lib/fp-ts/ReadonlyArray"
 import * as Function from "@/lib/fp-ts/Function"
 
-import { Eye as IconEye, EyeOff as IconEyeOff } from "lucide-react"
+import {
+  Eye as IconEye,
+  EyeOff as IconEyeOff,
+  LoaderCircle as IconLoaderCircle,
+  CircleAlert as IconCircleAlert,
+  CircleCheck,
+  CircleX as IconCircleX,
+} from "lucide-react"
 import { Badge } from "../badge"
 import { Icon } from "../icon"
+import { tw } from "@/utils/tailwind"
+import { cva, type VariantProps } from "class-variance-authority"
 
 export function FormField({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-2">{children}</div>
@@ -23,19 +32,82 @@ export function FieldLabel({
   )
 }
 
+export function FieldStatus({
+  status,
+}: {
+  status: "failure" | "success" | "pending" | "warning"
+}) {
+  switch (status) {
+    case "warning":
+      return (
+        <Icon
+          size="sm"
+          icon={IconCircleAlert}
+          label="field validation failed"
+          variant="secondary"
+        />
+      )
+    case "failure":
+      return (
+        <Icon
+          size="sm"
+          icon={IconCircleX}
+          label="field validation failed"
+          variant="red"
+        />
+      )
+    case "success":
+      return (
+        <Icon
+          size="sm"
+          icon={CircleCheck}
+          label="field validation succeeded"
+          variant="green"
+        />
+      )
+    case "pending":
+      return (
+        <div className="animate-spin">
+          <Icon
+            size="sm"
+            icon={IconLoaderCircle}
+            label="field validation in progress"
+            variant="neutral"
+          />
+        </div>
+      )
+  }
+}
+
+const base = tw`flex justify-center gap-2 rounded-xl border-1 p-4 outline-2 transition has-focus:shadow-md/10`
+const neutral = tw`border-neutral-200 outline-transparent has-focus:border-neutral-400 has-focus:outline-primary`
+const failure = tw`border-red-300 outline-transparent has-focus:outline-red-600`
+const success = tw`border-green-300 outline-transparent has-focus:border-neutral-400 has-focus:outline-green-600`
+const warning = tw`border-secondary outline-transparent has-focus:border-neutral-400 has-focus:outline-secondary`
+
+const variants = {
+  variant: { neutral, failure, success, warning },
+} as const
+
+const defaultVariants = { variant: "neutral" } as const
+
+const styles = cva(base, { variants, defaultVariants })
+
 export function FieldInput({
   name,
   type,
   placeholder,
   children,
+  variant,
 }: {
   name: string
   type: "text" | "email" | "password" | "tel"
   placeholder: string
   children?: React.ReactNode
+  variant?: VariantProps<typeof styles>["variant"]
 }) {
   return (
-    <div className="flex justify-center gap-2 rounded-xl border-1 border-neutral-200 bg-neutral-50 p-4 outline-2 outline-transparent transition has-focus:border-neutral-400 has-focus:shadow-md/10 has-focus:outline-primary">
+    <div className={styles({ variant })}>
       <input
         id={name}
         name={name}
@@ -76,8 +148,8 @@ export function FieldErrors({ errors }: { errors: readonly string[] }) {
 
 function FieldErrorItem(error: string) {
   return (
-    <li className="">
-      <Badge text={error} variant="secondary" />
+    <li>
+      <Badge text={error} variant="red" />
     </li>
   )
 }
