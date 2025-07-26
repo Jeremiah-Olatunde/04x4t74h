@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Link } from "wouter"
 import { Tabs } from "radix-ui"
 
-import * as Boolean from "@/lib/fp-ts/Boolean.ts"
+import * as Boolean from "Boolean"
 
 import {
   FormHeader,

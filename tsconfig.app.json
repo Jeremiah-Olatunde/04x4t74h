@@ -25,7 +25,13 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "Array": ["./src/lib/fp-ts/Array"],
+      "Boolean": ["./src/lib/fp-ts/Boolean"],
+      "DOM": ["./src/lib/fp-ts/DOM"],
+      "Function": ["./src/lib/fp-ts/Function"],
+      "IOOption": ["./src/lib/fp-ts/IOOption"],
+      "Option": ["./src/lib/fp-ts/Option"]
     }
   },
   "include": ["src"]

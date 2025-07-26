@@ -1,9 +1,9 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 
-import * as Dom from "@/lib/fp-ts/DOM.ts"
-import * as Function from "@/lib/fp-ts/Function"
-import * as IOOption from "@/lib/fp-ts/IOOption"
+import * as Dom from "DOM"
+import * as Function from "Function"
+import * as IOOption from "IOOption"
 
 import "./index.css"
 import { App as App_ } from "./app"

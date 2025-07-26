@@ -1,15 +1,17 @@
 import { useState } from "react"
 import { Clock12 as IconClock12 } from "lucide-react"
 
-import * as Boolean from "@/lib/fp-ts/Boolean.ts"
+import * as Boolean from "Boolean"
 
 import { FormHeader, Form, FormField, FormContainer } from "@/components/form"
 
 import { Logo } from "@/components/logo"
 import { LinkPrimary } from "@/components/link"
 import {
+  FieldErrors,
   FieldInput,
   FieldLabel,
+  FieldStatus,
   TogglePasswordVisibility,
 } from "@/components/form/field"
 import { Badge } from "@/components/badge"
@@ -49,8 +51,16 @@ export function ResetPassword() {
       <Form>
         <FormContainer>
           <FormField>
-            <FieldLabel text="Enter OTP" htmlFor="otp" />
-            <FieldInput name="otp" placeholder="Enter code" type="tel">
+            <div className="flex items-center justify-start gap-2">
+              <FieldLabel text="Enter OTP" htmlFor="otp" />
+              <FieldStatus status="warning" />
+            </div>
+            <FieldInput
+              variant="warning"
+              name="otp"
+              placeholder="Enter code"
+              type="tel"
+            >
               <button type="button" className="cursor-pointer">
                 <Badge text="Paste" variant="neutral" />
               </button>
@@ -58,8 +68,13 @@ export function ResetPassword() {
           </FormField>
 
           <FormField>
-            <FieldLabel text="password" htmlFor="password" />
+            <div className="flex items-center justify-start gap-2">
+              <FieldLabel text="password" htmlFor="password" />
+              <FieldStatus status="failure" />
+            </div>
+
             <FieldInput
+              variant="failure"
               name="password"
               placeholder="Enter your password"
               type={passwordVisible ? "text" : "password"}
@@ -69,13 +84,25 @@ export function ResetPassword() {
                 handleClick={() => setPasswordVisible(Boolean.invert)}
               />
             </FieldInput>
+            <FieldErrors
+              errors={[
+                "must have more than 5 characters",
+                "must have a symbol",
+                "must have a letter",
+              ]}
+            />
           </FormField>
 
           <FormField>
-            <FieldLabel text="confirm password" htmlFor="confirm-password" />
+            <div className="flex items-center justify-start gap-2">
+              <FieldLabel text="confirm password" htmlFor="confirm-password" />
+              <FieldStatus status="success" />
+            </div>
+
             <FieldInput
               name="confirm-password"
               placeholder="Re-enter your password"
+              variant="success"
               type={passwordVisible ? "text" : "password"}
             >
               <TogglePasswordVisibility

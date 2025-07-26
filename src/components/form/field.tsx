@@ -1,5 +1,5 @@
-import * as Array from "@/lib/fp-ts/ReadonlyArray"
-import * as Function from "@/lib/fp-ts/Function"
+import * as Array from "Array"
+import * as Function from "Function"
 
 import {
   Eye as IconEye,

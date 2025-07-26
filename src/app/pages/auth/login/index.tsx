@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link } from "wouter"
 
-import * as Boolean from "@/lib/fp-ts/Boolean.ts"
+import * as Boolean from "Boolean"
 
 import {
   FormHeader,
