@@ -1,10 +1,1 @@
-export {
-  map,
-  last,
-  findIndex,
-  makeBy,
-  replicate,
-  mapWithIndex,
-  updateAt,
-  flatten,
-} from "fp-ts/ReadonlyArray"
+export { map } from "fp-ts/ReadonlyArray"
