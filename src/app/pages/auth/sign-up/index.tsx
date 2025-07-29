@@ -187,8 +187,8 @@ function ButtonStage({
   stage: number
 }) {
   return (
-    <button
-      type="button"
+    // Not a button element as radix Tabs.Trigger component is already a button element
+    <div
       className={`flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 ${active ? "border-primary" : "border-neutral-200"} p-2`}
     >
       <div
@@ -205,6 +205,6 @@ function ButtonStage({
       >
         {text}
       </span>
-    </button>
+    </div>
   )
 }
