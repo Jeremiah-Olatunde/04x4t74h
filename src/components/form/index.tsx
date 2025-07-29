@@ -34,7 +34,7 @@ export function FormHeader({
   )
 }
 
-export function Form({ children }: { children: React.ReactNode }) {
+export function Form({ children }: { children: ReactNode }) {
   return (
     <form
       onSubmit={(event) => {
@@ -47,7 +47,7 @@ export function Form({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function FormContainer({ children }: { children: React.ReactNode }) {
+export function FormContainer({ children }: { children: ReactNode }) {
   return <div className="flex flex-col gap-6">{children}</div>
 }
 
@@ -55,7 +55,7 @@ export function FormSubmit({ text }: { text: string }) {
   return (
     <button
       type="submit"
-      className="bg-primary font-sora cursor-pointer rounded-xl p-4 text-sm font-medium text-white capitalize"
+      className="cursor-pointer rounded-xl bg-primary p-4 font-sora text-sm font-medium text-white capitalize"
     >
       {text}
     </button>
