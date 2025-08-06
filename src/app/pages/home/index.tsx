@@ -23,6 +23,21 @@ export function Home() {
         loosed upon the land the blood dimmed tide is loosed and everywhere the
         ceremony of innocence is drown
       </p>
+
+      <ul className="flex flex-col gap-2">
+        <li>
+          <a href="/auth/login">Login</a>
+        </li>
+        <li>
+          <a href="/auth/sign-up">Sign Up</a>
+        </li>
+        <li>
+          <a href="/auth/password/forgot">Password Forgot</a>
+        </li>
+        <li>
+          <a href="/auth/password/reset">Password Reset </a>
+        </li>
+      </ul>
     </section>
   )
 }
