@@ -1,7 +1,8 @@
+import { Search as IconSearch } from "lucide-react"
+
 import { Button } from "@/components/button"
 import { Icon } from "@/components/icon"
 import { Logo } from "@/components/logo"
-import { Search as IconSearch } from "lucide-react"
 
 export function Header() {
   return (

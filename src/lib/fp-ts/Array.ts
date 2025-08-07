@@ -1,1 +1,1 @@
-export { map } from "fp-ts/ReadonlyArray"
+export { map, makeBy } from "fp-ts/ReadonlyArray"
