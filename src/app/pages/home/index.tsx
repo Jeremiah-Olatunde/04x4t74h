@@ -38,12 +38,11 @@ export function Home() {
         <div className="flex gap-2 items-center">
           <div className="basis-2/5">
             <Button
-              tag="button"
+              tag="link"
               variant="yellow"
               size="sm"
               text="Get Started"
-              type="button"
-              handleClick={() => {}}
+              href="/auth/sign-up"
             />
           </div>
 
