@@ -3,11 +3,14 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { tw } from "@/utils/tailwind"
 import { Link as LinkWouter } from "wouter"
 
-const base = tw`flex w-full cursor-pointer items-center justify-center rounded-xl p-4 font-sora text-sm font-medium`
+const base = tw`flex w-full cursor-pointer items-center justify-center font-sora font-medium`
 const purple = tw`bg-primary text-white`
 const yellow = tw`bg-secondary text-neutral-600`
 const primary = purple
 const secondary = yellow
+
+const sm = tw`p-2 text-xs rounded-sm`
+const lg = tw`p-4 text-sm rounded-xl`
 
 const variants = {
   variant: {
@@ -16,10 +19,15 @@ const variants = {
     primary,
     secondary,
   },
+  size: {
+    sm,
+    lg,
+  },
 } as const
 
 const defaultVariants = {
   variant: "purple",
+  size: "lg",
 } as const
 
 const style = cva(base, { variants, defaultVariants })
@@ -29,6 +37,7 @@ type LinkProps = {
   href: string
   text: string
   variant?: VariantProps<typeof style>["variant"]
+  size?: VariantProps<typeof style>["size"]
 }
 
 type ButtonProps = {
@@ -38,6 +47,7 @@ type ButtonProps = {
   type: "submit" | "button"
   handleClick: (value: string) => void
   variant?: VariantProps<typeof style>["variant"]
+  size?: VariantProps<typeof style>["size"]
 }
 
 export function Button(props: ButtonProps | LinkProps) {
@@ -48,7 +58,11 @@ export function Button(props: ButtonProps | LinkProps) {
         className="w-full"
         onClick={() => props.handleClick(props.value ?? props.text)}
       >
-        <ButtonBase text={props.text} variant={props.variant} />
+        <ButtonBase
+          text={props.text}
+          variant={props.variant}
+          size={props.size}
+        />
       </button>
     )
   }
@@ -63,9 +77,11 @@ export function Button(props: ButtonProps | LinkProps) {
 function ButtonBase({
   text,
   variant,
+  size,
 }: {
   text: string
   variant: VariantProps<typeof style>["variant"]
+  size?: VariantProps<typeof style>["size"]
 }) {
-  return <div className={style({ variant })}>{text}</div>
+  return <div className={style({ variant, size })}>{text}</div>
 }
