@@ -25,7 +25,7 @@ export function Business({ details }: { details: BusinessDetails }) {
         className="absolute top-2 right-2 cursor-pointer"
         pressed={false}
         disabled={false}
-        onPressedChange={(_pressed) => {}}
+        onPressedChange={() => {}}
       >
         <div className="rounded-full p-2 flex justify-center items-center bg-red-400">
           {Math.random() < 0.5 ? (
