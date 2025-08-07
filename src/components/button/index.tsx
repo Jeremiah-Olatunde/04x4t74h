@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { tw } from "@/utils/tailwind"
 import { Link as LinkWouter } from "wouter"
 
-const base = tw`flex w-full cursor-pointer items-center justify-center font-sora font-medium`
+const base = tw`flex w-full cursor-pointer items-center justify-center font-sora font-semibold`
 const purple = tw`bg-primary text-white`
 const yellow = tw`bg-secondary text-neutral-600`
 const primary = purple
