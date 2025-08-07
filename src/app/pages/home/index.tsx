@@ -1,43 +1,65 @@
+import { Button } from "@/components/button"
+import { Icon } from "@/components/icon"
 import { Logo } from "@/components/logo"
+import { Search as IconSearch } from "lucide-react"
 
 export function Home() {
   return (
-    <section className="flex flex-col gap-4 p-6">
-      <div className="flex">
-        <Logo />
-      </div>
-      <div className="h-2" />
-      <header className="flex flex-col gap-2">
-        <h1 className="font-fredoka text-primary text-4xl font-medium">
-          The Second Coming
-        </h1>
-        <div className="flex">
-          <h2 className="font-sora bg-secondary rounded-md p-1 text-sm font-semibold text-white">
-            William Butler Yeats
-          </h2>
+    <section className="flex flex-col">
+      <header className="rounded-b-2xl bg-[url(/images/bg-guest.png)] bg-cover p-6">
+        <div>
+          <Logo variant="white" size="sm" />
         </div>
-      </header>
-      <p className="font-sora text-stone-600">
-        Turning and turning in the widening gyre the falcon cannot hear the
-        falconer things fall apart, the center cannot hold mere anarchy is
-        loosed upon the land the blood dimmed tide is loosed and everywhere the
-        ceremony of innocence is drown
-      </p>
 
-      <ul className="flex flex-col gap-2">
-        <li>
-          <a href="/auth/login">Login</a>
-        </li>
-        <li>
-          <a href="/auth/sign-up">Sign Up</a>
-        </li>
-        <li>
-          <a href="/auth/password/forgot">Password Forgot</a>
-        </li>
-        <li>
-          <a href="/auth/password/reset">Password Reset </a>
-        </li>
-      </ul>
+        <div className="h-4" />
+
+        <h1 className="font-sora text-white font-bold text-2xl text-center">
+          Best of the city, <br />
+          Currated just for you.
+        </h1>
+
+        <div className="h-4" />
+
+        <p className="font-sora text-white text-center text-xs">
+          Enjoy instant, personalized recommendations for places to eat, chill,
+          date, or explore—right in your city.
+        </p>
+
+        <div className="h-6" />
+
+        <div className="flex justify-center items-center">
+          <span className="text-xs text-white font-sora font-medium">
+            Ready to find your Next Spot?
+          </span>
+        </div>
+
+        <div className="h-2" />
+
+        <div className="flex gap-2 items-center">
+          <div className="basis-2/5">
+            <Button
+              tag="button"
+              variant="yellow"
+              size="sm"
+              text="Get Started"
+              type="button"
+              handleClick={() => {}}
+            />
+          </div>
+
+          <button
+            type="button"
+            className="bg-white cursor-pointer basis-3/5 p-2 gap-2 rounded-md flex items-center"
+          >
+            <Icon icon={IconSearch} size="sm" label="search plazzaa" />
+            <span className="text-xxs text-neutral-400 font-sora">
+              Search Plazzaa...
+            </span>
+          </button>
+        </div>
+
+        <div className="h-2" />
+      </header>
     </section>
   )
 }
