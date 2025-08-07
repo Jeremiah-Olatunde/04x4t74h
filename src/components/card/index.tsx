@@ -1,2 +1,2 @@
-export * from "./ask-kimbo"
-export * from "./get-recommendations"
+export { AskKimbo } from "./ask-kimbo"
+export { GetRecommendations } from "./get-recommendations"
