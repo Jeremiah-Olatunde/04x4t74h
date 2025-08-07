@@ -1,5 +1,6 @@
-import { ChevronRight as IconChevronRight } from "lucide-react"
+import { faker } from "@faker-js/faker"
 import { Link as WouterLink } from "wouter"
+import { ChevronRight as IconChevronRight } from "lucide-react"
 
 import * as Array from "Array"
 
@@ -10,13 +11,6 @@ import { Business } from "@/components/card"
 import { mockBusiness } from "@/utils/mock"
 
 export function Home() {
-  const tags = [
-    "Budget Friendly",
-    "Plazzaa Picks",
-    "Celebration",
-    "Chill and Casual",
-  ]
-
   return (
     <section className="flex flex-col">
       <Header />
@@ -27,14 +21,12 @@ export function Home() {
         <div className="h-8" />
 
         <div className="flex flex-col gap-8">
-          {tags.map((tag) => {
-            const businesses = Array.makeBy(3, mockBusiness)
-
+          {Array.makeBy(5, (index) => {
             return (
-              <section key={tag}>
+              <section key={index}>
                 <header className="flex justify-between items-center">
-                  <h2 className="font-sora text-neutral-700 font-medium ">
-                    {tag}
+                  <h2 className="capitalize font-sora text-neutral-700 font-medium ">
+                    {faker.company.buzzAdjective()} {faker.company.buzzNoun()}
                   </h2>
 
                   <WouterLink href={"#"}>
@@ -51,13 +43,9 @@ export function Home() {
                 <div className="h-4" />
 
                 <div className="flex gap-2 overflow-x-scroll no-scrollbar">
-                  {businesses.map((business) => (
+                  {Array.makeBy(3, mockBusiness).map((business) => (
                     <div key={business.id} className="w-60 shrink-0">
-                      <Business
-                        details={business}
-                        status={Math.random() < 0.5 ? "saved" : "not-saved"}
-                        handleSave={() => {}}
-                      />
+                      <Business details={business} />
                     </div>
                   ))}
                 </div>

@@ -2,14 +2,13 @@ import {
   Heart as IconHeart,
   MapPin as IconMapPin,
   Star as IconStar,
-  LoaderCircle as IconLoaderCircle,
 } from "lucide-react"
 import { Toggle } from "radix-ui"
 import { Link as WouterLink } from "wouter"
 
 import { Icon } from "@/components/icon"
 
-type Details = {
+type BusinessDetails = {
   city: string
   id: string
   logo: string
@@ -19,32 +18,20 @@ type Details = {
   town: string
 }
 
-type SavedStatus = "pending" | "saved" | "not-saved"
-
-export function Business({
-  details,
-  handleSave,
-  status,
-}: {
-  details: Details
-  handleSave: (saved: boolean) => void
-  status: SavedStatus
-}) {
+export function Business({ details }: { details: BusinessDetails }) {
   return (
     <article className="w-full h-full relative rounded-xl border border-neutral-100">
       <Toggle.Root
         className="absolute top-2 right-2 cursor-pointer"
-        pressed={status === "saved"}
-        disabled={status === "pending"}
-        onPressedChange={handleSave}
+        pressed={false}
+        disabled={false}
+        onPressedChange={(_pressed) => {}}
       >
         <div className="rounded-full p-2 flex justify-center items-center bg-red-400">
-          {status === "saved" ? (
-            <IconHeart className="size-3 stroke-white fill-white " />
-          ) : status === "not-saved" ? (
+          {Math.random() < 0.5 ? (
             <IconHeart className="size-3 stroke-white" />
           ) : (
-            <IconLoaderCircle className={`size-3 stroke-white animate-spin`} />
+            <IconHeart className="size-3 stroke-white fill-white " />
           )}
         </div>
       </Toggle.Root>
