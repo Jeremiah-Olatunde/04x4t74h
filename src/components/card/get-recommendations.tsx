@@ -2,10 +2,10 @@ import { Button } from "../button"
 
 export function GetRecommendations() {
   return (
-    <div className="rounded-xl p-5 bg-[#fffbed]">
+    <div className="rounded-xl p-5 border border-neutral-100 bg-[#fffbed]">
       <div className="flex gap-2">
         <div className="grow">
-          <h3 className="font-sora font-semibold text-black leading-none">
+          <h3 className="font-sora font-semibold text-neutral-700 leading-none">
             Need a <br />
             recommendation?
           </h3>
