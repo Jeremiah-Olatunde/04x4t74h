@@ -69,7 +69,7 @@ export function Button(props: ButtonProps | LinkProps) {
 
   return (
     <LinkWouter href={props.href} className="w-full">
-      <ButtonBase text={props.text} variant={props.variant} />
+      <ButtonBase text={props.text} variant={props.variant} size={props.size} />
     </LinkWouter>
   )
 }
