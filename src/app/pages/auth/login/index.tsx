@@ -34,6 +34,7 @@ export function Login() {
           <FormField>
             <FieldLabel text="email address" htmlFor="email" />
             <FieldInput
+              autoComplete="email"
               name="email"
               type="email"
               placeholder="example@email.com"
@@ -43,6 +44,7 @@ export function Login() {
           <FormField>
             <FieldLabel text="password" htmlFor="password" />
             <FieldInput
+              autoComplete="current-password"
               name="password"
               placeholder="Enter your password"
               type={passwordVisible ? "text" : "password"}

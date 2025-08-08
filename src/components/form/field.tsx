@@ -1,3 +1,4 @@
+import type { ReactNode } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import * as Array from "Array"
@@ -97,16 +98,18 @@ const defaultVariants = { variant: "neutral" } as const
 const styles = cva(base, { variants, defaultVariants })
 
 export function FieldInput({
+  autoComplete,
   name,
   type,
   placeholder,
   children,
   variant,
 }: {
+  autoComplete?: string
   name: string
   type: "text" | "email" | "password" | "tel"
   placeholder: string
-  children?: React.ReactNode
+  children?: ReactNode
   variant?: VariantProps<typeof styles>["variant"]
 }) {
   return (
@@ -114,6 +117,7 @@ export function FieldInput({
       <input
         id={name}
         name={name}
+        autoComplete={autoComplete}
         type={type}
         placeholder={placeholder}
         className="w-0 grow border-none font-sora text-xs text-neutral-600 outline-none placeholder:text-neutral-400"

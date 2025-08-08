@@ -1,5 +1,4 @@
-import type { ReactNode } from "react"
-import { Link as WouterLink } from "wouter"
+import type { PropsWithChildren } from "react"
 import { ChevronRight as IconChevronRight } from "lucide-react"
 
 import * as Array from "Array"
@@ -8,12 +7,21 @@ import * as Function from "Function"
 import { Icon } from "@/components/icon"
 
 import { type BusinessDetails, Business } from "./card"
+import { LinkBadge } from "../link"
 
-export function Root({ children }: { children: ReactNode }) {
+export function Root({ children }: PropsWithChildren<{}>) {
   return <section className="flex flex-col gap-4">{children}</section>
 }
 
-export function Title({ title }: { title: string }) {
+export function Header({ children }: PropsWithChildren<{}>) {
+  return (
+    <header className="flex justify-between items-center">{children}</header>
+  )
+}
+
+type TitleProps = Record<"title", string>
+
+export function Title({ title }: TitleProps) {
   return (
     <h2 className="capitalize font-sora text-neutral-700 font-medium ">
       {title}
@@ -21,17 +29,9 @@ export function Title({ title }: { title: string }) {
   )
 }
 
-export function Header({ children }: { children: ReactNode }) {
-  return (
-    <header className="flex justify-between items-center">{children}</header>
-  )
-}
+type SliderProps = Record<"businesses", readonly BusinessDetails[]>
 
-export function Slider({
-  businesses,
-}: {
-  businesses: readonly BusinessDetails[]
-}) {
+export function Slider({ businesses }: SliderProps) {
   return (
     <div className="flex gap-2 overflow-x-scroll no-scrollbar">
       {Function.pipe(
@@ -46,16 +46,21 @@ export function Slider({
   )
 }
 
-export function Link({ href }: { href: string }) {
+type LinkProps = Record<"href", string>
+export function Link({ href }: LinkProps) {
   return (
-    <WouterLink href={href}>
-      <div className="rounded-lg bg-neutral-100 p-2 flex justify-center items-center">
-        <Icon
-          size="sm"
-          icon={IconChevronRight}
-          label="see more budget friendly businesses"
-        />
-      </div>
-    </WouterLink>
+    <LinkBadge
+      color="neutral"
+      href={href}
+      shade="light"
+      shape="rounded"
+      size="md"
+    >
+      <Icon
+        size="sm"
+        icon={IconChevronRight}
+        label="see more budget friendly businesses"
+      />
+    </LinkBadge>
   )
 }

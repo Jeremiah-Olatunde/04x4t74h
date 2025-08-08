@@ -58,6 +58,7 @@ export function ResetPassword() {
               <FieldLabel text="Enter OTP" htmlFor="otp" />
             </div>
             <FieldInput
+              autoComplete="one-time-code"
               variant="neutral"
               name="otp"
               placeholder="Enter code"
@@ -70,7 +71,9 @@ export function ResetPassword() {
                 size="sm"
                 type="button"
                 handleClick={() => {}}
-              ></ButtonBadge>
+              >
+                Paste
+              </ButtonBadge>
             </FieldInput>
           </FormField>
 
@@ -80,6 +83,7 @@ export function ResetPassword() {
             </div>
 
             <FieldInput
+              autoComplete="new-password"
               variant="neutral"
               name="password"
               placeholder="Enter your password"
@@ -98,6 +102,7 @@ export function ResetPassword() {
             </div>
 
             <FieldInput
+              autoComplete="new-password"
               name="confirm-password"
               placeholder="Re-enter your password"
               variant="neutral"

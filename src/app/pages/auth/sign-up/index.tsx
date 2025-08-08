@@ -57,6 +57,7 @@ export function SignUp() {
                 <FormField>
                   <FieldLabel text="full name" htmlFor="email" />
                   <FieldInput
+                    autoComplete="name"
                     name="name"
                     type="text"
                     placeholder="Bola Ahmed Tinubu"
@@ -66,6 +67,7 @@ export function SignUp() {
                 <FormField>
                   <FieldLabel text="phone number" htmlFor="telephone" />
                   <FieldInput
+                    autoComplete="tel-national"
                     name="telephone"
                     type="tel"
                     placeholder="08178917635"
@@ -107,6 +109,7 @@ export function SignUp() {
                 <FormField>
                   <FieldLabel text="email address" htmlFor="email" />
                   <FieldInput
+                    autoComplete="email"
                     name="email"
                     type="email"
                     placeholder="example@email.com"
@@ -116,6 +119,7 @@ export function SignUp() {
                 <FormField>
                   <FieldLabel text="password" htmlFor="password" />
                   <FieldInput
+                    autoComplete="new-password"
                     name="password"
                     placeholder="Enter your password"
                     type={passwordVisible ? "text" : "password"}
@@ -133,6 +137,7 @@ export function SignUp() {
                     htmlFor="confirm-password"
                   />
                   <FieldInput
+                    autoComplete="new-password"
                     name="confirm-password"
                     placeholder="Re-enter your password"
                     type={passwordVisible ? "text" : "password"}
