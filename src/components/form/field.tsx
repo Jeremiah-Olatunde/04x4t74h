@@ -1,3 +1,5 @@
+import { cva, type VariantProps } from "class-variance-authority"
+
 import * as Array from "Array"
 import * as Function from "Function"
 
@@ -9,10 +11,11 @@ import {
   CircleCheck,
   CircleX as IconCircleX,
 } from "lucide-react"
-import { Badge } from "../badge"
-import { Icon } from "../icon"
+
 import { tw } from "@/utils/tailwind"
-import { cva, type VariantProps } from "class-variance-authority"
+
+import { Badge } from "@/components/badge"
+import { Icon } from "@/components/icon"
 
 export function FormField({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-2">{children}</div>
@@ -149,7 +152,9 @@ export function FieldErrors({ errors }: { errors: readonly string[] }) {
 function FieldErrorItem(error: string) {
   return (
     <li>
-      <Badge text={error} variant="red" />
+      <Badge color="red" shade="light" shape="pill" size="sm">
+        {error}
+      </Badge>
     </li>
   )
 }

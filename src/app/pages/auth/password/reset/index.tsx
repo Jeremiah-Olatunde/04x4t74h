@@ -1,23 +1,20 @@
 import { useState } from "react"
 import { Clock12 as IconClock12 } from "lucide-react"
+import { useLocation } from "wouter"
 
 import * as Boolean from "Boolean"
 
-import { FormHeader, Form, FormField, FormContainer } from "@/components/form"
-
+import { Icon } from "@/components/icon"
 import { Logo } from "@/components/logo"
-import { LinkPrimary } from "@/components/link"
+
 import {
-  FieldErrors,
   FieldInput,
   FieldLabel,
-  FieldStatus,
   TogglePasswordVisibility,
 } from "@/components/form/field"
-import { Badge } from "@/components/badge"
-import { Link, useLocation } from "wouter"
-import { Button } from "@/components/button"
-import { Icon } from "@/components/icon"
+import { FormHeader, Form, FormField, FormContainer } from "@/components/form"
+import { LinkBadge, LinkText } from "@/components/link"
+import { ButtonBadge } from "@/components/button"
 
 export function ResetPassword() {
   const [, setLocation] = useLocation()
@@ -41,9 +38,15 @@ export function ResetPassword() {
         </span>
         <div />
 
-        <Link href="/forgot">
-          <Badge text="Chage Email" variant="secondary" />
-        </Link>
+        <LinkBadge
+          color="yellow"
+          href="/forgot"
+          shade="dark"
+          shape="pill"
+          size="sm"
+        >
+          Change Email
+        </LinkBadge>
       </FormHeader>
 
       <div />
@@ -53,28 +56,31 @@ export function ResetPassword() {
           <FormField>
             <div className="flex items-center justify-start gap-2">
               <FieldLabel text="Enter OTP" htmlFor="otp" />
-              <FieldStatus status="warning" />
             </div>
             <FieldInput
-              variant="warning"
+              variant="neutral"
               name="otp"
               placeholder="Enter code"
               type="tel"
             >
-              <button type="button" className="cursor-pointer">
-                <Badge text="Paste" variant="neutral" />
-              </button>
+              <ButtonBadge
+                color="neutral"
+                shade="light"
+                shape="pill"
+                size="sm"
+                type="button"
+                handleClick={() => {}}
+              ></ButtonBadge>
             </FieldInput>
           </FormField>
 
           <FormField>
             <div className="flex items-center justify-start gap-2">
               <FieldLabel text="password" htmlFor="password" />
-              <FieldStatus status="failure" />
             </div>
 
             <FieldInput
-              variant="failure"
+              variant="neutral"
               name="password"
               placeholder="Enter your password"
               type={passwordVisible ? "text" : "password"}
@@ -84,25 +90,17 @@ export function ResetPassword() {
                 handleClick={() => setPasswordVisible(Boolean.invert)}
               />
             </FieldInput>
-            <FieldErrors
-              errors={[
-                "must have more than 5 characters",
-                "must have a symbol",
-                "must have a letter",
-              ]}
-            />
           </FormField>
 
           <FormField>
             <div className="flex items-center justify-start gap-2">
               <FieldLabel text="confirm password" htmlFor="confirm-password" />
-              <FieldStatus status="success" />
             </div>
 
             <FieldInput
               name="confirm-password"
               placeholder="Re-enter your password"
-              variant="success"
+              variant="neutral"
               type={passwordVisible ? "text" : "password"}
             >
               <TogglePasswordVisibility
@@ -113,22 +111,24 @@ export function ResetPassword() {
           </FormField>
 
           <div className="flex flex-col gap-4">
-            <Button
-              tag="button"
+            <ButtonBadge
+              color="purple"
+              shape="rounded"
+              shade="dark"
+              size="lg"
               type="submit"
-              text="Reset Password"
-              variant="primary"
               handleClick={() => setLocation("~/auth/login")}
-            />
+            >
+              Reset Password
+            </ButtonBadge>
 
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-between gap-1">
                 <span className="font-sora text-xs text-neutral-400">
                   Didn't recieve an OTP?
                 </span>
-                <Link href="/forgot">
-                  <LinkPrimary text="Resend it" />
-                </Link>
+
+                <LinkText href="/forgot">Resend it</LinkText>
               </div>
 
               <div className="flex items-center justify-between gap-1">

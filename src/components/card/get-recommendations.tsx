@@ -1,4 +1,4 @@
-import { Button } from "../button"
+import { LinkBadge } from "@/components/link"
 
 export function GetRecommendations() {
   return (
@@ -29,13 +29,15 @@ export function GetRecommendations() {
 
       <div className="h-4" />
 
-      <Button
-        tag="link"
-        variant="yellow"
-        size="sm"
+      <LinkBadge
+        color="yellow"
+        size="md"
+        shade="dark"
+        shape="rounded"
         href="/recommendations"
-        text="Get a recommendation"
-      />
+      >
+        Get a recommendation
+      </LinkBadge>
     </div>
   )
 }

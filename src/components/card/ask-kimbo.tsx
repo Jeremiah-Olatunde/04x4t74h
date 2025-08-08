@@ -1,4 +1,4 @@
-import { Button } from "../button"
+import { LinkBadge } from "@/components/link"
 
 export function AskKimbo() {
   return (
@@ -18,13 +18,15 @@ export function AskKimbo() {
 
         <div className="h-2" />
 
-        <Button
-          tag="link"
-          variant="yellow"
-          size="sm"
+        <LinkBadge
+          color="yellow"
           href="/recommendations"
-          text="Get a recommendation"
-        />
+          shape="rounded"
+          shade="dark"
+          size="sm"
+        >
+          Get a recommendation
+        </LinkBadge>
       </div>
 
       <div className="basis-1/3 flex justify-center items-center">

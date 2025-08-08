@@ -1,11 +1,11 @@
 import { Route, Switch } from "wouter"
 
 import { Home } from "./pages/home"
+import { Command } from "./pages/command"
 import { Login } from "./pages/auth/login"
 import { SignUp } from "./pages/auth/sign-up"
 import { ResetPassword } from "./pages/auth/password/reset"
 import { ForgotPassword } from "./pages/auth/password/forgot"
-import { Command } from "./pages/command"
 
 export function Router() {
   return (

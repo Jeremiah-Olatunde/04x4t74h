@@ -33,7 +33,9 @@ export function ForgotPassword() {
               placeholder="example@gmail.com"
             >
               <Link href="/reset" className="cursor-pointer">
-                <Badge text="Send Token" variant="primary" />
+                <Badge color="purple" shade="light" shape="pill" size="sm">
+                  Send Token
+                </Badge>
               </Link>
             </FieldInput>
           </FormField>

@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Link } from "wouter"
 import { Tabs } from "radix-ui"
 
 import * as Boolean from "Boolean"
@@ -13,9 +12,9 @@ import {
   TogglePasswordVisibility,
   FormContainer,
 } from "@/components/form"
-import { LinkPrimary } from "@/components/link"
 import { Logo } from "@/components/logo"
-import { Button } from "@/components/button"
+import { LinkText } from "@/components/link"
+import { ButtonBadge } from "@/components/button"
 import { FlagNg } from "@/assets/icons/flag-ng"
 
 export function SignUp() {
@@ -82,21 +81,23 @@ export function SignUp() {
                   </FieldInput>
                 </FormField>
 
-                <Button
-                  tag="button"
+                <ButtonBadge
+                  color="purple"
+                  shade="dark"
+                  shape="rounded"
+                  size="lg"
                   type="button"
-                  text="Next"
-                  variant="primary"
                   handleClick={() => setStage("details-account")}
-                />
+                >
+                  Next
+                </ButtonBadge>
 
                 <div className="flex items-center justify-center gap-1">
                   <span className="font-sora text-xs text-neutral-400">
                     Already have an account?
                   </span>
-                  <Link href="/login">
-                    <LinkPrimary text="Login" />
-                  </Link>
+
+                  <LinkText href="/login"> Login </LinkText>
                 </div>
               </FormContainer>
             </Tabs.Content>
@@ -144,29 +145,35 @@ export function SignUp() {
                 </FormField>
 
                 <div className="flex gap-2">
-                  <Button
-                    tag="button"
-                    type="submit"
-                    text="Back"
-                    variant="secondary"
+                  <ButtonBadge
+                    type="button"
+                    color="neutral"
+                    size="lg"
+                    shade="light"
+                    shape="rounded"
                     handleClick={() => setStage("details-personal")}
-                  />
-                  <Button
-                    tag="button"
+                  >
+                    Back
+                  </ButtonBadge>
+
+                  <ButtonBadge
                     type="submit"
-                    text="Submit"
-                    variant="primary"
+                    color="purple"
+                    size="lg"
+                    shade="dark"
+                    shape="rounded"
                     handleClick={() => {}}
-                  />
+                  >
+                    Submit
+                  </ButtonBadge>
                 </div>
 
                 <div className="flex items-center justify-center gap-1">
                   <span className="font-sora text-xs text-neutral-400">
                     Already have an account?
                   </span>
-                  <Link href="/login">
-                    <LinkPrimary text="Login" />
-                  </Link>
+
+                  <LinkText href="/login">Login</LinkText>
                 </div>
               </FormContainer>
             </Tabs.Content>

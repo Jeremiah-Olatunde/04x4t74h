@@ -1,8 +1,8 @@
 import { Search as IconSearch } from "lucide-react"
 
-import { Button } from "@/components/button"
 import { Icon } from "@/components/icon"
 import { Logo } from "@/components/logo"
+import { LinkBadge } from "@/components/link"
 
 export function Hero() {
   return (
@@ -37,13 +37,15 @@ export function Hero() {
 
       <div className="flex gap-2 items-center">
         <div className="basis-2/5">
-          <Button
-            tag="link"
-            variant="yellow"
-            size="sm"
-            text="Get Started"
+          <LinkBadge
+            color="yellow"
             href="/auth/sign-up"
-          />
+            shape="rounded"
+            shade="dark"
+            size="md"
+          >
+            Get Started
+          </LinkBadge>
         </div>
 
         <button

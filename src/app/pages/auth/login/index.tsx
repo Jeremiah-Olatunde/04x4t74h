@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Link } from "wouter"
 
 import * as Boolean from "Boolean"
 
@@ -12,9 +11,9 @@ import {
   TogglePasswordVisibility,
   FormContainer,
 } from "@/components/form"
-import { LinkPrimary } from "@/components/link"
 import { Logo } from "@/components/logo"
-import { Button } from "@/components/button"
+import { LinkText } from "@/components/link"
+import { ButtonBadge } from "@/components/button"
 
 export function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -53,28 +52,29 @@ export function Login() {
                 handleClick={() => setPasswordVisible(Boolean.invert)}
               />
             </FieldInput>
+
             <div className="flex justify-end">
-              <Link href="/password/forgot">
-                <LinkPrimary text="Forgot Password?" />
-              </Link>
+              <LinkText href="/password/forgot">Forgot Password?</LinkText>
             </div>
           </FormField>
 
-          <Button
-            tag="button"
-            text="Log In"
-            variant="primary"
+          <ButtonBadge
+            color="purple"
+            shape="rounded"
+            shade="dark"
+            size="lg"
             type="submit"
             handleClick={() => {}}
-          />
+          >
+            Submit
+          </ButtonBadge>
 
           <div className="flex items-center justify-center gap-1">
             <span className="font-sora text-xs text-neutral-400">
               Don't have an account?
             </span>
-            <Link href="/sign-up">
-              <LinkPrimary text="Sign Up" />
-            </Link>
+
+            <LinkText href="/sign-up">Sign Up</LinkText>
           </div>
         </FormContainer>
       </Form>
