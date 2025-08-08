@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react"
 import { Link as LinkWouter } from "wouter"
 
-import { Badge, type BadgeVariantsProps } from "../badge"
+import { Badge, type BadgeVariantProps } from "../badge"
 
 type LinkTextProps = Record<"children" | "href", string>
 
@@ -24,7 +24,7 @@ export function LinkBadge({
   shade,
   shape,
   size,
-}: PropsWithChildren<LinkBadgeProps & BadgeVariantsProps>) {
+}: PropsWithChildren<LinkBadgeProps & BadgeVariantProps>) {
   return (
     <LinkWouter href={href} className="cursor-pointer">
       <Badge color={color} shape={shape} shade={shade} size={size}>

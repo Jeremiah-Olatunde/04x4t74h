@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react"
-import { Badge, type BadgeVariantsProps } from "../badge"
+import { Badge, type BadgeVariantProps } from "../badge"
 
 type ButtonBadgeProps = {
   type: "submit" | "button"
@@ -14,7 +14,7 @@ export function ButtonBadge({
   size,
   type,
   handleClick,
-}: PropsWithChildren<ButtonBadgeProps & BadgeVariantsProps>) {
+}: PropsWithChildren<ButtonBadgeProps & BadgeVariantProps>) {
   return (
     <button type={type} onClick={handleClick} className="w-full cursor-pointer">
       <Badge color={color} shade={shade} shape={shape} size={size}>

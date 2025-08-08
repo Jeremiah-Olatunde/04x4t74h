@@ -59,7 +59,7 @@ export function ResetPassword() {
             </div>
             <FieldInput
               autoComplete="one-time-code"
-              variant="neutral"
+              color="neutral"
               name="otp"
               placeholder="Enter code"
               type="tel"
@@ -84,7 +84,7 @@ export function ResetPassword() {
 
             <FieldInput
               autoComplete="new-password"
-              variant="neutral"
+              color="neutral"
               name="password"
               placeholder="Enter your password"
               type={passwordVisible ? "text" : "password"}
@@ -103,9 +103,9 @@ export function ResetPassword() {
 
             <FieldInput
               autoComplete="new-password"
+              color="neutral"
               name="confirm-password"
               placeholder="Re-enter your password"
-              variant="neutral"
               type={passwordVisible ? "text" : "password"}
             >
               <TogglePasswordVisibility
@@ -137,7 +137,12 @@ export function ResetPassword() {
               </div>
 
               <div className="flex items-center justify-between gap-1">
-                <Icon icon={IconClock12} label="otp resend countdown" />
+                <Icon
+                  color="neutral"
+                  size="md"
+                  icon={IconClock12}
+                  label="otp resend countdown"
+                />
                 <span className="font-sora text-xs font-semibold text-primary">
                   45s
                 </span>

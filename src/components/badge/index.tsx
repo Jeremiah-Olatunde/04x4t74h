@@ -86,14 +86,14 @@ const compoundVariants = [
 
 const badge = cva(base, { variants, compoundVariants })
 type Variants = VariantProps<typeof badge>
-export type BadgeVariantsProps = {
+export type BadgeVariantProps = {
   size: NonNullable<Variants["size"]>
   shape: NonNullable<Variants["shape"]>
   shade: NonNullable<Variants["shade"]>
   color: NonNullable<Variants["color"]>
 }
 
-type Props = PropsWithChildren<BadgeVariantsProps>
+type Props = PropsWithChildren<BadgeVariantProps>
 
 export function Badge({ children, color, shape, shade, size }: Props) {
   return <div className={badge({ color, shape, shade, size })}>{children}</div>

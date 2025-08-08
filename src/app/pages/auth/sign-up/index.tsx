@@ -58,9 +58,10 @@ export function SignUp() {
                   <FieldLabel text="full name" htmlFor="email" />
                   <FieldInput
                     autoComplete="name"
+                    color="neutral"
                     name="name"
                     type="text"
-                    placeholder="Bola Ahmed Tinubu"
+                    placeholder="Enter your name"
                   />
                 </FormField>
 
@@ -68,17 +69,13 @@ export function SignUp() {
                   <FieldLabel text="phone number" htmlFor="telephone" />
                   <FieldInput
                     autoComplete="tel-national"
+                    color="neutral"
                     name="telephone"
                     type="tel"
-                    placeholder="08178917635"
+                    placeholder="Enter your phone number"
                   >
-                    <div className="relative">
-                      <button
-                        type="button"
-                        className="absolute right-0 -translate-y-1/2 cursor-pointer rounded-sm bg-neutral-200 px-1.5 py-0.5"
-                      >
-                        <FlagNg className="size-6" />
-                      </button>
+                    <div className="cursor-pointer rounded-sm bg-neutral-200 px-1.5 py-0.5">
+                      <FlagNg className="size-6" />
                     </div>
                   </FieldInput>
                 </FormField>
@@ -110,9 +107,10 @@ export function SignUp() {
                   <FieldLabel text="email address" htmlFor="email" />
                   <FieldInput
                     autoComplete="email"
+                    color="neutral"
                     name="email"
                     type="email"
-                    placeholder="example@email.com"
+                    placeholder="Enter your email address"
                   />
                 </FormField>
 
@@ -120,6 +118,7 @@ export function SignUp() {
                   <FieldLabel text="password" htmlFor="password" />
                   <FieldInput
                     autoComplete="new-password"
+                    color="neutral"
                     name="password"
                     placeholder="Enter your password"
                     type={passwordVisible ? "text" : "password"}
@@ -138,6 +137,7 @@ export function SignUp() {
                   />
                   <FieldInput
                     autoComplete="new-password"
+                    color="neutral"
                     name="confirm-password"
                     placeholder="Re-enter your password"
                     type={passwordVisible ? "text" : "password"}

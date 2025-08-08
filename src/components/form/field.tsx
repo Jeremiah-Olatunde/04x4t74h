@@ -1,4 +1,4 @@
-import type { ReactNode } from "react"
+import type { PropsWithChildren } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import * as Array from "Array"
@@ -18,17 +18,13 @@ import { tw } from "@/utils/tailwind"
 import { Badge } from "@/components/badge"
 import { Icon } from "@/components/icon"
 
-export function FormField({ children }: { children: React.ReactNode }) {
+export function FormField({ children }: PropsWithChildren<{}>) {
   return <div className="flex flex-col gap-2">{children}</div>
 }
 
-export function FieldLabel({
-  htmlFor,
-  text,
-}: {
-  htmlFor: string
-  text: string
-}) {
+type FieldLabelProps = Record<"htmlFor" | "text", string>
+
+export function FieldLabel({ htmlFor, text }: FieldLabelProps) {
   return (
     <label htmlFor={htmlFor} className="justifi-center flex items-center">
       <span className="font-sora text-xs font-medium capitalize">{text}</span>
@@ -36,19 +32,18 @@ export function FieldLabel({
   )
 }
 
-export function FieldStatus({
-  status,
-}: {
-  status: "failure" | "success" | "pending" | "warning"
-}) {
+type FieldStatusStatus = "failure" | "success" | "pending" | "warning"
+type FieldStatusProps = Record<"status", FieldStatusStatus>
+
+export function FieldStatus({ status }: FieldStatusProps) {
   switch (status) {
     case "warning":
       return (
         <Icon
           size="sm"
           icon={IconCircleAlert}
-          label="field validation failed"
-          variant="secondary"
+          label="field validation warning"
+          color="yellow"
         />
       )
     case "failure":
@@ -57,7 +52,7 @@ export function FieldStatus({
           size="sm"
           icon={IconCircleX}
           label="field validation failed"
-          variant="red"
+          color="red"
         />
       )
     case "success":
@@ -66,7 +61,7 @@ export function FieldStatus({
           size="sm"
           icon={CircleCheck}
           label="field validation succeeded"
-          variant="green"
+          color="green"
         />
       )
     case "pending":
@@ -76,26 +71,34 @@ export function FieldStatus({
             size="sm"
             icon={IconLoaderCircle}
             label="field validation in progress"
-            variant="neutral"
+            color="neutral"
           />
         </div>
       )
   }
 }
 
-const base = tw`flex justify-center gap-2 rounded-xl border-1 p-4 outline-2 transition has-focus:shadow-md/10`
+const base = tw`flex justify-center gap-2 rounded-xl border-1  outline-2 transition has-focus:shadow-md/10`
 const neutral = tw`border-neutral-200 outline-transparent has-focus:border-neutral-400 has-focus:outline-primary`
-const failure = tw`border-red-300 outline-transparent has-focus:outline-red-600`
-const success = tw`border-green-300 outline-transparent has-focus:border-neutral-400 has-focus:outline-green-600`
-const warning = tw`border-secondary outline-transparent has-focus:border-neutral-400 has-focus:outline-secondary`
+const red = tw`border-red-300 outline-transparent has-focus:outline-red-600`
+const green = tw`border-green-300 outline-transparent has-focus:border-neutral-400 has-focus:outline-green-600`
+const yellow = tw`border-secondary outline-transparent has-focus:border-neutral-400 has-focus:outline-secondary`
 
 const variants = {
-  variant: { neutral, failure, success, warning },
+  color: { neutral, red, green, yellow },
 } as const
 
-const defaultVariants = { variant: "neutral" } as const
-
-const styles = cva(base, { variants, defaultVariants })
+const styles = cva(base, { variants })
+type Variants = VariantProps<typeof styles>
+type FieldInputVariantProps = {
+  color: NonNullable<Variants["color"]>
+}
+type FieldInputProps = {
+  autoComplete: string
+  name: string
+  placeholder: string
+  type: "text" | "email" | "password" | "tel"
+}
 
 export function FieldInput({
   autoComplete,
@@ -103,49 +106,56 @@ export function FieldInput({
   type,
   placeholder,
   children,
-  variant,
-}: {
-  autoComplete?: string
-  name: string
-  type: "text" | "email" | "password" | "tel"
-  placeholder: string
-  children?: ReactNode
-  variant?: VariantProps<typeof styles>["variant"]
-}) {
+  color,
+}: PropsWithChildren<FieldInputProps & FieldInputVariantProps>) {
   return (
-    <div className={styles({ variant })}>
+    <div className={styles({ color })}>
       <input
         id={name}
         name={name}
         autoComplete={autoComplete}
         type={type}
         placeholder={placeholder}
-        className="w-0 grow border-none font-sora text-xs text-neutral-600 outline-none placeholder:text-neutral-400"
+        className="w-0 p-4 grow border-none font-sora text-xs text-neutral-600 outline-none placeholder:text-neutral-400"
       />
-      <div className="flex items-center justify-center gap-1">{children}</div>
+      <div className="px-4 flex items-center justify-center">{children}</div>
     </div>
   )
+}
+
+type TogglePasswordVisibilityProps = {
+  visible: boolean
+  handleClick: () => void
 }
 
 export function TogglePasswordVisibility({
   visible,
   handleClick,
-}: {
-  visible: boolean
-  handleClick: () => void
-}) {
+}: TogglePasswordVisibilityProps) {
   return (
     <button type="button" onClick={handleClick} className="cursor-pointer">
       {visible ? (
-        <Icon icon={IconEye} label="toggle password" />
+        <Icon
+          color="neutral"
+          icon={IconEye}
+          label="toggle password"
+          size="md"
+        />
       ) : (
-        <Icon icon={IconEyeOff} label="toggle password" />
+        <Icon
+          color="neutral"
+          icon={IconEyeOff}
+          label="toggle password"
+          size="md"
+        />
       )}
     </button>
   )
 }
 
-export function FieldErrors({ errors }: { errors: readonly string[] }) {
+type FieldErrorsProps = Record<"errors", readonly string[]>
+
+export function FieldErrors({ errors }: FieldErrorsProps) {
   return (
     <ul className="flex flex-row flex-wrap gap-2">
       {Function.pipe(errors, Array.map(FieldErrorItem))}

@@ -57,9 +57,10 @@ export function Link({ href }: LinkProps) {
       size="md"
     >
       <Icon
-        size="sm"
+        color="neutral"
         icon={IconChevronRight}
         label="see more budget friendly businesses"
+        size="sm"
       />
     </LinkBadge>
   )

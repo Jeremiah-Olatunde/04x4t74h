@@ -29,6 +29,7 @@ export function ForgotPassword() {
             <FieldLabel text="email address" htmlFor="email" />
             <FieldInput
               autoComplete="email"
+              color="neutral"
               name="email"
               type="email"
               placeholder="example@gmail.com"
