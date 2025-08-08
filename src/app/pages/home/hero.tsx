@@ -8,7 +8,7 @@ export function Hero() {
   return (
     <header className="rounded-b-2xl bg-[url(/images/bg-guest.png)] bg-cover p-6">
       <div>
-        <Logo variant="white" size="sm" />
+        <Logo color="white" size="sm" />
       </div>
 
       <div className="h-4" />

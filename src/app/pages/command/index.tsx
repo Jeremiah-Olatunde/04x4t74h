@@ -4,7 +4,7 @@ export function Command() {
   return (
     <section className="flex flex-col gap-4 p-6">
       <div className="flex">
-        <Logo />
+        <Logo size="lg" color="purple" />
       </div>
       <div className="h-2" />
       <header className="flex flex-col gap-2">

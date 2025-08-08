@@ -20,7 +20,7 @@ export function Login() {
 
   return (
     <section className="flex flex-col gap-4 px-6 py-8">
-      <Logo />
+      <Logo size="lg" color="purple" />
 
       <div className="h-8" />
 

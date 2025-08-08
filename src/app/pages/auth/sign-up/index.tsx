@@ -23,7 +23,7 @@ export function SignUp() {
 
   return (
     <section className="flex flex-col gap-4 px-6 py-8">
-      <Logo />
+      <Logo color="purple" size="lg" />
 
       <div className="h-8" />
 
@@ -55,7 +55,7 @@ export function SignUp() {
             <Tabs.Content value="details-personal">
               <FormContainer>
                 <FormField>
-                  <FieldLabel text="full name" htmlFor="email" />
+                  <FieldLabel text="full name" htmlFor="name" />
                   <FieldInput
                     autoComplete="name"
                     color="neutral"

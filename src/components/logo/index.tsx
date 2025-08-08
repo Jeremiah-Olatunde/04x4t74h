@@ -11,17 +11,16 @@ const text = (function () {
   const white = tw`text-white`
   const primary = purple
 
-  const variant = { purple, white, primary } as const
+  const color = { purple, white, primary } as const
 
   const sm = tw``
   const lg = tw`text-3xl`
 
   const size = { sm, lg } as const
 
-  const variants = { variant, size } as const
-  const defaultVariants = { size: "lg", variant: "primary" } as const
+  const variants = { color, size } as const
 
-  return cva(base, { variants, defaultVariants })
+  return cva(base, { variants })
 })()
 
 const image = (function () {
@@ -31,25 +30,24 @@ const image = (function () {
   const lg = tw`size-8`
 
   const variants = { size: { sm, lg } } as const
-  const defaultVariants = { size: "lg" } as const
 
-  return cva(base, { variants, defaultVariants })
+  return cva(base, { variants })
 })()
 
 export function Logo({
   size,
-  variant,
+  color,
 }: {
-  size?: "sm" | "lg"
-  variant?: "purple" | "primary" | "white"
+  size: "sm" | "lg"
+  color: "purple" | "primary" | "white"
 }) {
   return (
     <div className="w-min-content flex flex-row items-center justify-center">
       <img
-        src={variant === "white" ? logoWhite : logoPrimary}
+        src={color === "white" ? logoWhite : logoPrimary}
         className={image({ size })}
       />
-      <span className={text({ variant, size })}>plazzaa</span>
+      <span className={text({ color, size })}>plazzaa</span>
     </div>
   )
 }
