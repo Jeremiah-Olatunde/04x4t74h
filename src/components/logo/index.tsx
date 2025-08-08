@@ -3,6 +3,7 @@ import { cva } from "class-variance-authority"
 import logoPrimary from "@/assets/icons/logo-primary.svg"
 import logoWhite from "@/assets/icons/logo-white.svg"
 import { tw } from "@/utils/tailwind"
+import { Link as LinkWouter } from "wouter"
 
 const text = (function () {
   const base = tw`font-fredoka font-semibold capitalize`
@@ -42,12 +43,15 @@ export function Logo({
   color: "purple" | "primary" | "white"
 }) {
   return (
-    <div className="w-min-content flex flex-row items-center justify-center">
+    <LinkWouter
+      href="~/home"
+      className="w-min-content flex flex-row items-center justify-center"
+    >
       <img
         src={color === "white" ? logoWhite : logoPrimary}
         className={image({ size })}
       />
       <span className={text({ color, size })}>plazzaa</span>
-    </div>
+    </LinkWouter>
   )
 }
