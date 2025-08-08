@@ -6,9 +6,9 @@ const cvaContainer = (function () {
   const base = tw`flex items-center justify-center rounded-s-full rounded-e-full px-3 py-1`
   const primary = tw`bg-primary/10`
   const secondary = tw`bg-secondary`
-  const neutral = tw`bg-neutral-100`
-  const red = tw`bg-red-100`
-  const green = tw`bg-green-100`
+  const neutral = tw`bg-neutral-50`
+  const red = tw`bg-red-50`
+  const green = tw`bg-green-50`
 
   const variants = {
     variant: { primary, secondary, neutral, red, green },
