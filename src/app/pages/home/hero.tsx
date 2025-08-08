@@ -4,7 +4,7 @@ import { Button } from "@/components/button"
 import { Icon } from "@/components/icon"
 import { Logo } from "@/components/logo"
 
-export function Header() {
+export function Hero() {
   return (
     <header className="rounded-b-2xl bg-[url(/images/bg-guest.png)] bg-cover p-6">
       <div>
