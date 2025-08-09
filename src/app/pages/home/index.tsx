@@ -22,7 +22,7 @@ export function Home() {
             const adjective = faker.company.buzzAdjective()
             const noun = faker.company.buzzNoun()
             const tag = `${adjective} ${noun}`
-            const businesses = Array.makeBy(3, mockBusiness)
+            const businesses = Array.makeBy(10, mockBusiness)
 
             return (
               <BusinessList.Root key={index}>

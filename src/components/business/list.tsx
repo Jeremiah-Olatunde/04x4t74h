@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react"
 import { ChevronRight as IconChevronRight } from "lucide-react"
+import { ScrollArea } from "@base-ui-components/react/scroll-area"
 
 import * as Array from "Array"
 import * as Function from "Function"
@@ -33,16 +34,20 @@ type SliderProps = Record<"businesses", readonly BusinessDetails[]>
 
 export function Slider({ businesses }: SliderProps) {
   return (
-    <div className="flex gap-2 overflow-x-scroll no-scrollbar">
-      {Function.pipe(
-        businesses,
-        Array.map((business) => (
-          <div key={business.id} className="w-60 shrink-0">
-            <Business details={business} />
-          </div>
-        )),
-      )}
-    </div>
+    <ScrollArea.Root>
+      <ScrollArea.Viewport className="snap-x snap-mandatory flex gap-2 overflow-x-scroll no-scrollbar">
+        <ScrollArea.Content className="contents">
+          {Function.pipe(
+            businesses,
+            Array.map((business) => (
+              <div key={business.id} className="snap-start w-60 shrink-0">
+                <Business details={business} />
+              </div>
+            )),
+          )}
+        </ScrollArea.Content>
+      </ScrollArea.Viewport>
+    </ScrollArea.Root>
   )
 }
 
