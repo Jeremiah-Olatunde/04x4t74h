@@ -38,41 +38,15 @@ type FieldStatusProps = Record<"status", FieldStatusStatus>
 export function FieldStatus({ status }: FieldStatusProps) {
   switch (status) {
     case "warning":
-      return (
-        <Icon
-          size="sm"
-          icon={IconCircleAlert}
-          label="field validation warning"
-          color="yellow"
-        />
-      )
+      return <Icon size="sm" icon={IconCircleAlert} color="yellow" />
     case "failure":
-      return (
-        <Icon
-          size="sm"
-          icon={IconCircleX}
-          label="field validation failed"
-          color="red"
-        />
-      )
+      return <Icon size="sm" icon={IconCircleX} color="red" />
     case "success":
-      return (
-        <Icon
-          size="sm"
-          icon={CircleCheck}
-          label="field validation succeeded"
-          color="green"
-        />
-      )
+      return <Icon size="sm" icon={CircleCheck} color="green" />
     case "pending":
       return (
         <div className="animate-spin">
-          <Icon
-            size="sm"
-            icon={IconLoaderCircle}
-            label="field validation in progress"
-            color="neutral"
-          />
+          <Icon size="sm" icon={IconLoaderCircle} color="neutral" />
         </div>
       )
   }
@@ -135,19 +109,9 @@ export function TogglePasswordVisibility({
   return (
     <button type="button" onClick={handleClick} className="cursor-pointer">
       {visible ? (
-        <Icon
-          color="neutral"
-          icon={IconEye}
-          label="toggle password"
-          size="md"
-        />
+        <Icon color="neutral" icon={IconEye} size="md" />
       ) : (
-        <Icon
-          color="neutral"
-          icon={IconEyeOff}
-          label="toggle password"
-          size="md"
-        />
+        <Icon color="neutral" icon={IconEyeOff} size="md" />
       )}
     </button>
   )

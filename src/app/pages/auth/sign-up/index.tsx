@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Tabs } from "radix-ui"
+import { Tabs } from "@base-ui-components/react/tabs"
 
 import * as Boolean from "Boolean"
 
@@ -34,25 +34,25 @@ export function SignUp() {
           <div className="flex flex-col gap-8">
             <Tabs.List aria-label="create an account">
               <div className="grid grid-cols-2 gap-2">
-                <Tabs.Trigger value="details-personal">
+                <Tabs.Tab value="details-personal">
                   <ButtonStage
                     active={stage === "details-personal"}
                     stage={1}
                     text="Personal Details"
                   />
-                </Tabs.Trigger>
+                </Tabs.Tab>
 
-                <Tabs.Trigger value="details-account">
+                <Tabs.Tab value="details-account">
                   <ButtonStage
                     active={stage === "details-account"}
                     stage={2}
                     text="Account Details"
                   />
-                </Tabs.Trigger>
+                </Tabs.Tab>
               </div>
             </Tabs.List>
 
-            <Tabs.Content value="details-personal">
+            <Tabs.Panel value="details-personal">
               <FormContainer>
                 <FormField>
                   <FieldLabel text="full name" htmlFor="name" />
@@ -99,9 +99,9 @@ export function SignUp() {
                   <LinkText href="/login"> Login </LinkText>
                 </div>
               </FormContainer>
-            </Tabs.Content>
+            </Tabs.Panel>
 
-            <Tabs.Content value="details-account">
+            <Tabs.Panel value="details-account">
               <FormContainer>
                 <FormField>
                   <FieldLabel text="email address" htmlFor="email" />
@@ -181,7 +181,7 @@ export function SignUp() {
                   <LinkText href="/login">Login</LinkText>
                 </div>
               </FormContainer>
-            </Tabs.Content>
+            </Tabs.Panel>
           </div>
         </Tabs.Root>
       </Form>

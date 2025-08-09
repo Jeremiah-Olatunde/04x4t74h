@@ -2,7 +2,6 @@ import { tw } from "@/utils/tailwind"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { type LucideIcon } from "lucide-react"
-import { AccessibleIcon } from "radix-ui"
 
 const base = tw``
 
@@ -29,12 +28,8 @@ type IconVariantProps = {
   size: NonNullable<Variants["size"]>
 }
 
-type IconProps = { icon: LucideIcon; label: string } & IconVariantProps
+type IconProps = { icon: LucideIcon } & IconVariantProps
 
-export function Icon({ icon: Icon, label, color, size }: IconProps) {
-  return (
-    <AccessibleIcon.Root label={label}>
-      <Icon className={styles({ color, size })} />
-    </AccessibleIcon.Root>
-  )
+export function Icon({ icon: Icon, color, size }: IconProps) {
+  return <Icon className={styles({ color, size })} />
 }

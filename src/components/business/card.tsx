@@ -72,12 +72,7 @@ function Button() {
 function Address({ town, city }: { town: string; city: string }) {
   return (
     <address className="flex justify-start items-center gap-1">
-      <Icon
-        color="neutral"
-        icon={IconMapPin}
-        label="business location"
-        size="xs"
-      />
+      <Icon color="neutral" icon={IconMapPin} size="xs" />
       <span className="font-sora text-xxs text-neutral-400 font-light not-italic">
         {town}, {city}
       </span>

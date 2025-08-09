@@ -52,12 +52,7 @@ export function Hero() {
           type="button"
           className="bg-white cursor-pointer basis-3/5 p-2 gap-2 rounded-md flex items-center"
         >
-          <Icon
-            color="neutral"
-            icon={IconSearch}
-            label="search plazzaa"
-            size="sm"
-          />
+          <Icon color="neutral" icon={IconSearch} size="sm" />
           <span className="text-xxs text-neutral-400 font-sora">
             Search Plazzaa...
           </span>

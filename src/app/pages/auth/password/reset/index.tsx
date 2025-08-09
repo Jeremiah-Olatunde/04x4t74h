@@ -137,12 +137,7 @@ export function ResetPassword() {
               </div>
 
               <div className="flex items-center justify-between gap-1">
-                <Icon
-                  color="neutral"
-                  size="md"
-                  icon={IconClock12}
-                  label="otp resend countdown"
-                />
+                <Icon color="neutral" size="md" icon={IconClock12} />
                 <span className="font-sora text-xs font-semibold text-primary">
                   45s
                 </span>
