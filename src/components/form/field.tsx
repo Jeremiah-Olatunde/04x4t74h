@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+import { Input } from "@base-ui-components/react/input"
 
 import * as Array from "Array"
 import * as Function from "Function"
@@ -32,11 +33,11 @@ export function FieldLabel({ htmlFor, text }: FieldLabelProps) {
   )
 }
 
-type FieldStatusStatus = "failure" | "success" | "pending" | "warning"
-type FieldStatusProps = Record<"status", FieldStatusStatus>
+type FieldIndicatorState = "failure" | "success" | "pending" | "warning"
+type FieldIndicatorProps = Record<"state", FieldIndicatorState>
 
-export function FieldStatus({ status }: FieldStatusProps) {
-  switch (status) {
+export function FieldIndicator({ state }: FieldIndicatorProps) {
+  switch (state) {
     case "warning":
       return <Icon size="sm" icon={IconCircleAlert} color="yellow" />
     case "failure":
@@ -84,7 +85,7 @@ export function FieldInput({
 }: PropsWithChildren<FieldInputProps & FieldInputVariantProps>) {
   return (
     <div className={styles({ color })}>
-      <input
+      <Input
         id={name}
         name={name}
         autoComplete={autoComplete}
