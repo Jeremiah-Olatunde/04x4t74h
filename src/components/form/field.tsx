@@ -92,7 +92,9 @@ export function FieldInput({
         placeholder={placeholder}
         className="w-0 p-4 grow border-none font-sora text-xs text-neutral-600 outline-none placeholder:text-neutral-400"
       />
-      <div className="px-4 flex items-center justify-center">{children}</div>
+      {children && (
+        <div className="px-4 flex items-center justify-center">{children}</div>
+      )}
     </div>
   )
 }
