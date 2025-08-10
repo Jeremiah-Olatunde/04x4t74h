@@ -26,7 +26,7 @@ type FieldLabelProps = Record<"htmlFor" | "text", string>
 
 export function FieldLabel({ htmlFor, text }: FieldLabelProps) {
   return (
-    <label htmlFor={htmlFor} className="justifi-center flex items-center">
+    <label htmlFor={htmlFor} className="justify-start flex items-center">
       <span className="font-sora text-xs font-medium capitalize">{text}</span>
     </label>
   )
