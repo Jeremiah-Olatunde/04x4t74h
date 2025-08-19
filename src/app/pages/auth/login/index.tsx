@@ -1,19 +1,17 @@
 import { useState } from "react"
 
-import * as Boolean from "Boolean"
-
 import {
-  FormHeader,
-  Form,
-  FormField,
-  FieldLabel,
+  Field,
   FieldInput,
-  TogglePasswordVisibility,
-  FormContainer,
-} from "@/components/form"
+  FieldLabel,
+  FieldPasswordToggle,
+  Form,
+  FormGroup,
+  FormGroupTitle,
+} from "@/components/form-v2"
 import { Logo } from "@/components/logo"
-import { LinkText } from "@/components/link"
 import { ButtonBadge } from "@/components/button"
+import { LinkText } from "@/components/link"
 
 export function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -24,48 +22,46 @@ export function Login() {
 
       <div className="h-8" />
 
-      <FormHeader
-        title="Log In"
-        description="Welcome back! Please log in to continue"
-      />
-
       <Form>
-        <FormContainer>
-          <FormField>
-            <FieldLabel text="email address" htmlFor="email" />
+        <FormGroup>
+          <FormGroupTitle
+            title="Log In"
+            description="Welcome back! Please log in to continue"
+          />
+
+          <Field name="email">
+            <FieldLabel>Email Address</FieldLabel>
             <FieldInput
               autoComplete="email"
-              color="neutral"
-              name="email"
               type="email"
-              placeholder="example@email.com"
+              placeholder="Enter your email"
+              color="neutral"
             />
-          </FormField>
+          </Field>
 
-          <FormField>
-            <FieldLabel text="password" htmlFor="password" />
+          <Field name="password">
+            <FieldLabel>Password</FieldLabel>
             <FieldInput
               autoComplete="current-password"
-              color="neutral"
-              name="password"
-              placeholder="Enter your password"
               type={passwordVisible ? "text" : "password"}
+              placeholder="Enter your password"
+              color="neutral"
             >
-              <TogglePasswordVisibility
+              <FieldPasswordToggle
                 visible={passwordVisible}
-                handleClick={() => setPasswordVisible(Boolean.invert)}
+                onVisibleChange={setPasswordVisible}
               />
             </FieldInput>
 
             <div className="flex justify-end">
               <LinkText href="/password/forgot">Forgot Password?</LinkText>
             </div>
-          </FormField>
+          </Field>
 
           <ButtonBadge
+            type="submit"
             color="purple"
             size="lg"
-            type="submit"
             handleClick={() => {}}
           >
             Submit
@@ -78,7 +74,7 @@ export function Login() {
 
             <LinkText href="/sign-up">Sign Up</LinkText>
           </div>
-        </FormContainer>
+        </FormGroup>
       </Form>
     </section>
   )
