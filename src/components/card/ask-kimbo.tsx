@@ -18,13 +18,7 @@ export function AskKimbo() {
 
         <div className="h-2" />
 
-        <LinkBadge
-          color="yellow"
-          href="/recommendations"
-          shape="rounded"
-          shade="dark"
-          size="sm"
-        >
+        <LinkBadge color="yellow" href="/recommendations" size="sm">
           Get a recommendation
         </LinkBadge>
       </div>

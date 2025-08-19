@@ -64,8 +64,6 @@ export function Login() {
 
           <ButtonBadge
             color="purple"
-            shape="rounded"
-            shade="dark"
             size="lg"
             type="submit"
             handleClick={() => {}}

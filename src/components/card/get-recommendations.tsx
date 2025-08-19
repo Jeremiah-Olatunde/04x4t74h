@@ -29,13 +29,7 @@ export function GetRecommendations() {
 
       <div className="h-4" />
 
-      <LinkBadge
-        color="yellow"
-        size="md"
-        shade="dark"
-        shape="rounded"
-        href="/recommendations"
-      >
+      <LinkBadge color="yellow" size="md" href="/recommendations">
         Get a recommendation
       </LinkBadge>
     </div>

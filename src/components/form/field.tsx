@@ -16,8 +16,8 @@ import {
 
 import { tw } from "@/utils/tailwind"
 
-import { Badge } from "@/components/badge"
 import { Icon } from "@/components/icon"
+import { Pill } from "@/components/pill"
 
 export function FormField({ children }: PropsWithChildren<{}>) {
   return <div className="flex flex-col gap-2">{children}</div>
@@ -133,9 +133,9 @@ export function FieldErrors({ errors }: FieldErrorsProps) {
 function FieldErrorItem(error: string) {
   return (
     <li>
-      <Badge color="red" shade="light" shape="pill" size="sm">
+      <Pill color="red" size="sm">
         {error}
-      </Badge>
+      </Pill>
     </li>
   )
 }

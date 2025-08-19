@@ -82,8 +82,6 @@ export function SignUp() {
 
                 <ButtonBadge
                   color="purple"
-                  shade="dark"
-                  shape="rounded"
                   size="lg"
                   type="button"
                   handleClick={() => setStage("details-account")}
@@ -154,8 +152,6 @@ export function SignUp() {
                     type="button"
                     color="neutral"
                     size="lg"
-                    shade="light"
-                    shape="rounded"
                     handleClick={() => setStage("details-personal")}
                   >
                     Back
@@ -165,8 +161,6 @@ export function SignUp() {
                     type="submit"
                     color="purple"
                     size="lg"
-                    shade="dark"
-                    shape="rounded"
                     handleClick={() => {}}
                   >
                     Submit

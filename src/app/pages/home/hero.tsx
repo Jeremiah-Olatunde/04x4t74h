@@ -37,13 +37,7 @@ export function Hero() {
 
       <div className="flex gap-2 items-center">
         <div className="basis-2/5">
-          <LinkBadge
-            color="yellow"
-            href="/auth/sign-up"
-            shape="rounded"
-            shade="dark"
-            size="md"
-          >
+          <LinkBadge color="yellow" href="/auth/sign-up" size="md">
             Get Started
           </LinkBadge>
         </div>

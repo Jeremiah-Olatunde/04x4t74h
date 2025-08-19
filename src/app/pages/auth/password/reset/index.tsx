@@ -13,8 +13,8 @@ import {
   TogglePasswordVisibility,
 } from "@/components/form/field"
 import { FormHeader, Form, FormField, FormContainer } from "@/components/form"
-import { LinkBadge, LinkText } from "@/components/link"
-import { ButtonBadge } from "@/components/button"
+import { LinkPill, LinkText } from "@/components/link"
+import { ButtonBadge, ButtonPill } from "@/components/button"
 
 export function ResetPassword() {
   const [, setLocation] = useLocation()
@@ -38,15 +38,9 @@ export function ResetPassword() {
         </span>
         <div />
 
-        <LinkBadge
-          color="yellow"
-          href="/forgot"
-          shade="dark"
-          shape="pill"
-          size="sm"
-        >
+        <LinkPill color="yellow" href="/forgot" size="sm">
           Change Email
-        </LinkBadge>
+        </LinkPill>
       </FormHeader>
 
       <div />
@@ -64,16 +58,14 @@ export function ResetPassword() {
               placeholder="Enter code"
               type="tel"
             >
-              <ButtonBadge
+              <ButtonPill
                 color="neutral"
-                shade="light"
-                shape="pill"
                 size="sm"
                 type="button"
                 handleClick={() => {}}
               >
                 Paste
-              </ButtonBadge>
+              </ButtonPill>
             </FieldInput>
           </FormField>
 
@@ -118,8 +110,6 @@ export function ResetPassword() {
           <div className="flex flex-col gap-4">
             <ButtonBadge
               color="purple"
-              shape="rounded"
-              shade="dark"
               size="lg"
               type="submit"
               handleClick={() => setLocation("~/auth/login")}

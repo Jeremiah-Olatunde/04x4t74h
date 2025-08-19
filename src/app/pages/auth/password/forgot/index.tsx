@@ -1,4 +1,3 @@
-import { Badge } from "@/components/badge"
 import {
   FormHeader,
   Form,
@@ -9,6 +8,7 @@ import {
 } from "@/components/form"
 
 import { Logo } from "@/components/logo"
+import { Pill } from "@/components/pill"
 import { Link } from "wouter"
 
 export function ForgotPassword() {
@@ -35,9 +35,9 @@ export function ForgotPassword() {
               placeholder="example@gmail.com"
             >
               <Link href="/reset" className="cursor-pointer">
-                <Badge color="purple" shade="light" shape="pill" size="sm">
+                <Pill color="purple" size="sm">
                   Send Token
-                </Badge>
+                </Pill>
               </Link>
             </FieldInput>
           </FormField>

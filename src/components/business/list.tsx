@@ -54,13 +54,7 @@ export function Slider({ businesses }: SliderProps) {
 type LinkProps = Record<"href", string>
 export function Link({ href }: LinkProps) {
   return (
-    <LinkBadge
-      color="neutral"
-      href={href}
-      shade="light"
-      shape="rounded"
-      size="md"
-    >
+    <LinkBadge color="neutral" href={href} size="md">
       <Icon color="neutral" icon={IconChevronRight} size="sm" />
     </LinkBadge>
   )
