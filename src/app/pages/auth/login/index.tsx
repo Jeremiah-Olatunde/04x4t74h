@@ -13,8 +13,36 @@ import { Logo } from "@/components/logo"
 import { ButtonBadge } from "@/components/button"
 import { LinkText } from "@/components/link"
 
+type Valid = {
+  tag: "valid"
+  value: string
+}
+
+type Invalid = {
+  tag: "invalid"
+  value: string
+  errors: string[]
+}
+
+type Initial = {
+  tag: "initial"
+  value: string
+}
+
+type FormField = Initial | Invalid | Valid
+
+function validateEmail(value: string): FormField {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (regex.test(value)) {
+    return { tag: "valid", value }
+  }
+
+  return { tag: "invalid", value, errors: ["ERROR_EMAIL_INVALID"] }
+}
+
 export function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false)
+  const [email, setEmail] = useState<FormField>({ tag: "initial", value: "" })
 
   return (
     <section className="flex flex-col gap-4 px-6 py-8">
@@ -35,7 +63,13 @@ export function Login() {
               autoComplete="email"
               type="email"
               placeholder="Enter your email"
-              color="neutral"
+              color={email.tag === "invalid" ? "red" : "neutral"}
+              required={true}
+              onChange={(event) => {
+                const value = event.target.value
+                setEmail(validateEmail(value))
+              }}
+              value={email.value}
             />
           </Field>
 
@@ -46,6 +80,7 @@ export function Login() {
               type={passwordVisible ? "text" : "password"}
               placeholder="Enter your password"
               color="neutral"
+              required={true}
             >
               <FieldPasswordToggle
                 visible={passwordVisible}
