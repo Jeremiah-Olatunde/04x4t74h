@@ -5,14 +5,7 @@ import { Input } from "@base-ui-components/react/input"
 import * as Array from "Array"
 import * as Function from "Function"
 
-import {
-  Eye as IconEye,
-  EyeOff as IconEyeOff,
-  LoaderCircle as IconLoaderCircle,
-  CircleAlert as IconCircleAlert,
-  CircleCheck,
-  CircleX as IconCircleX,
-} from "lucide-react"
+import { Eye as IconEye, EyeOff as IconEyeOff } from "lucide-react"
 
 import { tw } from "@/utils/tailwind"
 
@@ -31,26 +24,6 @@ export function FieldLabel({ htmlFor, text }: FieldLabelProps) {
       <span className="font-sora text-xs font-medium capitalize">{text}</span>
     </label>
   )
-}
-
-type FieldIndicatorState = "failure" | "success" | "pending" | "warning"
-type FieldIndicatorProps = Record<"state", FieldIndicatorState>
-
-export function FieldIndicator({ state }: FieldIndicatorProps) {
-  switch (state) {
-    case "warning":
-      return <Icon size="sm" icon={IconCircleAlert} color="yellow" />
-    case "failure":
-      return <Icon size="sm" icon={IconCircleX} color="red" />
-    case "success":
-      return <Icon size="sm" icon={CircleCheck} color="green" />
-    case "pending":
-      return (
-        <div className="animate-spin">
-          <Icon size="sm" icon={IconLoaderCircle} color="neutral" />
-        </div>
-      )
-  }
 }
 
 const base = tw`flex justify-center gap-2 rounded-xl border-1  outline-2 transition has-focus:shadow-md/10`
