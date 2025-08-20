@@ -84,7 +84,7 @@ export function SignUp() {
                   color="purple"
                   size="lg"
                   type="button"
-                  handleClick={() => setStage("details-account")}
+                  onClick={() => setStage("details-account")}
                 >
                   Next
                 </ButtonBadge>
@@ -152,7 +152,7 @@ export function SignUp() {
                     type="button"
                     color="neutral"
                     size="lg"
-                    handleClick={() => setStage("details-personal")}
+                    onClick={() => setStage("details-personal")}
                   >
                     Back
                   </ButtonBadge>
@@ -161,7 +161,7 @@ export function SignUp() {
                     type="submit"
                     color="purple"
                     size="lg"
-                    handleClick={() => {}}
+                    onClick={() => {}}
                   >
                     Submit
                   </ButtonBadge>

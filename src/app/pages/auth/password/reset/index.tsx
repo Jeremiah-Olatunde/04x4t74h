@@ -62,7 +62,7 @@ export function ResetPassword() {
                 color="neutral"
                 size="sm"
                 type="button"
-                handleClick={() => {}}
+                onClick={() => {}}
               >
                 Paste
               </ButtonPill>
@@ -112,7 +112,7 @@ export function ResetPassword() {
               color="purple"
               size="lg"
               type="submit"
-              handleClick={() => setLocation("~/auth/login")}
+              onClick={() => setLocation("~/auth/login")}
             >
               Reset Password
             </ButtonBadge>

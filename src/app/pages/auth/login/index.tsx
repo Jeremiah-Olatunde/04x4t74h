@@ -1,7 +1,14 @@
-import { useState } from "react"
+import zod from "zod/v4"
+import {
+  CheckCheck as IconCheckCheck,
+  LoaderCircle as IconLoaderCircle,
+} from "lucide-react"
+import { useState, type PropsWithChildren } from "react"
+import { useForm } from "react-hook-form"
 
 import {
   Field,
+  FieldError,
   FieldInput,
   FieldLabel,
   FieldPasswordToggle,
@@ -12,37 +19,52 @@ import {
 import { Logo } from "@/components/logo"
 import { ButtonBadge } from "@/components/button"
 import { LinkText } from "@/components/link"
+import * as Information from "@/components/card/information"
 
-type Valid = {
-  tag: "valid"
-  value: string
-}
-
-type Invalid = {
-  tag: "invalid"
-  value: string
-  errors: string[]
+type FormData = {
+  email: string
+  password: string
 }
 
 type Initial = {
   tag: "initial"
-  value: string
 }
 
-type FormField = Initial | Invalid | Valid
+const INITIAL: Initial = { tag: "initial" }
+const PENDING: Pending = { tag: "pending" }
 
-function validateEmail(value: string): FormField {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (regex.test(value)) {
-    return { tag: "valid", value }
-  }
-
-  return { tag: "invalid", value, errors: ["ERROR_EMAIL_INVALID"] }
+type Pending = {
+  tag: "pending"
 }
+
+type Failure = {
+  tag: "failure"
+  reason: "INVALID_DETAILS"
+}
+
+type Success = {
+  tag: "success"
+  payload: { token: string }
+}
+
+type SubmitStatus = Initial | Pending | Failure | Success
 
 export function Login() {
+  console.log("Component Render")
   const [passwordVisible, setPasswordVisible] = useState(false)
-  const [email, setEmail] = useState<FormField>({ tag: "initial", value: "" })
+
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(INITIAL)
+
+  const { register, formState, handleSubmit } = useForm<FormData>({
+    criteriaMode: "all",
+    mode: "onChange",
+    shouldUseNativeValidation: true,
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    disabled: true,
+  })
 
   return (
     <section className="flex flex-col gap-4 px-6 py-8">
@@ -50,12 +72,28 @@ export function Login() {
 
       <div className="h-8" />
 
-      <Form>
+      <Form
+        onSubmit={handleSubmit(async (formData) => {
+          setSubmitStatus(PENDING)
+
+          try {
+            const payload = await login(formData)
+            setSubmitStatus({ tag: "success", payload })
+          } catch (error) {
+            if (error === "INVALID_DETAILS") {
+              setSubmitStatus({ tag: "failure", reason: "INVALID_DETAILS" })
+            }
+          }
+        })}
+      >
         <FormGroup>
           <FormGroupTitle
             title="Log In"
             description="Welcome back! Please log in to continue"
           />
+
+          {submitStatus.tag === "failure" && <InvalidCredentials />}
+          {submitStatus.tag === "success" && <SuccessfulLogin />}
 
           <Field name="email">
             <FieldLabel>Email Address</FieldLabel>
@@ -63,14 +101,21 @@ export function Login() {
               autoComplete="email"
               type="email"
               placeholder="Enter your email"
-              color={email.tag === "invalid" ? "red" : "neutral"}
-              required={true}
-              onChange={(event) => {
-                const value = event.target.value
-                setEmail(validateEmail(value))
-              }}
-              value={email.value}
+              color={formState.errors.email === undefined ? "neutral" : "red"}
+              {...register("email", {
+                validate: {
+                  validate: function (value) {
+                    const parsed = zod.email().safeParse(value)
+                    if (parsed.success) return true
+                    return "Must a be valid email"
+                  },
+                },
+              })}
             />
+
+            {formState.errors.email?.message !== undefined && (
+              <FieldError>{formState.errors.email.message}</FieldError>
+            )}
           </Field>
 
           <Field name="password">
@@ -79,8 +124,19 @@ export function Login() {
               autoComplete="current-password"
               type={passwordVisible ? "text" : "password"}
               placeholder="Enter your password"
-              color="neutral"
-              required={true}
+              color={
+                formState.errors.password === undefined ? "neutral" : "red"
+              }
+              {...register("password", {
+                validate: {
+                  required: function (value) {
+                    if (/^$/.test(value)) {
+                      return "Password is required"
+                    }
+                    return true
+                  },
+                },
+              })}
             >
               <FieldPasswordToggle
                 visible={passwordVisible}
@@ -88,19 +144,28 @@ export function Login() {
               />
             </FieldInput>
 
+            {formState.errors.password?.message !== undefined && (
+              <FieldError>{formState.errors.password.message}</FieldError>
+            )}
+
             <div className="flex justify-end">
               <LinkText href="/password/forgot">Forgot Password?</LinkText>
             </div>
           </Field>
 
-          <ButtonBadge
-            type="submit"
-            color="purple"
-            size="lg"
-            handleClick={() => {}}
-          >
-            Submit
-          </ButtonBadge>
+          {submitStatus.tag === "pending" ? (
+            <ButtonBadge type="button" color="purple" size="lg">
+              <IconLoaderCircle className="animate-spin size-5" />
+            </ButtonBadge>
+          ) : submitStatus.tag === "success" ? (
+            <ButtonBadge type="button" color="purple" size="lg">
+              <IconCheckCheck className="size-5" />
+            </ButtonBadge>
+          ) : (
+            <ButtonBadge type="submit" color="purple" size="lg">
+              Submit
+            </ButtonBadge>
+          )}
 
           <div className="flex items-center justify-center gap-1">
             <span className="font-sora text-xs text-neutral-400">
@@ -113,4 +178,53 @@ export function Login() {
       </Form>
     </section>
   )
+}
+
+function InvalidCredentials() {
+  return (
+    <Information.Root color="red">
+      <Information.Title>
+        We couldn't find an account with those details
+      </Information.Title>
+      <Information.Content>
+        Make sure you have entered the right email and password, or sign up if
+        you are new
+      </Information.Content>
+    </Information.Root>
+  )
+}
+
+function SuccessfulLogin() {
+  return (
+    <Information.Root color="green">
+      <Information.Title>
+        Welcome back! Let’s find your next adventure
+      </Information.Title>
+      <Information.Content>
+        You’re all signed in. Discover personalized spots to eat, chill, date,
+        or explore—handpicked for you.
+      </Information.Content>
+    </Information.Root>
+  )
+}
+
+type LoginDetails = Record<"email" | "password", string>
+
+async function login({
+  email,
+  password,
+}: LoginDetails): Promise<{ token: string }> {
+  email
+  password
+
+  await sleep(2000)
+
+  if (Math.random() < 0.5)
+    return { token: "9f67387b-5b24-4952-a5c4-1f73371dbbde" }
+
+  throw "INVALID_DETAILS"
+}
+
+function sleep(duration: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, duration))
 }

@@ -72,13 +72,13 @@ export function FieldDescription({ children }: FieldDescriptionProps) {
   )
 }
 
-type FieldErrorProps = Record<"message", string>
+type FieldErrorProps = Record<"children", string>
 
-export function FieldError({ message }: FieldErrorProps) {
+export function FieldError({ children }: FieldErrorProps) {
   return (
     <BuiField.Error match={true}>
       <Pill size="sm" color="red">
-        {message}
+        {children}
       </Pill>
     </BuiField.Error>
   )
