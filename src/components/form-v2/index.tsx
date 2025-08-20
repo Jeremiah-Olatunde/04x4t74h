@@ -1,18 +1,19 @@
 import type { PropsWithChildren } from "react"
 import { EyeOff as IconEyeOff, Eye as IconEye } from "lucide-react"
 
-import { Fieldset } from "@base-ui-components/react/fieldset"
-import { Field as BuiField } from "@base-ui-components/react/field"
-import { Toggle } from "@base-ui-components/react/toggle"
-
 import { Pill } from "@/components/pill"
 import { Icon } from "@/components/icon"
 
-type FormGroupProps = {}
+type FormGroupProps = { name: string }
 
-export function FormGroup({ children }: PropsWithChildren<FormGroupProps>) {
+export function FormGroup({
+  name,
+  children,
+}: PropsWithChildren<FormGroupProps>) {
   return (
-    <Fieldset.Root className="flex flex-col gap-6">{children}</Fieldset.Root>
+    <fieldset name={name} className="flex flex-col gap-6">
+      {children}
+    </fieldset>
   )
 }
 
@@ -24,41 +25,39 @@ export function FormGroupTitle({
   title,
 }: PropsWithChildren<FormGroupTitle>) {
   return (
-    <Fieldset.Legend>
-      <header className="flex flex-col items-center gap-1">
-        <h1>
-          <span className="font-sora text-xl font-bold text-neutral-600">
-            {title}
-          </span>
-        </h1>
+    <div>
+      <legend>
+        <header className="flex flex-col items-center gap-1">
+          <h1>
+            <span className="font-sora text-xl font-bold text-neutral-600">
+              {title}
+            </span>
+          </h1>
 
-        <p className="font-sora text-sm text-neutral-400">{description}</p>
+          <p className="font-sora text-sm text-neutral-400">{description}</p>
 
-        {children}
-      </header>
-    </Fieldset.Legend>
+          {children}
+        </header>
+      </legend>
+    </div>
   )
 }
 
-type FieldProps = { name: string }
+type FieldProps = {}
 
-export function Field({ name, children }: PropsWithChildren<FieldProps>) {
-  return (
-    <BuiField.Root name={name} className="flex flex-col gap-2">
-      {children}
-    </BuiField.Root>
-  )
+export function Field({ children }: PropsWithChildren<FieldProps>) {
+  return <div className="flex flex-col gap-2">{children}</div>
 }
 
-type FieldLabelProps = Record<"children", string>
+type FieldLabelProps = Record<"children" | "htmlFor", string>
 
-export function FieldLabel({ children }: FieldLabelProps) {
+export function FieldLabel({ htmlFor, children }: FieldLabelProps) {
   return (
-    <BuiField.Label className="justify-start flex items-center">
+    <label htmlFor={htmlFor} className="justify-start flex items-center">
       <span className="font-sora text-sm font-medium capitalize text-neutral-600">
         {children}
       </span>
-    </BuiField.Label>
+    </label>
   )
 }
 
@@ -66,9 +65,9 @@ type FieldDescriptionProps = Record<"children", string>
 
 export function FieldDescription({ children }: FieldDescriptionProps) {
   return (
-    <BuiField.Description className="text-neutral-400 text-xs font-sora font-light pb-2">
+    <p className="text-neutral-400 text-xs font-sora font-light pb-2">
       {children}
-    </BuiField.Description>
+    </p>
   )
 }
 
@@ -76,11 +75,19 @@ type FieldErrorProps = Record<"children", string>
 
 export function FieldError({ children }: FieldErrorProps) {
   return (
-    <BuiField.Error match={true}>
-      <Pill size="sm" color="red">
-        {children}
-      </Pill>
-    </BuiField.Error>
+    <Pill size="sm" color="red">
+      {children}
+    </Pill>
+  )
+}
+
+export function FieldErrors({ errors }: { errors: string[] }) {
+  return (
+    <div className="flex gap-1 flex-wrap">
+      {errors.map((error) => (
+        <FieldError key={error}>{error}</FieldError>
+      ))}
+    </div>
   )
 }
 
@@ -94,21 +101,17 @@ export function FieldPasswordToggle({
   onVisibleChange,
 }: FieldPasswordToggleProps) {
   return (
-    <Toggle
-      pressed={visible}
-      onPressedChange={onVisibleChange}
-      render={(props, state) => {
-        return (
-          <button {...props} className="cursor-pointer">
-            {state.pressed ? (
-              <Icon color="neutral" icon={IconEye} size="md" />
-            ) : (
-              <Icon color="neutral" icon={IconEyeOff} size="md" />
-            )}
-          </button>
-        )
-      }}
-    />
+    <button
+      onClick={() => onVisibleChange(!visible)}
+      type="button"
+      className="cursor-pointer"
+    >
+      {visible ? (
+        <Icon color="neutral" icon={IconEye} size="md" />
+      ) : (
+        <Icon color="neutral" icon={IconEyeOff} size="md" />
+      )}
+    </button>
   )
 }
 

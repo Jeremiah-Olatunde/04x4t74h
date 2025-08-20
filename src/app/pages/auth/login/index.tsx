@@ -1,14 +1,13 @@
-import zod from "zod/v4"
 import {
   CheckCheck as IconCheckCheck,
   LoaderCircle as IconLoaderCircle,
 } from "lucide-react"
-import { useState, type PropsWithChildren } from "react"
-import { useForm } from "react-hook-form"
+import { useState } from "react"
+import { Controller, useForm } from "react-hook-form"
 
 import {
   Field,
-  FieldError,
+  FieldErrors,
   FieldInput,
   FieldLabel,
   FieldPasswordToggle,
@@ -24,6 +23,11 @@ import * as Information from "@/components/card/information"
 type FormData = {
   email: string
   password: string
+}
+
+const FORM_DEFAULTS = {
+  email: "",
+  password: "",
 }
 
 type Initial = {
@@ -55,15 +59,11 @@ export function Login() {
 
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(INITIAL)
 
-  const { register, formState, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<FormData>({
     criteriaMode: "all",
     mode: "onChange",
     shouldUseNativeValidation: true,
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-    disabled: true,
+    defaultValues: FORM_DEFAULTS,
   })
 
   return (
@@ -74,10 +74,11 @@ export function Login() {
 
       <Form
         onSubmit={handleSubmit(async (formData) => {
+          console.log("submitting")
           setSubmitStatus(PENDING)
 
           try {
-            const payload = await login(formData)
+            const payload = await login({ ...formData, password: "" })
             setSubmitStatus({ tag: "success", payload })
           } catch (error) {
             if (error === "INVALID_DETAILS") {
@@ -86,7 +87,7 @@ export function Login() {
           }
         })}
       >
-        <FormGroup>
+        <FormGroup name="login">
           <FormGroupTitle
             title="Log In"
             description="Welcome back! Please log in to continue"
@@ -95,63 +96,76 @@ export function Login() {
           {submitStatus.tag === "failure" && <InvalidCredentials />}
           {submitStatus.tag === "success" && <SuccessfulLogin />}
 
-          <Field name="email">
-            <FieldLabel>Email Address</FieldLabel>
-            <FieldInput
-              autoComplete="email"
-              type="email"
-              placeholder="Enter your email"
-              color={formState.errors.email === undefined ? "neutral" : "red"}
-              {...register("email", {
-                validate: {
-                  validate: function (value) {
-                    const parsed = zod.email().safeParse(value)
-                    if (parsed.success) return true
-                    return "Must a be valid email"
-                  },
-                },
-              })}
-            />
+          <Controller
+            name="email"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: "Required",
+              },
+              pattern: {
+                value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                message: "Invalid email",
+              },
+            }}
+            render={({ field, fieldState }) => {
+              const errorMap = Object.values(fieldState.error?.types ?? {})
+              const errors = errorMap.filter((e) => typeof e === "string")
 
-            {formState.errors.email?.message !== undefined && (
-              <FieldError>{formState.errors.email.message}</FieldError>
-            )}
-          </Field>
+              return (
+                <Field>
+                  <FieldLabel htmlFor={field.name}>Email Address</FieldLabel>
+                  <FieldInput
+                    {...field}
+                    id={field.name}
+                    autoComplete="email"
+                    color={fieldState.invalid ? "red" : "neutral"}
+                    placeholder="Enter your email"
+                    type="email"
+                  />
+                  <FieldErrors errors={errors} />
+                </Field>
+              )
+            }}
+          />
 
-          <Field name="password">
-            <FieldLabel>Password</FieldLabel>
-            <FieldInput
-              autoComplete="current-password"
-              type={passwordVisible ? "text" : "password"}
-              placeholder="Enter your password"
-              color={
-                formState.errors.password === undefined ? "neutral" : "red"
-              }
-              {...register("password", {
-                validate: {
-                  required: function (value) {
-                    if (/^$/.test(value)) {
-                      return "Password is required"
-                    }
-                    return true
-                  },
-                },
-              })}
-            >
-              <FieldPasswordToggle
-                visible={passwordVisible}
-                onVisibleChange={setPasswordVisible}
-              />
-            </FieldInput>
+          <Controller
+            name="password"
+            control={control}
+            rules={{ required: { value: true, message: "Required" } }}
+            render={({ field, fieldState }) => {
+              const errorMap = Object.values(fieldState.error?.types ?? {})
+              const errors = errorMap.filter((e) => typeof e === "string")
 
-            {formState.errors.password?.message !== undefined && (
-              <FieldError>{formState.errors.password.message}</FieldError>
-            )}
+              return (
+                <Field>
+                  <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+                  <FieldInput
+                    {...field}
+                    id={field.name}
+                    autoComplete="current-password"
+                    type={passwordVisible ? "text" : "password"}
+                    placeholder="Enter your password"
+                    color={fieldState.invalid ? "red" : "neutral"}
+                  >
+                    <FieldPasswordToggle
+                      visible={passwordVisible}
+                      onVisibleChange={setPasswordVisible}
+                    />
+                  </FieldInput>
 
-            <div className="flex justify-end">
-              <LinkText href="/password/forgot">Forgot Password?</LinkText>
-            </div>
-          </Field>
+                  <FieldErrors errors={errors} />
+
+                  <div className="flex justify-end">
+                    <LinkText href="/password/forgot">
+                      Forgot Password?
+                    </LinkText>
+                  </div>
+                </Field>
+              )
+            }}
+          />
 
           {submitStatus.tag === "pending" ? (
             <ButtonBadge type="button" color="purple" size="lg">
