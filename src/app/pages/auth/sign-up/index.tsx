@@ -1,25 +1,56 @@
 import { useState } from "react"
-import { Tabs } from "@base-ui-components/react/tabs"
-
-import * as Boolean from "Boolean"
-
+import { Controller, useForm } from "react-hook-form"
 import {
-  FormHeader,
-  Form,
-  FormField,
-  FieldLabel,
+  CheckCheck as IconCheckCheck,
+  LoaderCircle as IconLoaderCircle,
+} from "lucide-react"
+
+import { FlagNg } from "@/assets/icons/flag-ng"
+import { ButtonBadge } from "@/components/button"
+import {
+  Field,
+  FieldErrors,
   FieldInput,
-  TogglePasswordVisibility,
-  FormContainer,
-} from "@/components/form"
+  FieldLabel,
+  FieldPasswordToggle,
+  Form,
+  FormGroup,
+  FormGroupTitle,
+} from "@/components/form-v2"
+
+import * as Information from "@/components/card/information"
 import { Logo } from "@/components/logo"
 import { LinkText } from "@/components/link"
-import { ButtonBadge } from "@/components/button"
-import { FlagNg } from "@/assets/icons/flag-ng"
+
+type FormValues = {
+  name: string
+  email: string
+  telephone: string
+  password: string
+}
+
+const defaultValues: FormValues = {
+  name: "",
+  email: "",
+  telephone: "",
+  password: "",
+}
 
 export function SignUp() {
-  const [stage, setStage] = useState("details-personal")
   const [passwordVisible, setPasswordVisible] = useState(false)
+
+  type RemoteData = "Initial" | "Pending" | "Failure" | "Success"
+  const [status, setStatus] = useState<RemoteData>("Initial")
+
+  type Banner = "EmailTaken" | "SignUpComplete"
+  const [banner, setBanner] = useState<null | Banner>(null)
+
+  const { control, handleSubmit, setError } = useForm<FormValues>({
+    criteriaMode: "all",
+    mode: "onChange",
+    shouldUseNativeValidation: true,
+    defaultValues,
+  })
 
   return (
     <section className="flex flex-col gap-4 px-6 py-8">
@@ -27,50 +58,132 @@ export function SignUp() {
 
       <div className="h-8" />
 
-      <FormHeader title="Sign Up" description="Create your account" />
+      <Form
+        onSubmit={handleSubmit(async function (formValues) {
+          setStatus("Pending")
 
-      <Form>
-        <Tabs.Root value={stage} onValueChange={setStage}>
-          <div className="flex flex-col gap-8">
-            <Tabs.List aria-label="create an account">
-              <div className="grid grid-cols-2 gap-2">
-                <Tabs.Tab value="details-personal">
-                  <ButtonStage
-                    active={stage === "details-personal"}
-                    stage={1}
-                    text="Personal Details"
-                  />
-                </Tabs.Tab>
+          try {
+            await register(formValues)
+            setStatus("Success")
+            setBanner("SignUpComplete")
+          } catch (error) {
+            if (error instanceof ApiError) {
+              if (error.is(409)) {
+                const field = "email"
+                const options = { shouldFocus: true }
+                const fieldError = { types: { taken: "Email taken" } }
+                setError(field, fieldError, options)
+                setBanner("EmailTaken")
+              }
 
-                <Tabs.Tab value="details-account">
-                  <ButtonStage
-                    active={stage === "details-account"}
-                    stage={2}
-                    text="Account Details"
-                  />
-                </Tabs.Tab>
-              </div>
-            </Tabs.List>
+              if (error.is(400)) {
+              }
+            }
 
-            <Tabs.Panel value="details-personal">
-              <FormContainer>
-                <FormField>
-                  <FieldLabel text="full name" htmlFor="name" />
+            setStatus("Failure")
+            throw error
+          }
+        })}
+      >
+        <FormGroup name="group-one">
+          <FormGroupTitle title="Sign In" description="Create an account!" />
+
+          {banner === "EmailTaken" && <EmailTaken />}
+          {banner === "SignUpComplete" && <SignUpComplete />}
+
+          <Controller
+            name="name"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: "Required",
+              },
+              pattern: {
+                value: /^[A-Za-z]+(?:[ '-][A-Za-z]+)*$/,
+                message: "Invalid name",
+              },
+            }}
+            render={({ field, fieldState }) => {
+              const errorMap = Object.values(fieldState.error?.types ?? {})
+              const errors = errorMap.filter((e) => typeof e === "string")
+
+              return (
+                <Field>
+                  <FieldLabel htmlFor={field.name}>Full name</FieldLabel>
                   <FieldInput
+                    {...field}
+                    id={field.name}
                     autoComplete="name"
-                    color="neutral"
-                    name="name"
+                    color={fieldState.invalid ? "red" : "neutral"}
+                    placeholder="Enter your full name"
                     type="text"
-                    placeholder="Enter your name"
                   />
-                </FormField>
+                  <FieldErrors errors={errors} />
+                </Field>
+              )
+            }}
+          />
 
-                <FormField>
-                  <FieldLabel text="phone number" htmlFor="telephone" />
+          <Controller
+            name="email"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: "Required",
+              },
+              pattern: {
+                value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                message: "Invalid email",
+              },
+            }}
+            render={({ field, fieldState }) => {
+              const errorMap = Object.values(fieldState.error?.types ?? {})
+              const errors = errorMap.filter((e) => typeof e === "string")
+
+              return (
+                <Field>
+                  <FieldLabel htmlFor={field.name}>Email Address</FieldLabel>
                   <FieldInput
+                    {...field}
+                    id={field.name}
+                    autoComplete="email"
+                    color={fieldState.invalid ? "red" : "neutral"}
+                    placeholder="Enter your email"
+                    type="email"
+                  />
+                  <FieldErrors errors={errors} />
+                </Field>
+              )
+            }}
+          />
+
+          <Controller
+            name="telephone"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: "Required",
+              },
+              pattern: {
+                value: /^0(7|8|9)\d{9}$/,
+                message: "Invalid phone number",
+              },
+            }}
+            render={({ field, fieldState }) => {
+              const errorMap = Object.values(fieldState.error?.types ?? {})
+              const errors = errorMap.filter((e) => typeof e === "string")
+
+              return (
+                <Field>
+                  <FieldLabel htmlFor={field.name}>Phone Number</FieldLabel>
+                  <FieldInput
+                    {...field}
+                    id={field.name}
                     autoComplete="tel-national"
-                    color="neutral"
-                    name="telephone"
+                    color={fieldState.invalid ? "red" : "neutral"}
                     type="tel"
                     placeholder="Enter your phone number"
                   >
@@ -78,139 +191,162 @@ export function SignUp() {
                       <FlagNg className="size-6" />
                     </div>
                   </FieldInput>
-                </FormField>
+                  <FieldErrors errors={errors} />
+                </Field>
+              )
+            }}
+          />
 
-                <ButtonBadge
-                  color="purple"
-                  size="lg"
-                  type="button"
-                  onClick={() => setStage("details-account")}
-                >
-                  Next
-                </ButtonBadge>
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              required: { value: true, message: "Required" },
+              minLength: { value: 10, message: "Too short" },
+              validate: {
+                noWhitespace: function excludeWhitespace(
+                  v: string,
+                ): string | true {
+                  const message = "Spaces not allowed"
+                  return /^\S+$/.test(v) || message
+                },
+                oneDigit: function (v: string): true | string {
+                  const message = "Must have a digit"
+                  return /[0-9]/.test(v) || message
+                },
 
-                <div className="flex items-center justify-center gap-1">
-                  <span className="font-sora text-xs text-neutral-400">
-                    Already have an account?
-                  </span>
+                oneSymbol: function (v: string): string | true {
+                  const message = "Must have a symbol"
+                  return /[^a-zA-Z0-9\s]/.test(v) || message
+                },
+                oneUppercase: function (v: string): string | true {
+                  const message = "Must have an uppercase"
+                  return /[A-Z]/.test(v) || message
+                },
 
-                  <LinkText href="/login"> Login </LinkText>
-                </div>
-              </FormContainer>
-            </Tabs.Panel>
+                oneLowercase: function (v: string): string | true {
+                  const message = "Must have a lowercase"
+                  return /[a-z]/.test(v) || message
+                },
+              },
+            }}
+            render={({ field, fieldState }) => {
+              const errorMap = Object.values(fieldState.error?.types ?? {})
+              const errors = errorMap.filter((e) => typeof e === "string")
 
-            <Tabs.Panel value="details-account">
-              <FormContainer>
-                <FormField>
-                  <FieldLabel text="email address" htmlFor="email" />
+              return (
+                <Field>
+                  <FieldLabel htmlFor={field.name}>Password</FieldLabel>
                   <FieldInput
-                    autoComplete="email"
-                    color="neutral"
-                    name="email"
-                    type="email"
-                    placeholder="Enter your email address"
-                  />
-                </FormField>
-
-                <FormField>
-                  <FieldLabel text="password" htmlFor="password" />
-                  <FieldInput
-                    autoComplete="new-password"
-                    color="neutral"
-                    name="password"
+                    {...field}
+                    id={field.name}
+                    autoComplete="current-password"
+                    type={passwordVisible ? "text" : "password"}
                     placeholder="Enter your password"
-                    type={passwordVisible ? "text" : "password"}
+                    color={fieldState.invalid ? "red" : "neutral"}
                   >
-                    <TogglePasswordVisibility
+                    <FieldPasswordToggle
                       visible={passwordVisible}
-                      handleClick={() => setPasswordVisible(Boolean.invert)}
+                      onVisibleChange={setPasswordVisible}
                     />
                   </FieldInput>
-                </FormField>
 
-                <FormField>
-                  <FieldLabel
-                    text="confirm password"
-                    htmlFor="confirm-password"
-                  />
-                  <FieldInput
-                    autoComplete="new-password"
-                    color="neutral"
-                    name="confirm-password"
-                    placeholder="Re-enter your password"
-                    type={passwordVisible ? "text" : "password"}
-                  >
-                    <TogglePasswordVisibility
-                      visible={passwordVisible}
-                      handleClick={() => setPasswordVisible(Boolean.invert)}
-                    />
-                  </FieldInput>
-                </FormField>
+                  <FieldErrors errors={errors} />
+                </Field>
+              )
+            }}
+          />
 
-                <div className="flex gap-2">
-                  <ButtonBadge
-                    type="button"
-                    color="neutral"
-                    size="lg"
-                    onClick={() => setStage("details-personal")}
-                  >
-                    Back
-                  </ButtonBadge>
+          {status === "Pending" ? (
+            <ButtonBadge type="button" color="purple" size="lg">
+              <IconLoaderCircle className="animate-spin size-5" />
+            </ButtonBadge>
+          ) : status === "Success" ? (
+            <ButtonBadge type="button" color="purple" size="lg">
+              <IconCheckCheck className="size-5" />
+            </ButtonBadge>
+          ) : (
+            <ButtonBadge type="submit" color="purple" size="lg">
+              Sign Up
+            </ButtonBadge>
+          )}
 
-                  <ButtonBadge
-                    type="submit"
-                    color="purple"
-                    size="lg"
-                    onClick={() => {}}
-                  >
-                    Submit
-                  </ButtonBadge>
-                </div>
+          <div className="flex items-center justify-center gap-1">
+            <span className="font-sora text-xs text-neutral-400">
+              Already have an account?
+            </span>
 
-                <div className="flex items-center justify-center gap-1">
-                  <span className="font-sora text-xs text-neutral-400">
-                    Already have an account?
-                  </span>
-
-                  <LinkText href="/login">Login</LinkText>
-                </div>
-              </FormContainer>
-            </Tabs.Panel>
+            <LinkText href="/login">Login</LinkText>
           </div>
-        </Tabs.Root>
+        </FormGroup>
       </Form>
     </section>
   )
 }
 
-function ButtonStage({
-  active,
-  text,
-  stage,
-}: {
-  active: boolean
-  text: string
-  stage: number
-}) {
+function SignUpComplete() {
   return (
-    // Not a button element as radix Tabs.Trigger component is already a button element
-    <div
-      className={`flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 ${active ? "border-primary" : "border-neutral-200"} p-2`}
-    >
-      <div
-        className={`flex aspect-square w-4 items-center justify-center rounded-full ${active ? "bg-primary" : "bg-neutral-200"}`}
-      >
-        <span
-          className={`font-sora text-[8px] ${active ? "text-white" : "text-neutral-400"}`}
-        >
-          {stage}
-        </span>
-      </div>
-      <span
-        className={`font-sora text-xs font-medium ${active ? "text-primary" : "text-neutral-400"} capitalize`}
-      >
-        {text}
-      </span>
-    </div>
+    <Information.Root color="green">
+      <Information.Title>
+        Congratulations! You account has been created
+      </Information.Title>
+      <Information.Content>
+        You’re all set. Discover personalized spots to eat, chill, date, or
+        explore—handpicked for you.
+      </Information.Content>
+    </Information.Root>
   )
+}
+
+function EmailTaken() {
+  return (
+    <Information.Root color="red">
+      <Information.Title>
+        Looks like you already have an account
+      </Information.Title>
+      <Information.Content>
+        That email is already registered. Try logging in instead, or use a
+        different email to sign up.
+      </Information.Content>
+    </Information.Root>
+  )
+}
+
+const StatusToText = {
+  400: "Bad Request",
+  401: "Unauthorized",
+  409: "Conflict",
+  418: "I'm a teapot",
+} as const
+
+type Status = keyof typeof StatusToText
+
+class ApiError<T extends Status> extends Error {
+  status: T
+  statusText: (typeof StatusToText)[T]
+  constructor(status: T, message: string) {
+    super(message)
+    this.status = status
+    this.statusText = StatusToText[status]
+  }
+
+  is<T extends Status>(this: ApiError<any>, status: T): this is ApiError<T> {
+    return this.status === status
+  }
+
+  static is<T extends Status>(status: T, error: unknown): error is ApiError<T> {
+    return error instanceof ApiError && error.status === status
+  }
+}
+
+type RegisterDetails = Record<
+  "name" | "email" | "password" | "telephone",
+  string
+>
+async function register({}: RegisterDetails): Promise<{ token: string }> {
+  if (Math.random() < 0.5) {
+    throw new ApiError(409, "Email Taken")
+  }
+
+  return { token: "7fc979df-0284-436b-affb-10bf465423a5" }
 }

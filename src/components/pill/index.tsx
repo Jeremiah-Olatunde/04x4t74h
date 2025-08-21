@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { tw } from "@/utils/tailwind"
 
-const base = tw`w-fit inline-flex items-center justify-center font-sora font-semibold cursor-pointer rounded-s-full rounded-e-full`
+const base = tw`whitespace-nowrap w-fit inline-flex items-center justify-center font-sora font-semibold cursor-pointer rounded-s-full rounded-e-full`
 
 const red = tw`bg-red-50 text-red-600`
 const purple = tw`bg-primary/10 text-primary`

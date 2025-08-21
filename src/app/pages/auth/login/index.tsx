@@ -20,12 +20,12 @@ import { ButtonBadge } from "@/components/button"
 import { LinkText } from "@/components/link"
 import * as Information from "@/components/card/information"
 
-type FormData = {
+type FormValues = {
   email: string
   password: string
 }
 
-const FORM_DEFAULTS = {
+const defaultValues = {
   email: "",
   password: "",
 }
@@ -59,11 +59,11 @@ export function Login() {
 
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(INITIAL)
 
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<FormValues>({
     criteriaMode: "all",
+    defaultValues,
     mode: "onChange",
     shouldUseNativeValidation: true,
-    defaultValues: FORM_DEFAULTS,
   })
 
   return (

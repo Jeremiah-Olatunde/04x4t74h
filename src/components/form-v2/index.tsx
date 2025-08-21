@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react"
 import { EyeOff as IconEyeOff, Eye as IconEye } from "lucide-react"
+import { ScrollArea } from "@base-ui-components/react/scroll-area"
 
 import { Pill } from "@/components/pill"
 import { Icon } from "@/components/icon"
@@ -11,7 +12,7 @@ export function FormGroup({
   children,
 }: PropsWithChildren<FormGroupProps>) {
   return (
-    <fieldset name={name} className="flex flex-col gap-6">
+    <fieldset name={name} className="min-w-0 w-full flex flex-col gap-6">
       {children}
     </fieldset>
   )
@@ -83,11 +84,17 @@ export function FieldError({ children }: FieldErrorProps) {
 
 export function FieldErrors({ errors }: { errors: string[] }) {
   return (
-    <div className="flex gap-1 flex-wrap">
-      {errors.map((error) => (
-        <FieldError key={error}>{error}</FieldError>
-      ))}
-    </div>
+    <ScrollArea.Root>
+      <ScrollArea.Viewport className="snap-x snap-mandatory flex gap-2 overflow-x-scroll no-scrollbar">
+        <ScrollArea.Content className="contents">
+          {errors.map((error) => (
+            <div key={error} className="snap-start">
+              <FieldError>{error}</FieldError>
+            </div>
+          ))}
+        </ScrollArea.Content>
+      </ScrollArea.Viewport>
+    </ScrollArea.Root>
   )
 }
 
