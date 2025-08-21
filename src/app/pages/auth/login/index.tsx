@@ -2,7 +2,7 @@ import {
   CheckCheck as IconCheckCheck,
   LoaderCircle as IconLoaderCircle,
 } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 
 import {
@@ -30,34 +30,11 @@ const defaultValues = {
   password: "",
 }
 
-type Initial = {
-  tag: "initial"
-}
-
-const INITIAL: Initial = { tag: "initial" }
-const PENDING: Pending = { tag: "pending" }
-
-type Pending = {
-  tag: "pending"
-}
-
-type Failure = {
-  tag: "failure"
-  reason: "INVALID_DETAILS"
-}
-
-type Success = {
-  tag: "success"
-  payload: { token: string }
-}
-
-type SubmitStatus = Initial | Pending | Failure | Success
-
 export function Login() {
-  console.log("Component Render")
   const [passwordVisible, setPasswordVisible] = useState(false)
 
-  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(INITIAL)
+  const [details, setDetails] = useState<null | LoginDetails>(null)
+  const loginData = useLogin(details)
 
   const { control, handleSubmit } = useForm<FormValues>({
     criteriaMode: "all",
@@ -72,29 +49,22 @@ export function Login() {
 
       <div className="h-8" />
 
-      <Form
-        onSubmit={handleSubmit(async (formData) => {
-          console.log("submitting")
-          setSubmitStatus(PENDING)
-
-          try {
-            const payload = await login({ ...formData, password: "" })
-            setSubmitStatus({ tag: "success", payload })
-          } catch (error) {
-            if (error === "INVALID_DETAILS") {
-              setSubmitStatus({ tag: "failure", reason: "INVALID_DETAILS" })
-            }
-          }
-        })}
-      >
+      <Form onSubmit={handleSubmit(setDetails)}>
         <FormGroup name="login">
           <FormGroupTitle
             title="Log In"
             description="Welcome back! Please log in to continue"
           />
 
-          {submitStatus.tag === "failure" && <InvalidCredentials />}
-          {submitStatus.tag === "success" && <SuccessfulLogin />}
+          {loginData.tag === "success" && <LoginComplete />}
+
+          {loginData.tag === "failure" && loginData.error.status === 400 && (
+            <InvalidData />
+          )}
+
+          {loginData.tag === "failure" && loginData.error.status === 401 && (
+            <InvalidCredentials />
+          )}
 
           <Controller
             name="email"
@@ -167,11 +137,11 @@ export function Login() {
             }}
           />
 
-          {submitStatus.tag === "pending" ? (
+          {loginData.tag === "pending" ? (
             <ButtonBadge type="button" color="purple" size="lg">
               <IconLoaderCircle className="animate-spin size-5" />
             </ButtonBadge>
-          ) : submitStatus.tag === "success" ? (
+          ) : loginData.tag === "success" ? (
             <ButtonBadge type="button" color="purple" size="lg">
               <IconCheckCheck className="size-5" />
             </ButtonBadge>
@@ -208,7 +178,7 @@ function InvalidCredentials() {
   )
 }
 
-function SuccessfulLogin() {
+function LoginComplete() {
   return (
     <Information.Root color="green">
       <Information.Title>
@@ -222,23 +192,96 @@ function SuccessfulLogin() {
   )
 }
 
-type LoginDetails = Record<"email" | "password", string>
-
-async function login({
-  email,
-  password,
-}: LoginDetails): Promise<{ token: string }> {
-  email
-  password
-
-  await sleep(2000)
-
-  if (Math.random() < 0.5)
-    return { token: "9f67387b-5b24-4952-a5c4-1f73371dbbde" }
-
-  throw "INVALID_DETAILS"
+function InvalidData() {
+  return (
+    <Information.Root color="green">
+      <Information.Title>That doesn’t look quite right</Information.Title>
+      <Information.Content>
+        One of the fields you entered has an invalid format. Please double-check
+        and try again.
+      </Information.Content>
+    </Information.Root>
+  )
 }
 
-function sleep(duration: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, duration))
+type LoginDetails = Record<"email" | "password", string>
+
+type Initial = { tag: "initial" }
+type Pending = { tag: "pending" }
+type Failure = { tag: "failure"; error: ApiError<400 | 401> }
+type Success<T> = { tag: "success"; result: T }
+
+type RemoteData<T> = Initial | Pending | Failure | Success<T>
+
+const initial: Initial = { tag: "initial" }
+
+type LoginPayload = { token: string }
+
+function useLogin(details: null | LoginDetails): RemoteData<LoginPayload> {
+  const [data, setData] = useState<RemoteData<LoginPayload>>(initial)
+
+  useEffect(() => {
+    if (details === null) {
+      return
+    }
+
+    setData({ tag: "pending" })
+
+    login(details)
+      .then((result) => {
+        setData({ tag: "success", result })
+      })
+      .catch((error) => {
+        if (error instanceof ApiError) {
+          if (error.is(400) || error.is(401)) {
+            setData({ tag: "failure", error })
+          }
+        }
+
+        throw error
+      })
+
+    return () => console.log("ABORTING REQUEST: LOGIN")
+  }, [JSON.stringify(details)])
+
+  return data
+}
+
+async function login({}: LoginDetails): Promise<LoginPayload> {
+  if (Math.random() < 0.3) {
+    throw new ApiError(400, "Invalid Email")
+  }
+
+  if (Math.random() < 0.3) {
+    throw new ApiError(401, "Invalid Credentiails")
+  }
+
+  return { token: "f76ef3ee-ec8c-472e-9388-bc2f1f81196e" }
+}
+
+const StatusToText = {
+  400: "Bad Request",
+  401: "Unauthorized",
+  409: "Conflict",
+  418: "I'm a teapot",
+} as const
+
+type Status = keyof typeof StatusToText
+
+class ApiError<T extends Status> extends Error {
+  status: T
+  statusText: (typeof StatusToText)[T]
+  constructor(status: T, message: string) {
+    super(message)
+    this.status = status
+    this.statusText = StatusToText[status]
+  }
+
+  is<T extends Status>(this: ApiError<any>, status: T): this is ApiError<T> {
+    return this.status === status
+  }
+
+  static is<T extends Status>(status: T, error: unknown): error is ApiError<T> {
+    return error instanceof ApiError && error.status === status
+  }
 }
