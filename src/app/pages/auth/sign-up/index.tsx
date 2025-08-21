@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import {
   CheckCheck as IconCheckCheck,
@@ -25,12 +25,16 @@ import {
   EmailTaken,
   InvalidData,
   SignUpComplete,
+  PostSignUpLoginComplete,
+  PostSignUpLoginFailure,
   TelephoneTaken,
 } from "@/components/form-v2/banner"
 
 import { BadRequest, Conflict } from "@/api/errors"
 import { register } from "@/api/endpoints/register"
 import { useErrorBoundary } from "react-error-boundary"
+import { useLocation } from "wouter"
+import { login } from "@/api/endpoints/login"
 
 type FormValues = {
   name: string
@@ -47,16 +51,20 @@ const defaultValues: FormValues = {
 }
 
 export function SignUp() {
+  const [_, setLocation] = useLocation()
   const { showBoundary } = useErrorBoundary()
   const [passwordVisible, setPasswordVisible] = useState(false)
 
   type RemoteData = "Initial" | "Pending" | "Failure" | "Success"
-  const [status, setStatus] = useState<RemoteData>("Initial")
+  const [statusSignUp, setStatusSignUp] = useState<RemoteData>("Initial")
+  const [statusLogin, setStatusLogin] = useState<RemoteData>("Initial")
 
   type Banner =
     | "EmailTaken"
     | "TelephoneTaken"
     | "SignUpComplete"
+    | "PostSignUpLoginComplete"
+    | "PostSignUpLoginFailure"
     | "InvalidData"
   const [banner, setBanner] = useState<null | Banner>(null)
 
@@ -67,15 +75,36 @@ export function SignUp() {
     defaultValues,
   })
 
+  useEffect(() => {
+    if (statusLogin === "Failure") {
+      setTimeout(setLocation, 1000, "/login")
+    }
+
+    if (statusLogin === "Success") {
+      setTimeout(setLocation, 1000, "~/home")
+    }
+  }, [statusLogin])
+
   async function onSubmit(formValues: FormValues) {
-    setStatus("Pending")
+    setStatusSignUp("Pending")
 
     try {
       await register(formValues)
-      setStatus("Success")
+      setStatusSignUp("Success")
       setBanner("SignUpComplete")
+
+      try {
+        setStatusLogin("Pending")
+        await login(formValues)
+        setStatusLogin("Success")
+        setBanner("PostSignUpLoginComplete")
+      } catch (error) {
+        console.error(error)
+        setStatusLogin("Failure")
+        setBanner("PostSignUpLoginFailure")
+      }
     } catch (error) {
-      setStatus("Failure")
+      setStatusSignUp("Failure")
 
       if (error instanceof Conflict) {
         const field = error.details.field
@@ -132,6 +161,8 @@ export function SignUp() {
           {banner === "EmailTaken" && <EmailTaken />}
           {banner === "TelephoneTaken" && <TelephoneTaken />}
           {banner === "SignUpComplete" && <SignUpComplete />}
+          {banner === "PostSignUpLoginComplete" && <PostSignUpLoginComplete />}
+          {banner === "PostSignUpLoginFailure" && <PostSignUpLoginFailure />}
           {banner === "InvalidData" && <InvalidData />}
 
           <Controller
@@ -300,11 +331,11 @@ export function SignUp() {
             }}
           />
 
-          {status === "Pending" ? (
+          {statusSignUp === "Pending" || statusLogin === "Pending" ? (
             <ButtonBadge type="button" color="purple" size="lg">
               <IconLoaderCircle className="animate-spin size-5" />
             </ButtonBadge>
-          ) : status === "Success" ? (
+          ) : statusSignUp === "Success" || statusLogin === "Success" ? (
             <ButtonBadge type="button" color="purple" size="lg">
               <IconCheckCheck className="size-5" />
             </ButtonBadge>

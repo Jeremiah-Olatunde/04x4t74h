@@ -4,11 +4,36 @@ export function SignUpComplete() {
   return (
     <Information.Root color="green">
       <Information.Title>
-        Congratulations! You account has been created
+        Congratulations! Your account is ready!
       </Information.Title>
       <Information.Content>
-        You’re all set. Discover personalized spots to eat, chill, date, or
-        explore—handpicked for you.
+        Welcome aboard — your account has been created successfully. Hang tight
+        for just a moment while we log you in and get your personalized
+        recommendations ready.
+      </Information.Content>
+    </Information.Root>
+  )
+}
+
+export function PostSignUpLoginComplete() {
+  return (
+    <Information.Root color="green">
+      <Information.Title>You’re all set!</Information.Title>
+      <Information.Content>
+        You've been logged in successfully. In just a moment, we’ll take you to
+        your homepage so you can start exploring personalized spots to eat,
+        chill, date, and discover.
+      </Information.Content>
+    </Information.Root>
+  )
+}
+export function PostSignUpLoginFailure() {
+  return (
+    <Information.Root color="red">
+      <Information.Title>We couldn’t log you in</Information.Title>
+      <Information.Content>
+        Something went wrong with your login attempt. You’ll be redirected to
+        the login page to try again.
       </Information.Content>
     </Information.Root>
   )
