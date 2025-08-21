@@ -18,9 +18,18 @@ import {
   FormGroupTitle,
 } from "@/components/form-v2"
 
-import * as Information from "@/components/card/information"
 import { Logo } from "@/components/logo"
 import { LinkText } from "@/components/link"
+
+import {
+  EmailTaken,
+  InvalidData,
+  SignUpComplete,
+  TelephoneTaken,
+} from "./banner"
+
+import { BadRequest, Conflict } from "@/api/errors"
+import { register } from "@/api/endpoints/register"
 
 type FormValues = {
   name: string
@@ -42,7 +51,11 @@ export function SignUp() {
   type RemoteData = "Initial" | "Pending" | "Failure" | "Success"
   const [status, setStatus] = useState<RemoteData>("Initial")
 
-  type Banner = "EmailTaken" | "SignUpComplete"
+  type Banner =
+    | "EmailTaken"
+    | "TelephoneTaken"
+    | "SignUpComplete"
+    | "InvalidData"
   const [banner, setBanner] = useState<null | Banner>(null)
 
   const { control, handleSubmit, setError } = useForm<FormValues>({
@@ -52,44 +65,71 @@ export function SignUp() {
     defaultValues,
   })
 
+  async function onSubmit(formValues: FormValues) {
+    setStatus("Pending")
+
+    try {
+      await register(formValues)
+      setStatus("Success")
+      setBanner("SignUpComplete")
+    } catch (error) {
+      setStatus("Failure")
+
+      if (error instanceof Conflict) {
+        const field = error.details.field
+
+        const isEmail = field === "email"
+        const isTelephone = field === "telephone"
+
+        if (!(isEmail || isTelephone)) {
+          throw error
+        }
+
+        const options = { shouldFocus: true }
+        const fieldError = { types: { conflict: error.message } }
+        setError(field, fieldError, options)
+        setBanner(field === "email" ? "EmailTaken" : "TelephoneTaken")
+
+        return
+      }
+
+      if (error instanceof BadRequest) {
+        const field = error.details.field
+
+        const isEmail = field === "email"
+        const isTelephone = field === "telephone"
+        const isPassword = field === "password"
+
+        if (!(isEmail || isTelephone || isPassword)) {
+          throw error
+        }
+
+        const options = { shouldFocus: true }
+        const fieldError = { types: { conflict: error.message } }
+        setError(field, fieldError, options)
+        setBanner("InvalidData")
+
+        return
+      }
+
+      throw error
+    }
+  }
+
   return (
     <section className="flex flex-col gap-4 px-6 py-8">
       <Logo color="purple" size="lg" />
 
       <div className="h-8" />
 
-      <Form
-        onSubmit={handleSubmit(async function (formValues) {
-          setStatus("Pending")
-
-          try {
-            await register(formValues)
-            setStatus("Success")
-            setBanner("SignUpComplete")
-          } catch (error) {
-            if (error instanceof ApiError) {
-              if (error.is(409)) {
-                const field = "email"
-                const options = { shouldFocus: true }
-                const fieldError = { types: { taken: "Email taken" } }
-                setError(field, fieldError, options)
-                setBanner("EmailTaken")
-              }
-
-              if (error.is(400)) {
-              }
-            }
-
-            setStatus("Failure")
-            throw error
-          }
-        })}
-      >
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <FormGroup name="group-one">
           <FormGroupTitle title="Sign In" description="Create an account!" />
 
           {banner === "EmailTaken" && <EmailTaken />}
+          {banner === "TelephoneTaken" && <TelephoneTaken />}
           {banner === "SignUpComplete" && <SignUpComplete />}
+          {banner === "InvalidData" && <InvalidData />}
 
           <Controller
             name="name"
@@ -282,71 +322,4 @@ export function SignUp() {
       </Form>
     </section>
   )
-}
-
-function SignUpComplete() {
-  return (
-    <Information.Root color="green">
-      <Information.Title>
-        Congratulations! You account has been created
-      </Information.Title>
-      <Information.Content>
-        You’re all set. Discover personalized spots to eat, chill, date, or
-        explore—handpicked for you.
-      </Information.Content>
-    </Information.Root>
-  )
-}
-
-function EmailTaken() {
-  return (
-    <Information.Root color="red">
-      <Information.Title>
-        Looks like you already have an account
-      </Information.Title>
-      <Information.Content>
-        That email is already registered. Try logging in instead, or use a
-        different email to sign up.
-      </Information.Content>
-    </Information.Root>
-  )
-}
-
-const StatusToText = {
-  400: "Bad Request",
-  401: "Unauthorized",
-  409: "Conflict",
-  418: "I'm a teapot",
-} as const
-
-type Status = keyof typeof StatusToText
-
-class ApiError<T extends Status> extends Error {
-  status: T
-  statusText: (typeof StatusToText)[T]
-  constructor(status: T, message: string) {
-    super(message)
-    this.status = status
-    this.statusText = StatusToText[status]
-  }
-
-  is<T extends Status>(this: ApiError<any>, status: T): this is ApiError<T> {
-    return this.status === status
-  }
-
-  static is<T extends Status>(status: T, error: unknown): error is ApiError<T> {
-    return error instanceof ApiError && error.status === status
-  }
-}
-
-type RegisterDetails = Record<
-  "name" | "email" | "password" | "telephone",
-  string
->
-async function register({}: RegisterDetails): Promise<{ token: string }> {
-  if (Math.random() < 0.5) {
-    throw new ApiError(409, "Email Taken")
-  }
-
-  return { token: "7fc979df-0284-436b-affb-10bf465423a5" }
 }
