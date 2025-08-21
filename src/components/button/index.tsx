@@ -1,7 +1,7 @@
 import type { ComponentProps, PropsWithChildren } from "react"
 
 import { Badge, type BadgeVariantProps } from "@/components/badge"
-import { Pill } from "@/components/pill"
+import { Pill, type PillVariantProps } from "@/components/pill"
 
 type ButtonBadgeProps = ComponentProps<"button"> & BadgeVariantProps
 
@@ -21,13 +21,15 @@ export function ButtonBadge({
   )
 }
 
+type ButtonPillProps = ComponentProps<"button"> & PillVariantProps
+
 export function ButtonPill({
   children,
   color,
   size,
   type,
   onClick,
-}: PropsWithChildren<ButtonBadgeProps>) {
+}: PropsWithChildren<ButtonPillProps>) {
   return (
     <button type={type} onClick={onClick} className="w-full cursor-pointer">
       <Pill color={color} size={size}>

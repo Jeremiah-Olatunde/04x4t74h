@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react"
 import { Link as LinkWouter } from "wouter"
 
 import { Badge, type BadgeVariantProps } from "../badge"
-import { Pill } from "@/components/pill"
+import { Pill, type PillVariantProps } from "@/components/pill"
 
 type LinkTextProps = Record<"children" | "href", string>
 
@@ -33,12 +33,14 @@ export function LinkBadge({
   )
 }
 
+type LinkPillProps = Record<"href", string> & PillVariantProps
+
 export function LinkPill({
   children,
   color,
   href,
   size,
-}: PropsWithChildren<LinkBadgeProps>) {
+}: PropsWithChildren<LinkPillProps>) {
   return (
     <LinkWouter href={href} className="cursor-pointer">
       <Pill color={color} size={size}>
