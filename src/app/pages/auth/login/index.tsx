@@ -2,8 +2,10 @@ import {
   CheckCheck as IconCheckCheck,
   LoaderCircle as IconLoaderCircle,
 } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
+import { useErrorBoundary } from "react-error-boundary"
+import { useLocation } from "wouter"
 
 import {
   Field,
@@ -27,7 +29,6 @@ import { ButtonBadge } from "@/components/button"
 import { LinkText } from "@/components/link"
 import { login } from "@/api/endpoints/login"
 import { BadRequest, Unauthorized } from "@/api/errors"
-import { useErrorBoundary } from "react-error-boundary"
 
 type FormValues = {
   email: string
@@ -40,6 +41,7 @@ const defaultValues = {
 }
 
 export function Login() {
+  const [_, setLocation] = useLocation()
   const { showBoundary } = useErrorBoundary()
   const [passwordVisible, setPasswordVisible] = useState(false)
 
@@ -55,6 +57,14 @@ export function Login() {
     shouldUseNativeValidation: true,
     defaultValues,
   })
+
+  useEffect(() => {
+    if (status !== "Success") {
+      return
+    }
+
+    setLocation("~/home")
+  }, [status])
 
   async function onSubmit(formValues: FormValues) {
     setBanner(null)
