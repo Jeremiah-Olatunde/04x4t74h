@@ -15,10 +15,16 @@ import { Http } from "./pages/error/http"
 export function Router() {
   return (
     <ErrorBoundary
-      fallbackRender={({ error }) => {
+      fallbackRender={({ error, resetErrorBoundary }) => {
         console.log(error)
         if (error instanceof ApiError) {
-          return <Http error={error} />
+          return (
+            <Http
+              error={error}
+              handleRetry={resetErrorBoundary}
+              handleReport={() => {}}
+            />
+          )
         }
 
         return <Unexpected />

@@ -1,11 +1,18 @@
 import type { ApiError } from "@/api/errors"
+import { ButtonBadge } from "@/components/button"
 
-export function Http({ error }: { error: ApiError }) {
+type HttpProps = {
+  error: ApiError
+  handleRetry: () => void
+  handleReport: () => void
+}
+
+export function Http({ error, handleRetry, handleReport }: HttpProps) {
   return (
     <section className="h-screen flex flex-col gap-4 px-6 py-8 justify-center">
       <header className="flex flex-col">
         <p className="">
-          <span className="font-sora text-4xl text-primary font-semibold">
+          <span className="font-sora text-4xl text-neutral-200 font-semibold">
             {error.code}
           </span>
           &nbsp;
@@ -22,6 +29,20 @@ export function Http({ error }: { error: ApiError }) {
         Oops, looks like something unexpected went wrong. Don’t worry—it happens
         sometimes. A quick refresh of the page might just fix it.
       </p>
+
+      <div className="flex gap-2 justify-start">
+        <div>
+          <ButtonBadge color="neutral" size="md" onClick={handleReport}>
+            Report Error
+          </ButtonBadge>
+        </div>
+
+        <div>
+          <ButtonBadge color="white" size="md" onClick={handleRetry}>
+            Try Again
+          </ButtonBadge>
+        </div>
+      </div>
     </section>
   )
 }
