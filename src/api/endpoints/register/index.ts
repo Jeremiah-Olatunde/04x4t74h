@@ -1,4 +1,10 @@
-import { BadRequest, Conflict, ImATeapot } from "@/api/errors"
+import {
+  BadRequest,
+  Conflict,
+  ImATeapot,
+  InternalServerError,
+  TooManyRequests,
+} from "@/api/errors"
 
 type RegisterKeys = "name" | "email" | "password" | "telephone"
 type RegisterDetails = Record<RegisterKeys, string>
@@ -19,8 +25,16 @@ export async function register({}: RegisterDetails): Promise<void> {
     throw new BadRequest(message, details)
   }
 
-  if (Math.random() < 0.1) {
-    throw new ImATeapot("Unable to brew coffee")
+  if (Math.random() < 0.2) {
+    throw new ImATeapot("You did not just ask me to make a smoothie")
+  }
+
+  if (Math.random() < 0.2) {
+    throw new InternalServerError("Unrecoverable server error")
+  }
+
+  if (Math.random() < 0.2) {
+    throw new TooManyRequests("Try again after 120 seconds")
   }
 }
 

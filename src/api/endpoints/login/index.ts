@@ -1,4 +1,10 @@
-import { BadRequest, ImATeapot, Unauthorized } from "@/api/errors"
+import {
+  BadRequest,
+  ImATeapot,
+  InternalServerError,
+  TooManyRequests,
+  Unauthorized,
+} from "@/api/errors"
 import { sleep } from "@/utils"
 
 type LoginKeys = "email" | "password"
@@ -13,16 +19,24 @@ export async function login({}: LoginDetails): Promise<LoginPayload> {
   }
 
   if (Math.random() < 0.3) {
-    const fields = ["email"]
-    const field = fields[Math.floor(Math.random() * 3)]
-    console.log("random field", field)
+    const field = "email"
     const message = `Invalid ${field}`
     const details = { field, tag: "invalid" } as const
     throw new BadRequest(message, details)
   }
 
-  if (Math.random() < 0.1) {
-    throw new ImATeapot("Unable to brew coffee")
+  if (Math.random() < 0.2) {
+    throw new ImATeapot("No Roman, I can't brew coffee")
+  }
+
+  if (Math.random() < 0.2) {
+    throw new InternalServerError(
+      "An unexpected error occurred while processing your request",
+    )
+  }
+
+  if (Math.random() < 0.2) {
+    throw new TooManyRequests("Try again after 120 seconds")
   }
 
   return { token: crypto.randomUUID() }

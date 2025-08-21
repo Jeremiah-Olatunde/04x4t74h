@@ -30,6 +30,7 @@ import {
 
 import { BadRequest, Conflict } from "@/api/errors"
 import { register } from "@/api/endpoints/register"
+import { useErrorBoundary } from "react-error-boundary"
 
 type FormValues = {
   name: string
@@ -46,6 +47,7 @@ const defaultValues: FormValues = {
 }
 
 export function SignUp() {
+  const { showBoundary } = useErrorBoundary()
   const [passwordVisible, setPasswordVisible] = useState(false)
 
   type RemoteData = "Initial" | "Pending" | "Failure" | "Success"
@@ -112,6 +114,7 @@ export function SignUp() {
         return
       }
 
+      showBoundary(error)
       throw error
     }
   }

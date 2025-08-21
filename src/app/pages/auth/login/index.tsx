@@ -27,6 +27,7 @@ import { ButtonBadge } from "@/components/button"
 import { LinkText } from "@/components/link"
 import { login } from "@/api/endpoints/login"
 import { BadRequest, Unauthorized } from "@/api/errors"
+import { useErrorBoundary } from "react-error-boundary"
 
 type FormValues = {
   email: string
@@ -39,6 +40,7 @@ const defaultValues = {
 }
 
 export function Login() {
+  const { showBoundary } = useErrorBoundary()
   const [passwordVisible, setPasswordVisible] = useState(false)
 
   type RemoteData = "Initial" | "Pending" | "Failure" | "Success"
@@ -55,6 +57,7 @@ export function Login() {
   })
 
   async function onSubmit(formValues: FormValues) {
+    setBanner(null)
     setStatus("Pending")
 
     try {
@@ -86,6 +89,7 @@ export function Login() {
         return
       }
 
+      showBoundary(error)
       throw error
     }
   }

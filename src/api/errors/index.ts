@@ -39,3 +39,15 @@ export class ImATeapot extends ApiError {
     super(418, "I'm a teapot", message)
   }
 }
+
+export class TooManyRequests extends ApiError {
+  constructor(message: string) {
+    super(429, "Too Many Requests", message)
+  }
+}
+
+export class InternalServerError extends ApiError {
+  constructor(message: string) {
+    super(500, "Internal Server Error", message)
+  }
+}
