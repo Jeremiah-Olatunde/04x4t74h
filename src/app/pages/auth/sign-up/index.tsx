@@ -26,7 +26,7 @@ import {
   InvalidData,
   SignUpComplete,
   TelephoneTaken,
-} from "./banner"
+} from "@/components/form-v2/banner"
 
 import { BadRequest, Conflict } from "@/api/errors"
 import { register } from "@/api/endpoints/register"

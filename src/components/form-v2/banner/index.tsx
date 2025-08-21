@@ -14,6 +14,20 @@ export function SignUpComplete() {
   )
 }
 
+export function LoginComplete() {
+  return (
+    <Information.Root color="green">
+      <Information.Title>
+        Welcome back! Let’s find your next adventure
+      </Information.Title>
+      <Information.Content>
+        You’re all signed in. Discover personalized spots to eat, chill, date,
+        or explore—handpicked for you.
+      </Information.Content>
+    </Information.Root>
+  )
+}
+
 export function EmailTaken() {
   return (
     <Information.Root color="red">
@@ -49,6 +63,20 @@ export function InvalidData() {
       <Information.Content>
         One of the fields you entered has an invalid format. Please double-check
         and try again.
+      </Information.Content>
+    </Information.Root>
+  )
+}
+
+export function InvalidCredentials() {
+  return (
+    <Information.Root color="red">
+      <Information.Title>
+        We couldn't find an account with those details
+      </Information.Title>
+      <Information.Content>
+        Make sure you have entered the right email and password, or sign up if
+        you are new
       </Information.Content>
     </Information.Root>
   )
