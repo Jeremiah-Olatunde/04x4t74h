@@ -51,3 +51,5 @@ export class InternalServerError extends ApiError {
     super(500, "Internal Server Error", message)
   }
 }
+
+export class AutoLoginError extends ApiError {}

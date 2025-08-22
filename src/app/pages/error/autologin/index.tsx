@@ -1,13 +1,12 @@
 import type { ApiError } from "@/api/errors"
 import { ButtonBadge } from "@/components/button"
+import { LinkBadge } from "@/components/link"
 
-type HttpProps = {
+type AutoLoginProps = {
   error: ApiError
-  children: string
-  handleRetry: () => void
 }
 
-export function Http({ error, children, handleRetry }: HttpProps) {
+export function AutoLogin({ error }: AutoLoginProps) {
   return (
     <section className="h-screen flex flex-col gap-4 px-6 py-8 justify-center">
       <header className="flex flex-col">
@@ -25,7 +24,11 @@ export function Http({ error, children, handleRetry }: HttpProps) {
         </p>
       </header>
 
-      <p className="font-sora text-neutral-600">{children}</p>
+      <p className="font-sora text-neutral-600">
+        Your account was created, but something went wrong while logging you in
+        automatically. Please click the button below to go to the login page and
+        sign in manually
+      </p>
 
       <div className="flex gap-2 justify-start">
         <div>
@@ -35,9 +38,9 @@ export function Http({ error, children, handleRetry }: HttpProps) {
         </div>
 
         <div>
-          <ButtonBadge color="white" size="md" onClick={handleRetry}>
-            Try Again
-          </ButtonBadge>
+          <LinkBadge href="~/auth/login" color="white" size="md">
+            Manual Login
+          </LinkBadge>
         </div>
       </div>
     </section>

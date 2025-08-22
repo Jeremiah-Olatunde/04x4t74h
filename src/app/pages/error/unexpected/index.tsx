@@ -3,7 +3,7 @@ export function Unexpected() {
     <section className="h-screen flex flex-col gap-4 px-6 py-8 justify-center">
       <header className="flex flex-col">
         <h1 className="font-sora text-xl text-neutral-600 font-medium">
-          Something's wrong
+          Error!
         </h1>
         <p className="text-neutral-400 text-sm font-medium font-sora">
           An unexpected error occured

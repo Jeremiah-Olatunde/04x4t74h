@@ -1,7 +1,7 @@
-import { Route, Switch } from "wouter"
+import { Route, Switch, useLocation } from "wouter"
 import { ErrorBoundary } from "react-error-boundary"
 
-import { ApiError } from "@/api/errors"
+import { ApiError, AutoLoginError } from "@/api/errors"
 
 import { Home } from "./pages/home"
 import { Command } from "./pages/command"
@@ -13,17 +13,35 @@ import { Unexpected } from "./pages/error/unexpected"
 import { Http } from "./pages/error/http"
 
 export function Router() {
+  const [_, setLocation] = useLocation()
+
   return (
     <ErrorBoundary
       fallbackRender={({ error, resetErrorBoundary }) => {
         console.log(error)
-        if (error instanceof ApiError) {
+
+        if (error instanceof AutoLoginError) {
           return (
             <Http
               error={error}
-              handleRetry={resetErrorBoundary}
-              handleReport={() => {}}
-            />
+              handleRetry={() => {
+                resetErrorBoundary()
+                setLocation("~/auth/login")
+              }}
+            >
+              Your account was created, but something went wrong while logging
+              you in automatically. Please click the button below to go to the
+              login page and sign in manually
+            </Http>
+          )
+        }
+
+        if (error instanceof ApiError) {
+          return (
+            <Http error={error} handleRetry={resetErrorBoundary}>
+              Oops, looks like something unexpected went wrong. Don’t worry—it
+              happens sometimes. A quick refresh of the page might just fix it.
+            </Http>
           )
         }
 

@@ -30,7 +30,7 @@ import {
   TelephoneTaken,
 } from "@/components/form-v2/banner"
 
-import { BadRequest, Conflict } from "@/api/errors"
+import { ApiError, AutoLoginError, BadRequest, Conflict } from "@/api/errors"
 import { register } from "@/api/endpoints/register"
 import { useErrorBoundary } from "react-error-boundary"
 import { useLocation } from "wouter"
@@ -76,10 +76,6 @@ export function SignUp() {
   })
 
   useEffect(() => {
-    if (statusLogin === "Failure") {
-      setTimeout(setLocation, 1000, "/login")
-    }
-
     if (statusLogin === "Success") {
       setTimeout(setLocation, 1000, "~/home")
     }
@@ -99,9 +95,11 @@ export function SignUp() {
         setStatusLogin("Success")
         setBanner("PostSignUpLoginComplete")
       } catch (error) {
-        console.error(error)
-        setStatusLogin("Failure")
-        setBanner("PostSignUpLoginFailure")
+        if (error instanceof ApiError) {
+          throw new AutoLoginError(error.code, error.text, error.message)
+        }
+
+        throw error
       }
     } catch (error) {
       setStatusSignUp("Failure")
