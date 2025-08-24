@@ -1,8 +1,6 @@
 import {
   ChevronDownIcon,
-  CompassIcon,
-  Search as IconSearch,
-  LogOutIcon,
+  LogInIcon,
   MenuIcon,
   SearchIcon,
   TelescopeIcon,
@@ -22,8 +20,15 @@ export function Hero() {
 
   return (
     <header className="relative rounded-b-2xl bg-[url(/images/bg-guest.png)] bg-cover p-6">
-      <div className="flex flex-start">
+      <div className="flex justify-between items-center">
         <SelectCity city={city} cities={cities} handleCityChange={setCity} />
+        <div className="opacity-0 border-1 border-neutral-300 bg-white rounded-lg p-0.5">
+          <MenuIcon className="text-neutral-400 size-6" />
+        </div>
+      </div>
+
+      <div className="fixed top-6 right-6 z-10">
+        <Sidebar />
       </div>
 
       <div className="h-8" />
@@ -65,7 +70,7 @@ export function Hero() {
           type="button"
           className="bg-white cursor-pointer basis-3/5 p-2 gap-2 rounded-md flex items-center"
         >
-          <Icon color="neutral" icon={IconSearch} size="sm" />
+          <Icon color="neutral" icon={SearchIcon} size="sm" />
           <span className="text-xxs text-neutral-400 font-sora">
             Search Plazzaa...
           </span>
@@ -117,5 +122,52 @@ function SelectCity({ city, cities, handleCityChange }: SelectCityProps) {
         </Select.Positioner>
       </Select.Portal>
     </Select.Root>
+  )
+}
+
+type SidebarProps = {}
+
+function Sidebar({}: SidebarProps) {
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger className="flex flex-row justify-center items-center gap-1 border-1 border-neutral-300 bg-white rounded-md p-1">
+        <MenuIcon className="text-neutral-400 size-4" />
+        <span className="font-sora text-xs font-semibold text-neutral-400">
+          Menu
+        </span>
+      </Dialog.Trigger>
+
+      <Dialog.Portal>
+        <Dialog.Backdrop className="fixed inset-0 bg-black/0 backdrop-blur-[2px] z-20" />
+        <Dialog.Popup className="fixed top-0 right-0 p-1 h-screen z-20">
+          <div className="bg-white border-1 border-neutral-300 h-full rounded-xl flex flex-col justify-between items-center px-6 py-6">
+            <div>
+              <ul className="flex flex-col gap-8 items-center">
+                <li className="">
+                  <MenuIcon className="text-neutral-400 size-6" />
+                </li>
+
+                <div className="h-0" />
+
+                <li className="">
+                  <TelescopeIcon className="text-neutral-400 size-6" />
+                </li>
+                <li className="">
+                  <SearchIcon className="text-neutral-400 size-6" />
+                </li>
+              </ul>
+            </div>
+
+            <ul>
+              <li>
+                <WouterLink href="/auth/login">
+                  <LogInIcon className="text-neutral-400 size-6" />
+                </WouterLink>
+              </li>
+            </ul>
+          </div>
+        </Dialog.Popup>
+      </Dialog.Portal>
+    </Dialog.Root>
   )
 }
