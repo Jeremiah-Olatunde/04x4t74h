@@ -21,7 +21,7 @@ export type BusinessDetails = {
 export function Business({ details }: { details: BusinessDetails }) {
   return (
     <Root>
-      <Button />
+      {/* <Button /> */}
 
       <WouterLink href={`#`}>
         <img
