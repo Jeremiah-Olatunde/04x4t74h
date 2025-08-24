@@ -1,15 +1,34 @@
-import { Search as IconSearch } from "lucide-react"
+import {
+  ChevronDownIcon,
+  CompassIcon,
+  Search as IconSearch,
+  LogOutIcon,
+  MenuIcon,
+  SearchIcon,
+  TelescopeIcon,
+} from "lucide-react"
 
 import { Icon } from "@/components/icon"
 import { Logo } from "@/components/logo"
 import { LinkBadge } from "@/components/link"
+import { Select } from "@base-ui-components/react/select"
+import { useState } from "react"
+import { Dialog } from "@base-ui-components/react/dialog"
+import { Link as WouterLink } from "wouter"
 
 export function Hero() {
+  const [city, setCity] = useState("Lagos")
+  const [cities] = useState(["Abuja", "Lagos", "Port Harcourt"])
+
   return (
-    <header className="rounded-b-2xl bg-[url(/images/bg-guest.png)] bg-cover p-6">
-      <div>
-        <Logo color="white" size="sm" />
+    <header className="relative rounded-b-2xl bg-[url(/images/bg-guest.png)] bg-cover p-6">
+      <div className="flex flex-start">
+        <SelectCity city={city} cities={cities} handleCityChange={setCity} />
       </div>
+
+      <div className="h-8" />
+
+      <Logo color="white" size="sm" />
 
       <div className="h-4" />
 
@@ -55,5 +74,48 @@ export function Hero() {
 
       <div className="h-2" />
     </header>
+  )
+}
+
+type SelectCityProps = {
+  city: string
+  cities: string[]
+  handleCityChange: (city: string) => void
+}
+
+function SelectCity({ city, cities, handleCityChange }: SelectCityProps) {
+  return (
+    <Select.Root
+      items={cities.map((c) => ({ label: c, value: c }))}
+      name="poet"
+      id="poet"
+      value={city}
+      onValueChange={handleCityChange}
+    >
+      <Select.Trigger>
+        <div className="flex flex-row gap-2 justify-between items-center py-1 px-2 rounded-md bg-white/10 backdrop-blur-xs">
+          <Select.Value className="font-sora text-xs font-medium text-white" />
+          <Select.Icon>
+            <ChevronDownIcon className="text-white size-4" />
+          </Select.Icon>
+        </div>
+      </Select.Trigger>
+
+      <Select.Portal>
+        <Select.Positioner align="start" sideOffset={8}>
+          <Select.Popup className="bg-white border-1 border-neutral-300 rounded-lg flex flex-col gap-0">
+            {cities.map((city) => {
+              return (
+                <Select.Item key={city} value={city} className="p-2">
+                  <Select.ItemText className="font-sora text-sm text-neutral-600">
+                    {city}
+                  </Select.ItemText>
+                </Select.Item>
+              )
+            })}
+          </Select.Popup>
+        </Select.Positioner>
+      </Select.Portal>
+    </Select.Root>
   )
 }

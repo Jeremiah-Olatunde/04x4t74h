@@ -18,7 +18,7 @@ export function Home() {
         <div className="h-8" />
 
         <div className="flex flex-col gap-8">
-          {Array.makeBy(5, (index) => {
+          {Array.makeBy(8, (index) => {
             const adjective = faker.company.buzzAdjective()
             const noun = faker.company.buzzNoun()
             const tag = `${adjective} ${noun}`
