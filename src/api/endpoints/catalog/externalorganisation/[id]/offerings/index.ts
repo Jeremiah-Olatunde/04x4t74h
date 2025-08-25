@@ -7,14 +7,18 @@ import {
 } from "@/api/errors"
 import type { BusinessWithReviewsAndServices } from "@/types/business"
 import { sleep } from "@/utils"
-import { businessWithReviewsAndServices } from "@/utils/fake/business"
+import { BUSINESSES_WITH_REVIEWS_AND_SERVICES } from "@/utils/fake/business"
 
 export async function offerings(
   id: string,
 ): Promise<BusinessWithReviewsAndServices> {
   await sleep(Math.random() * 2000)
 
-  if (Math.random() < 0.3) {
+  const business = BUSINESSES_WITH_REVIEWS_AND_SERVICES.find(
+    (business) => business.id === id,
+  )
+
+  if (business === undefined || Math.random() < 0.3) {
     const name = "object.id"
     const reason = `a resource with id ${id} does not exist`
     const invalidParams = [{ name, reason }]
@@ -39,5 +43,5 @@ export async function offerings(
     throw new TooManyRequests("Try again after 120 seconds")
   }
 
-  return businessWithReviewsAndServices({ id })
+  return business
 }

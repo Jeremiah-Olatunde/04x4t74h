@@ -1,5 +1,3 @@
-import { faker } from "@faker-js/faker"
-
 import {
   Unauthorized,
   ImATeapot,
@@ -9,9 +7,9 @@ import {
 import { sleep } from "@/utils/sleep"
 
 import type { Business } from "@/types/business"
-import { business } from "@/utils/fake/business"
+import { BUSINESSES } from "@/utils/fake"
 
-export async function externalorganisation(): Promise<Business[]> {
+export async function externalorganisation(): Promise<readonly Business[]> {
   await sleep(Math.random() * 2000)
 
   if (Math.random() < 0.1) {
@@ -32,7 +30,5 @@ export async function externalorganisation(): Promise<Business[]> {
     throw new TooManyRequests("Try again after 120 seconds")
   }
 
-  const min = 50
-  const max = 200
-  return Array(faker.number.int({ min, max })).fill(0).map(business)
+  return BUSINESSES
 }
