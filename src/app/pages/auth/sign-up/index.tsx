@@ -1,5 +1,7 @@
+import { useLocation } from "wouter"
 import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
+import { useErrorBoundary } from "react-error-boundary"
 import {
   CheckCheck as IconCheckCheck,
   LoaderCircle as IconLoaderCircle,
@@ -31,10 +33,8 @@ import {
 } from "@/components/form-v2/banner"
 
 import { ApiError, AutoLoginError, BadRequest, Conflict } from "@/api/errors"
-import { register } from "@/api/endpoints/register"
-import { useErrorBoundary } from "react-error-boundary"
-import { useLocation } from "wouter"
-import { login } from "@/api/endpoints/login"
+import { login } from "@/api/endpoints/auth/login"
+import { register } from "@/api/endpoints/auth/register"
 
 type FormValues = {
   name: string

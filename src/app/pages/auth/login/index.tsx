@@ -27,7 +27,7 @@ import {
 import { Logo } from "@/components/logo"
 import { ButtonBadge } from "@/components/button"
 import { LinkText } from "@/components/link"
-import { login } from "@/api/endpoints/login"
+import { login } from "@/api/endpoints/auth/login"
 import { BadRequest, Unauthorized } from "@/api/errors"
 
 type FormValues = {

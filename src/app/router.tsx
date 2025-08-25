@@ -2,15 +2,14 @@ import { Route, Switch, useLocation } from "wouter"
 import { ErrorBoundary } from "react-error-boundary"
 
 import { ApiError, AutoLoginError } from "@/api/errors"
+import { Unexpected, Http } from "@/components/error"
 
 import { Home } from "./pages/home"
-import { Command } from "./pages/command"
 import { Login } from "./pages/auth/login"
 import { SignUp } from "./pages/auth/sign-up"
 import { ResetPassword } from "./pages/auth/password/reset"
 import { ForgotPassword } from "./pages/auth/password/forgot"
-import { Unexpected } from "./pages/error/unexpected"
-import { Http } from "./pages/error/http"
+import { Business } from "./pages/business"
 
 export function Router() {
   const [_, setLocation] = useLocation()
@@ -49,8 +48,8 @@ export function Router() {
       }}
     >
       <Switch>
-        <Route path="/" component={Command} />
         <Route path="/home" component={Home} />
+        <Route path="/business" component={Business} />
         <Route path="/auth" nest>
           <Route path="/" component={Login} />
           <Route path="/login" component={Login} />
