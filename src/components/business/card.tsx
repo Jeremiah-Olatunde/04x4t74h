@@ -51,20 +51,6 @@ function Root({ children }: { children: ReactNode }) {
   )
 }
 
-// function Button() {
-//   return (
-//     <button type="button" className="absolute top-2 right-2 cursor-pointer">
-//       <div className="rounded-full p-2 flex justify-center items-center bg-red-400">
-//         {Math.random() < 0.5 ? (
-//           <IconHeart className="size-3 stroke-white" />
-//         ) : (
-//           <IconHeart className="size-3 stroke-white fill-white " />
-//         )}
-//       </div>
-//     </button>
-//   )
-// }
-
 function Address({ town, city }: { town: string; city: string }) {
   return (
     <address className="flex justify-start items-center gap-1">
@@ -102,3 +88,17 @@ function Budget() {
     </p>
   )
 }
+
+// function Button() {
+//   return (
+//     <button type="button" className="absolute top-2 right-2 cursor-pointer">
+//       <div className="rounded-full p-2 flex justify-center items-center bg-red-400">
+//         {Math.random() < 0.5 ? (
+//           <IconHeart className="size-3 stroke-white" />
+//         ) : (
+//           <IconHeart className="size-3 stroke-white fill-white " />
+//         )}
+//       </div>
+//     </button>
+//   )
+// }

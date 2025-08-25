@@ -1,13 +1,31 @@
+import { LoaderCircleIcon } from "lucide-react"
 import { faker } from "@faker-js/faker"
 
 import * as Array from "Array"
-import { mockBusiness } from "@/utils/mock"
 
 import { Hero } from "./hero"
 import * as BusinessList from "@/components/business/list"
 import { GetRecommendations } from "@/components/card"
+import { useBusinesses } from "@/hooks/business"
+import { isFailure, isInitial, isPending } from "@/lib/remote-data"
 
 export function Home() {
+  const remoteData = useBusinesses()
+
+  if (isInitial(remoteData) || isPending(remoteData)) {
+    return (
+      <section className="h-screen w-screen flex justify-center items-center">
+        <LoaderCircleIcon className="text-primary size-16 animate-spin" />
+      </section>
+    )
+  }
+
+  if (isFailure(remoteData)) {
+    throw remoteData.error
+  }
+
+  const businesses = remoteData.value
+
   return (
     <section className="flex flex-col">
       <Hero />
@@ -22,7 +40,6 @@ export function Home() {
             const adjective = faker.company.buzzAdjective()
             const noun = faker.company.buzzNoun()
             const tag = `${adjective} ${noun}`
-            const businesses = Array.makeBy(10, mockBusiness)
 
             return (
               <BusinessList.Root key={index}>

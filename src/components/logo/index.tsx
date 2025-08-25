@@ -1,9 +1,9 @@
+import { Link as LinkWouter } from "wouter"
 import { cva } from "class-variance-authority"
 
 import logoPrimary from "@/assets/icons/logo-primary.svg"
 import logoWhite from "@/assets/icons/logo-white.svg"
 import { tw } from "@/utils/tailwind"
-import { Link as LinkWouter } from "wouter"
 
 const text = (function () {
   const base = tw`font-fredoka font-semibold capitalize`

@@ -24,6 +24,18 @@ export class Unauthorized extends ApiError {
   }
 }
 
+type NotFoundPayload = {
+  invalidParams: { name: string; reason: string }[]
+}
+
+export class NotFound extends ApiError {
+  payload: NotFoundPayload
+  constructor(message: string, payload: NotFoundPayload) {
+    super(404, "Not Found", message)
+    this.payload = payload
+  }
+}
+
 type ConflictDetails = { field: string }
 
 export class Conflict extends ApiError {

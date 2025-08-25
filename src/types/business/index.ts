@@ -1,20 +1,21 @@
-import type { Review } from "./review"
-import type { Service } from "./service"
+import type { Review } from "@/types/review"
+import type { Service } from "@/types/service"
 
 export type Business = Readonly<{
   amenities: Readonly<Record<"name", string>[]>
-  businessCategory: readonly string[]
+  businessCategory: string
   businessSubCategory: readonly string[]
   city: string
   description: string
   id: string
+  logo: string
   name: string
   paymentOptions: readonly string[]
+  rating: number
   street: string
   telephone: string
-  themes: Readonly<Record<"name", string>[]>
+  tags: Readonly<Record<"name", string>[]>
   town: string
-  logo: string
 }>
 
 export type BusinessWithReviewsAndServices = Business & {
