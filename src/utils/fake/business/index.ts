@@ -46,7 +46,7 @@ export const BUSINESSES_WITH_REVIEWS_AND_SERVICES: readonly BusinessWithReviewsA
           createdOn: faker.date.past().toString(),
           reviewBody: faker.lorem.paragraph(),
           reviewRating: faker.number.float({
-            min: 3,
+            min: 1,
             max: 5,
             fractionDigits: 1,
           }),

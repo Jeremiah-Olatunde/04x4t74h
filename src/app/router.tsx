@@ -48,8 +48,10 @@ export function Router() {
       }}
     >
       <Switch>
+        <Route path="/" component={Home} />
         <Route path="/home" component={Home} />
-        <Route path="/business" component={Business} />
+        <Route path="/business/:id" component={Business} />
+
         <Route path="/auth" nest>
           <Route path="/" component={Login} />
           <Route path="/login" component={Login} />

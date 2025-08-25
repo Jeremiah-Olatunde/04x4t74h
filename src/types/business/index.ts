@@ -2,7 +2,7 @@ import type { Review } from "@/types/review"
 import type { Service } from "@/types/service"
 
 export type Business = Readonly<{
-  amenities: Readonly<Record<"name", string>[]>
+  amenities: readonly string[]
   businessCategory: string
   businessSubCategory: readonly string[]
   city: string
@@ -14,7 +14,7 @@ export type Business = Readonly<{
   rating: number
   street: string
   telephone: string
-  tags: Readonly<Record<"name", string>[]>
+  tags: readonly string[]
   town: string
 }>
 

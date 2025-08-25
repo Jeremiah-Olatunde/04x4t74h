@@ -1,23 +1,15 @@
-import { LoaderCircleIcon } from "lucide-react"
-import { faker } from "@faker-js/faker"
-
-import * as Array from "Array"
-
 import { Hero } from "./hero"
 import * as BusinessList from "@/components/business/list"
 import { GetRecommendations } from "@/components/card"
 import { useBusinesses } from "@/hooks/business"
 import { isFailure, isInitial, isPending } from "@/lib/remote-data"
+import { LoadingScreen } from "@/components/loading"
 
 export function Home() {
   const remoteData = useBusinesses()
 
   if (isInitial(remoteData) || isPending(remoteData)) {
-    return (
-      <section className="h-screen w-screen flex justify-center items-center">
-        <LoaderCircleIcon className="text-primary size-16 animate-spin" />
-      </section>
-    )
+    return <LoadingScreen />
   }
 
   if (isFailure(remoteData)) {
@@ -25,6 +17,12 @@ export function Home() {
   }
 
   const businesses = remoteData.value
+
+  const tags = [...new Set(businesses.flatMap((b) => b.tags))] as const
+
+  const grouped = group(businesses, tags, (business, tag) => {
+    return business.tags.includes(tag)
+  })
 
   return (
     <section className="flex flex-col">
@@ -36,16 +34,12 @@ export function Home() {
         <div className="h-8" />
 
         <div className="flex flex-col gap-8">
-          {Array.makeBy(8, (index) => {
-            const adjective = faker.company.buzzAdjective()
-            const noun = faker.company.buzzNoun()
-            const tag = `${adjective} ${noun}`
-
+          {[...grouped.entries()].map(([name, businesses]) => {
             return (
-              <BusinessList.Root key={index}>
+              <BusinessList.Root key={name}>
                 <BusinessList.Header>
-                  <BusinessList.Title title={tag} />
-                  <BusinessList.Link href="#" />
+                  <BusinessList.Title title={name} />
+                  <BusinessList.Link href={`/search?tag=${name}`} />
                 </BusinessList.Header>
 
                 <BusinessList.Slider businesses={businesses} />
@@ -56,4 +50,20 @@ export function Home() {
       </section>
     </section>
   )
+}
+
+export function group<T>(
+  items: readonly T[],
+  groups: readonly string[],
+  belongs: (item: T, group: string) => boolean,
+) {
+  const map: Map<string, T[]> = new Map(groups.map((g) => [g, []]))
+
+  for (const group of groups) {
+    for (const item of items) {
+      if (belongs(item, group)) map.get(group)?.push(item)
+    }
+  }
+
+  return map
 }

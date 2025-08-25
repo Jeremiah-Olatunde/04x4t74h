@@ -10,7 +10,7 @@ import type { Business } from "@/types/business"
 import { BUSINESSES } from "@/utils/fake"
 
 export async function externalorganisation(): Promise<readonly Business[]> {
-  await sleep(Math.random() * 2000)
+  await sleep(Math.random() * 500)
 
   if (Math.random() < 0.1) {
     throw new Unauthorized("Invalid credentials")

@@ -19,7 +19,7 @@ export function Business({ details }: { details: BusinessDetails }) {
     <Root>
       {/* <Button /> */}
 
-      <WouterLink href={`#`}>
+      <WouterLink href={`/business/${details.id}`}>
         <img
           src={details.logo}
           alt={`cover photo of ${details.name}`}
