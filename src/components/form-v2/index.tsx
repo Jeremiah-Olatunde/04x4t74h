@@ -12,8 +12,10 @@ export function FormGroup({
   children,
 }: PropsWithChildren<FormGroupProps>) {
   return (
-    <fieldset name={name} className="min-w-0 w-full flex flex-col gap-6">
-      {children}
+    <fieldset name={name} className="contents">
+      <div className="min-w-0 w-full flex flex-col gap-6 grow-1">
+        {children}
+      </div>
     </fieldset>
   )
 }
@@ -122,5 +124,5 @@ export function FieldPasswordToggle({
   )
 }
 
-export { Input as FieldInput } from "./input"
+export { Input as FieldInput, TextArea as FieldTextArea } from "./input"
 export { Form } from "@base-ui-components/react/form"

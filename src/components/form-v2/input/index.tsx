@@ -39,3 +39,25 @@ export function Input({
     </div>
   )
 }
+
+type TextAreaProps = {} & ComponentProps<"textarea">
+
+export function TextArea({
+  children,
+  color,
+  ...rest
+}: PropsWithChildren<TextAreaProps & InputVariantProps>) {
+  return (
+    <div className={generateClasses({ color })}>
+      <textarea
+        className="w-0 h-72 p-4 grow border-none font-sora text-xs text-neutral-600 outline-none placeholder:text-neutral-400"
+        {...rest}
+      />
+      {children && (
+        <div className="self-start flex items-center justify-center">
+          {children}
+        </div>
+      )}
+    </div>
+  )
+}
