@@ -4,12 +4,13 @@ import { ErrorBoundary } from "react-error-boundary"
 import { ApiError, AutoLoginError } from "@/api/errors"
 import { Unexpected, Http } from "@/components/error"
 
-import { Business } from "@/app/pages/business"
+import { Business } from "@/app/pages/business/[businessId]/home/[page]"
+import { ReviewCreate } from "@/app/pages/business/[businessId]/reviews/create"
+
 import { ForgotPassword } from "@/app/pages/auth/password/forgot"
 import { Home } from "@/app/pages/home"
 import { Login } from "@/app/pages/auth/login"
 import { ResetPassword } from "@/app/pages/auth/password/reset"
-import { ReviewCreate } from "@/app/pages/business/review"
 import { SignUp } from "@/app/pages/auth/sign-up"
 
 export function Router() {

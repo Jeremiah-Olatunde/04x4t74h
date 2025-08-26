@@ -44,6 +44,8 @@ export function ReviewCreate() {
           return <BusinessDetails business={business} />
         },
       })}
+
+      <ReviewCreateForm />
     </section>
   )
 }
