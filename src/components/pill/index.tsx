@@ -9,13 +9,14 @@ const red = tw`bg-red-50 text-red-600`
 const purple = tw`bg-primary/10 text-primary`
 const yellow = tw`bg-secondary text-neutral-600`
 const neutral = tw`bg-neutral-100 text-neutral-600`
+const white = tw`bg-white text-neutral-600 border-1 border-neutral-300`
 
 const sm = tw`px-3 py-1 text-[10px]`
-const md = tw`p-2 text-xs`
+const md = tw`px-4 py-2 text-xs`
 const lg = tw`p-4 text-sm`
 
 const variants = {
-  color: { red, purple, yellow, neutral },
+  color: { red, purple, yellow, neutral, white },
   size: { sm, md, lg },
 } as const
 

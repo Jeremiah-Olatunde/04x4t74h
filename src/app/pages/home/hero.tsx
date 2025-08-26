@@ -1,5 +1,6 @@
 import {
   ChevronDownIcon,
+  LoaderCircleIcon,
   LogInIcon,
   MenuIcon,
   SearchIcon,
@@ -10,85 +11,46 @@ import { Icon } from "@/components/icon"
 import { Logo } from "@/components/logo"
 import { LinkBadge } from "@/components/link"
 import { Select } from "@base-ui-components/react/select"
-import { useState } from "react"
 import { Dialog } from "@base-ui-components/react/dialog"
 import { Link as WouterLink } from "wouter"
+import type { PropsWithChildren } from "react"
 
-export function Hero() {
-  const [city, setCity] = useState("Lagos")
-  const [cities] = useState(["Abuja", "Lagos", "Port Harcourt"])
+type HeroProps = {}
 
+export function Root({ children }: PropsWithChildren<HeroProps>) {
   return (
-    <header className="relative rounded-b-2xl bg-[url(/images/bg-guest.png)] bg-cover p-6">
-      <div className="flex justify-between items-center">
-        <SelectCity city={city} cities={cities} handleCityChange={setCity} />
-        <div className="opacity-0 border-1 border-neutral-300 bg-white rounded-lg p-0.5">
-          <MenuIcon className="text-neutral-400 size-6" />
-        </div>
+    <header className="rounded-b-2xl bg-primary">
+      <div className="relative rounded-b-2xl bg-[url(/images/bg-guest.png)] bg-cover p-6">
+        {children}
       </div>
-
-      <div className="fixed top-6 right-6 z-10">
-        <Sidebar />
-      </div>
-
-      <div className="h-8" />
-
-      <Logo color="white" size="sm" />
-
-      <div className="h-4" />
-
-      <h1 className="font-sora text-white font-bold text-2xl text-center">
-        Best of the city, <br />
-        Currated just for you.
-      </h1>
-
-      <div className="h-4" />
-
-      <p className="font-sora text-white text-center text-xs">
-        Enjoy instant, personalized recommendations for places to eat, chill,
-        date, or explore—right in your city.
-      </p>
-
-      <div className="h-6" />
-
-      <div className="flex justify-center items-center">
-        <span className="text-xs text-white font-sora font-medium">
-          Ready to find your Next Spot?
-        </span>
-      </div>
-
-      <div className="h-2" />
-
-      <div className="flex gap-2 items-center">
-        <div className="basis-2/5">
-          <LinkBadge color="yellow" href="/auth/sign-up" size="md">
-            Get Started
-          </LinkBadge>
-        </div>
-
-        <button
-          type="button"
-          className="bg-white cursor-pointer basis-3/5 p-2 gap-2 rounded-md flex items-center"
-        >
-          <Icon color="neutral" icon={SearchIcon} size="sm" />
-          <span className="text-xxs text-neutral-400 font-sora">
-            Search Plazzaa...
-          </span>
-        </button>
-      </div>
-
-      <div className="h-2" />
     </header>
   )
 }
 
 type SelectCityProps = {
   city: string
-  cities: string[]
+  cities: readonly string[]
   handleCityChange: (city: string) => void
 }
 
-function SelectCity({ city, cities, handleCityChange }: SelectCityProps) {
+export function SelectCitySkeleton() {
+  return (
+    <div className="flex flex-row gap-2 justify-between items-center py-1 px-2 rounded-md bg-white/10 backdrop-blur-xs">
+      <div className="font-sora text-xs font-medium text-white px-1">
+        <LoaderCircleIcon className="size-4 text-white animate-spin" />
+      </div>
+      <div>
+        <ChevronDownIcon className="text-white size-4" />
+      </div>
+    </div>
+  )
+}
+
+export function SelectCity({
+  city,
+  cities,
+  handleCityChange,
+}: SelectCityProps) {
   return (
     <Select.Root
       items={cities.map((c) => ({ label: c, value: c }))}
@@ -127,7 +89,7 @@ function SelectCity({ city, cities, handleCityChange }: SelectCityProps) {
 
 type SidebarProps = {}
 
-function Sidebar({}: SidebarProps) {
+export function Sidebar({}: SidebarProps) {
   return (
     <Dialog.Root>
       <Dialog.Trigger className="flex flex-row justify-center items-center gap-1 border-1 border-neutral-300 bg-white rounded-md p-1">
@@ -169,5 +131,55 @@ function Sidebar({}: SidebarProps) {
         </Dialog.Popup>
       </Dialog.Portal>
     </Dialog.Root>
+  )
+}
+
+export function Content() {
+  return (
+    <div>
+      <Logo color="white" size="sm" />
+
+      <div className="h-4" />
+
+      <h1 className="font-sora text-white font-bold text-2xl text-center">
+        Best of the city, <br />
+        Currated just for you.
+      </h1>
+
+      <div className="h-4" />
+
+      <p className="font-sora text-white text-center text-xs">
+        Enjoy instant, personalized recommendations for places to eat, chill,
+        date, or explore—right in your city.
+      </p>
+
+      <div className="h-6" />
+
+      <div className="flex justify-center items-center">
+        <span className="text-xs text-white font-sora font-medium">
+          Ready to find your Next Spot?
+        </span>
+      </div>
+
+      <div className="h-2" />
+
+      <div className="flex gap-2 items-center">
+        <div className="basis-2/5">
+          <LinkBadge color="yellow" href="/auth/sign-up" size="md">
+            Get Started
+          </LinkBadge>
+        </div>
+
+        <WouterLink
+          href="#"
+          className="bg-white cursor-pointer basis-3/5 p-2 gap-2 rounded-md flex items-center"
+        >
+          <Icon color="neutral" icon={SearchIcon} size="sm" />
+          <span className="text-xxs text-neutral-400 font-sora">
+            Search Plazzaa...
+          </span>
+        </WouterLink>
+      </div>
+    </div>
   )
 }

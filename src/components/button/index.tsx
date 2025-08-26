@@ -10,10 +10,15 @@ export function ButtonBadge({
   color,
   size,
   type,
+  className,
   onClick,
 }: PropsWithChildren<ButtonBadgeProps>) {
   return (
-    <button type={type} onClick={onClick} className="w-full cursor-pointer">
+    <button
+      type={type}
+      onClick={onClick}
+      className={`w-full cursor-pointer ${className}`}
+    >
       <Badge color={color} size={size}>
         {children}
       </Badge>
@@ -28,10 +33,15 @@ export function ButtonPill({
   color,
   size,
   type,
+  className,
   onClick,
 }: PropsWithChildren<ButtonPillProps>) {
   return (
-    <button type={type} onClick={onClick} className="w-full cursor-pointer">
+    <button
+      type={type}
+      onClick={onClick}
+      className={`w-min cursor-pointer ${className}`}
+    >
       <Pill color={color} size={size}>
         {children}
       </Pill>

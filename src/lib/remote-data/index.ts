@@ -56,3 +56,39 @@ export const map = <E, A, B>(
   if (isSuccess(fa)) return success(f(fa.value))
   return fa
 }
+
+export const fold =
+  <E, A, B>(
+    onInitial: () => B,
+    onPending: () => B,
+    onFailure: (error: E) => B,
+    onSuccess: (value: A) => B,
+  ) =>
+  (ma: RemoteData<E, A>): B => {
+    switch (ma.tag) {
+      case "RemoteInitial": {
+        return onInitial()
+      }
+
+      case "RemotePending": {
+        return onPending()
+      }
+
+      case "RemoteFailure": {
+        return onFailure(ma.error)
+      }
+
+      case "RemoteSuccess": {
+        return onSuccess(ma.value)
+      }
+    }
+  }
+
+export const fold3 = <E, A, R>(
+  fa: RemoteData<E, A>,
+  f: {
+    onNone: () => R
+    onFailure: (e: E) => R
+    onSuccess: (a: A) => R
+  },
+) => fold(() => f.onNone(), f.onNone, f.onFailure, f.onSuccess)(fa)
