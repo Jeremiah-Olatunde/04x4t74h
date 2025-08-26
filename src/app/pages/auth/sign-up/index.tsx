@@ -348,7 +348,7 @@ export function SignUp() {
               Already have an account?
             </span>
 
-            <LinkText href="/login">Login</LinkText>
+            <LinkText href="/auth/login">Login</LinkText>
           </div>
         </FormGroup>
       </Form>

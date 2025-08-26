@@ -211,7 +211,7 @@ export function Login() {
               Don't have an account?
             </span>
 
-            <LinkText href="/sign-up">Sign Up</LinkText>
+            <LinkText href="/auth/sign-up">Sign Up</LinkText>
           </div>
         </FormGroup>
       </Form>
