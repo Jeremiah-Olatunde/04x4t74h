@@ -4,12 +4,12 @@ import { ErrorBoundary } from "react-error-boundary"
 import { ApiError, AutoLoginError } from "@/api/errors"
 import { Unexpected, Http } from "@/components/error"
 
-import { Home } from "./pages/home"
-import { Login } from "./pages/auth/login"
-import { SignUp } from "./pages/auth/sign-up"
-import { ResetPassword } from "./pages/auth/password/reset"
-import { ForgotPassword } from "./pages/auth/password/forgot"
-import { Business } from "./pages/business"
+import { Home } from "@/app/pages/home"
+import { Login } from "@/app/pages/auth/login"
+import { SignUp } from "@/app/pages/auth/sign-up"
+import { ResetPassword } from "@/app/pages/auth/password/reset"
+import { ForgotPassword } from "@/app/pages/auth/password/forgot"
+import { Business } from "@/app/pages/business"
 
 export function Router() {
   const [_, setLocation] = useLocation()

@@ -101,7 +101,7 @@ function Hero({ business }: HeroProps) {
         </ul>
         <div className="flex gap-2 items-center justify-start">
           <ul className="flex gap-1">
-            {Array(Math.ceil(business.rating))
+            {Array(Math.round(business.rating))
               .fill(0)
               .map((_, index) => (
                 <StarIcon
@@ -218,7 +218,7 @@ function Reviews({ reviews }: ReviewsProps) {
                       {review.reviewer.name}
                     </h2>
                     <ul className="flex gap-1">
-                      {Array(Math.ceil(review.reviewRating))
+                      {Array(Math.round(review.reviewRating))
                         .fill(0)
                         .map((_, index) => (
                           <li key={index}>
