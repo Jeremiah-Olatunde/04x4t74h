@@ -106,3 +106,16 @@ export function InvalidCredentials() {
     </Information.Root>
   )
 }
+
+export function ReviewCreated() {
+  return (
+    <Information.Root color="green">
+      <Information.Title>Thanks for sharing your experience!</Information.Title>
+      <Information.Content>
+        Your review was submitted successfully. It’s now part of the community
+        and will help others discover great spots to enjoy around the city. We
+        appreciate your contribution!
+      </Information.Content>
+    </Information.Root>
+  )
+}

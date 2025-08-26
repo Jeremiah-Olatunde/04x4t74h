@@ -1,17 +1,23 @@
 import { useParams } from "wouter"
 
-import { PathParameterError } from "@/api/errors"
+import { BadRequest, PathParameterError } from "@/api/errors"
 import { useBusinessesWithReviewsAndServices } from "@/hooks/business"
 import { LinkBack } from "@/components/link"
 import type { Business } from "@/types/business"
 import * as RemoteData from "@/lib/remote-data"
-import { type ReactNode } from "react"
+import { useState, type ReactNode } from "react"
 import { Icon } from "@/components/icon"
-import { MapPinIcon, ClockIcon, PiggyBankIcon, StarIcon } from "lucide-react"
+import {
+  MapPinIcon,
+  ClockIcon,
+  PiggyBankIcon,
+  StarIcon,
+  LoaderCircleIcon,
+  CheckCheckIcon,
+} from "lucide-react"
 import {
   Field,
   FieldErrors,
-  FieldInput,
   FieldLabel,
   FieldTextArea,
   Form,
@@ -20,6 +26,9 @@ import {
 
 import { Controller, useForm } from "react-hook-form"
 import { ButtonBadge } from "@/components/button"
+import { reviews } from "@/api/endpoints/catalog/externalorganisation/[id]/reviews"
+import { InvalidData, ReviewCreated } from "@/components/form-v2/banner"
+import { useErrorBoundary } from "react-error-boundary"
 
 export function ReviewCreate() {
   const { businessId } = useParams()
@@ -32,8 +41,6 @@ export function ReviewCreate() {
     throw new PathParameterError(parameter, schema, details)
   }
 
-  const remoteData = useBusinessesWithReviewsAndServices(businessId)
-
   return (
     <section className="px-6 py-8 min-h-screen flex flex-col gap-8">
       <header className="relative flex justify-center items-center gap-4">
@@ -45,19 +52,7 @@ export function ReviewCreate() {
         </h1>
       </header>
 
-      {RemoteData.fold3(remoteData, {
-        onFailure: (error): ReactNode => {
-          throw error
-        },
-        onNone: (): ReactNode => {
-          return <BusinessDetailsSkeleton />
-        },
-        onSuccess: (business): ReactNode => {
-          return <BusinessDetails business={business} />
-        },
-      })}
-
-      <ReviewCreateForm />
+      <ReviewCreateForm businessId={businessId} />
     </section>
   )
 }
@@ -130,22 +125,74 @@ const defaultValues: FormValues = {
   reviewRating: 0,
 }
 
-type ReviewCreateFormProps = {}
-function ReviewCreateForm({}: ReviewCreateFormProps) {
-  const { control, handleSubmit, setValue } = useForm<FormValues>({
+type ReviewCreateFormProps = { businessId: string }
+function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
+  const { showBoundary } = useErrorBoundary()
+  const remoteData = useBusinessesWithReviewsAndServices(businessId)
+
+  const { control, handleSubmit, setValue, setError } = useForm<FormValues>({
     criteriaMode: "all",
     mode: "onChange",
     shouldUseNativeValidation: true,
     defaultValues,
   })
 
-  function onSubmit(formValues: FormValues) {
-    console.log(formValues)
+  type Status = RemoteData.RemoteData<unknown, null>
+  const [status, setStatus] = useState<Status>(RemoteData.initial)
+
+  type Banner = "ReviewCreated" | "InvalidData"
+  const [banner, setBanner] = useState<null | Banner>(null)
+
+  async function onSubmit(formValues: FormValues) {
+    setStatus(RemoteData.pending)
+
+    try {
+      await reviews(businessId, formValues)
+      setStatus(RemoteData.success(null))
+    } catch (error) {
+      setStatus(RemoteData.failure(error))
+
+      if (error instanceof BadRequest) {
+        const field = error.details.field
+
+        const isReviewBody = field === "reviewBody"
+        const isReviewRating = field === "reviewRating"
+
+        if (!(isReviewBody || isReviewRating)) {
+          throw error
+        }
+
+        const options = { shouldFocus: true }
+        const fieldError = { types: { invalid: error.message } }
+        setError(field, fieldError, options)
+        setBanner("InvalidData")
+
+        return
+      }
+
+      showBoundary(error)
+      throw error
+    }
   }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="grow-1 flex flex-col">
       <FormGroup name="create-review">
+        {banner === "ReviewCreated" && <ReviewCreated />}
+        {banner === "InvalidData" && <InvalidData />}
+
+        {RemoteData.fold3(remoteData, {
+          onFailure: (error): ReactNode => {
+            throw error
+          },
+          onNone: (): ReactNode => {
+            return <BusinessDetailsSkeleton />
+          },
+          onSuccess: (business): ReactNode => {
+            return <BusinessDetails business={business} />
+          },
+        })}
+
         <Controller
           name="reviewRating"
           control={control}
@@ -168,7 +215,7 @@ function ReviewCreateForm({}: ReviewCreateFormProps) {
                 <input
                   {...field}
                   type="number"
-                  id="rating"
+                  id={field.name}
                   className="hidden"
                 />
                 <div className="flex gap-4 items-center">
@@ -240,9 +287,36 @@ function ReviewCreateForm({}: ReviewCreateFormProps) {
           }}
         />
 
-        <ButtonBadge type="submit" color="purple" size="lg">
-          Leave your Review
-        </ButtonBadge>
+        {RemoteData.fold(status, {
+          onInitial: (): ReactNode => {
+            return (
+              <ButtonBadge type="submit" color="purple" size="lg">
+                Share your experience!
+              </ButtonBadge>
+            )
+          },
+          onPending: (): ReactNode => {
+            return (
+              <ButtonBadge type="button" color="purple" size="lg">
+                <LoaderCircleIcon className="animate-spin size-5" />
+              </ButtonBadge>
+            )
+          },
+          onFailure: (): ReactNode => {
+            return (
+              <ButtonBadge type="submit" color="purple" size="lg">
+                Share your experience!
+              </ButtonBadge>
+            )
+          },
+          onSuccess: (): ReactNode => {
+            return (
+              <ButtonBadge type="button" color="purple" size="lg">
+                <CheckCheckIcon className="size-5" />
+              </ButtonBadge>
+            )
+          },
+        })}
       </FormGroup>
     </Form>
   )

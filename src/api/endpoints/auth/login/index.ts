@@ -25,18 +25,19 @@ export async function login({}: LoginDetails): Promise<LoginPayload> {
     throw new BadRequest(message, details)
   }
 
-  if (Math.random() < 0.2) {
-    throw new ImATeapot("No Roman, I can't brew coffee")
+  if (Math.random() < 0.1) {
+    throw new ImATeapot("Don't share your password with a teapot!")
   }
 
-  if (Math.random() < 0.2) {
+  if (Math.random() < 0.1) {
     throw new InternalServerError(
       "An unexpected error occurred while processing your request",
     )
   }
 
-  if (Math.random() < 0.2) {
-    throw new TooManyRequests("Try again after 120 seconds")
+  if (Math.random() < 0.1) {
+    const time = Math.ceil(Math.random() * 120)
+    throw new TooManyRequests(`Try again after ${time} seconds`)
   }
 
   return { token: crypto.randomUUID() }

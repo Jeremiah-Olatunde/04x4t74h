@@ -86,7 +86,7 @@ export function Login() {
         }
 
         const options = { shouldFocus: true }
-        const fieldError = { types: { conflict: error.message } }
+        const fieldError = { types: { invalid: error.message } }
         setError(field, fieldError, options)
         setBanner("InvalidData")
 
