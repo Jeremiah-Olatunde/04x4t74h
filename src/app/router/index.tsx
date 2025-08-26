@@ -4,12 +4,13 @@ import { ErrorBoundary } from "react-error-boundary"
 import { ApiError, AutoLoginError } from "@/api/errors"
 import { Unexpected, Http } from "@/components/error"
 
+import { Business } from "@/app/pages/business"
+import { ForgotPassword } from "@/app/pages/auth/password/forgot"
 import { Home } from "@/app/pages/home"
 import { Login } from "@/app/pages/auth/login"
-import { SignUp } from "@/app/pages/auth/sign-up"
 import { ResetPassword } from "@/app/pages/auth/password/reset"
-import { ForgotPassword } from "@/app/pages/auth/password/forgot"
-import { Business } from "@/app/pages/business"
+import { ReviewCreate } from "@/app/pages/business/review"
+import { SignUp } from "@/app/pages/auth/sign-up"
 
 export function Router() {
   const [_, setLocation] = useLocation()
@@ -17,8 +18,6 @@ export function Router() {
   return (
     <ErrorBoundary
       fallbackRender={({ error, resetErrorBoundary }) => {
-        console.log(error)
-
         if (error instanceof AutoLoginError) {
           return (
             <Http
@@ -50,18 +49,20 @@ export function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/home" component={Home} />
-        <Route path="/business/:id" component={Business} />
 
-        <Route path="/auth" nest>
-          <Route path="/" component={Login} />
-          <Route path="/login" component={Login} />
-          <Route path="/sign-up" component={SignUp} />
-          <Route path="/password" nest>
-            <Route path="/" component={ForgotPassword} />
-            <Route path="/forgot" component={ForgotPassword} />
-            <Route path="/reset" component={ResetPassword} />
-          </Route>
-        </Route>
+        <Route path="/business/:businessId/home/:page" component={Business} />
+        <Route
+          path="/business/:businessId/reviews/create"
+          component={ReviewCreate}
+        />
+
+        <Route path="/auth" component={Login} />
+        <Route path="/auth/login" component={Login} />
+        <Route path="/auth/sign-up" component={SignUp} />
+        <Route path="/auth/password" component={ForgotPassword} />
+        <Route path="/auth/password/forgot" component={ForgotPassword} />
+        <Route path="/auth/password/reset" component={ResetPassword} />
+
         <Route>page not found</Route>
       </Switch>
     </ErrorBoundary>

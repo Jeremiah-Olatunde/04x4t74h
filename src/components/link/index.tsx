@@ -3,6 +3,7 @@ import { Link as LinkWouter } from "wouter"
 
 import { Badge, type BadgeVariantProps } from "../badge"
 import { Pill, type PillVariantProps } from "@/components/pill"
+import { ChevronLeftIcon } from "lucide-react"
 
 type LinkTextProps = Record<"children" | "href", string>
 
@@ -46,6 +47,18 @@ export function LinkPill({
       <Pill color={color} size={size}>
         {children}
       </Pill>
+    </LinkWouter>
+  )
+}
+
+type LinkBackProps = { href: string }
+
+export function LinkBack({ href }: LinkBackProps) {
+  return (
+    <LinkWouter href={href} className="w-min">
+      <div className="w-min bg-white border-1 border-neutral-300 p-2 rounded-xl">
+        <ChevronLeftIcon className="text-neutral-400 size-5" />
+      </div>
     </LinkWouter>
   )
 }

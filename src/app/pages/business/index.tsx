@@ -1,12 +1,11 @@
-import { Link as WouterLink, useParams } from "wouter"
+import { useLocation, useParams } from "wouter"
 import { Tabs } from "@base-ui-components/react/tabs"
 
 import type { BusinessWithReviewsAndServices } from "@/types/business"
 import { LoadingScreen } from "@/components/loading"
 import { useBusinessesWithReviewsAndServices } from "@/hooks/business"
-import { isInitial, isPending, isFailure } from "@/lib/remote-data"
+import * as RemoteData from "@/lib/remote-data"
 import {
-  ChevronLeftIcon,
   CircleUserRoundIcon,
   ClockIcon,
   MapPinIcon,
@@ -15,26 +14,29 @@ import {
   StarIcon,
 } from "lucide-react"
 import { Icon } from "@/components/icon"
-import { useState } from "react"
 import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
-
-class ParameterError extends Error {}
+import { PathParameterError } from "@/api/errors"
+import { LinkBack, LinkText } from "@/components/link"
 
 export function Business() {
-  const { id } = useParams()
+  const { businessId } = useParams()
 
-  if (id === undefined) {
-    throw new ParameterError("Missing :id parameter")
+  if (businessId === undefined) {
+    const tag = "missing"
+    const details = { tag } as const
+    const parameter = "businessId"
+    const schema = "/business/:businessId/home/:page"
+    throw new PathParameterError(parameter, schema, details)
   }
 
-  const remoteData = useBusinessesWithReviewsAndServices(id)
+  const remoteData = useBusinessesWithReviewsAndServices(businessId)
 
-  if (isInitial(remoteData) || isPending(remoteData)) {
+  if (RemoteData.isInitial(remoteData) || RemoteData.isPending(remoteData)) {
     return <LoadingScreen />
   }
 
-  if (isFailure(remoteData)) {
+  if (RemoteData.isFailure(remoteData)) {
     throw remoteData.error
   }
 
@@ -56,13 +58,9 @@ function Hero({ business }: HeroProps) {
   return (
     <section className="flex flex-col gap-6 p-6">
       <div className="relative">
-        <WouterLink
-          href="/home"
-          type="button"
-          className="absolute top-2 left-2 bg-white border-1 border-neutral-300 p-2 rounded-xl"
-        >
-          <ChevronLeftIcon className="text-neutral-600 size-5" />
-        </WouterLink>
+        <div className="absolute top-2 left-2">
+          <LinkBack href="/home" />
+        </div>
         <img
           src={business.logo}
           alt={`${business.name}`}
@@ -115,9 +113,9 @@ function Hero({ business }: HeroProps) {
             &nbsp; &middot; &nbsp;
             {business.reviews.length} Reviews
           </div>
-          <div className="font-sora text-xs text-primary font-medium">
+          <LinkText href={`/business/${business.id}/reviews/create`}>
             Leave a Review
-          </div>
+          </LinkText>
         </div>
       </div>
     </section>
@@ -127,42 +125,68 @@ function Hero({ business }: HeroProps) {
 type KakashiProps = { business: BusinessWithReviewsAndServices }
 
 function Kakashi({ business }: KakashiProps) {
-  type Page = "Menu" | "Reviews" | "Information"
-  const [page, setPage] = useState<Page>("Menu")
+  const { page } = useParams()
+  const [_, setLocation] = useLocation()
+
+  const isMenu = page === "menu"
+  const isReviews = page === "reviews"
+  const isInfo = page === "info"
+
+  if (page === undefined) {
+    const tag = "missing"
+    const details = { tag } as const
+    const parameter = "page"
+    const schema = "/business/:id/home/:page"
+    throw new PathParameterError(parameter, schema, details)
+  }
+
+  if (!(isMenu || isReviews || isInfo)) {
+    const value = page
+    const tag = "invalid"
+    const details = { tag, value } as const
+    const parameter = "page"
+    const schema = "/business/:id/home/:page"
+    throw new PathParameterError(parameter, schema, details)
+  }
 
   return (
     <section>
-      <Tabs.Root value={page} onValueChange={setPage}>
+      <Tabs.Root
+        value={page}
+        onValueChange={(page) => {
+          setLocation(`/business/${business.id}/home/${page}`)
+        }}
+      >
         <Tabs.List className="px-8 py-4 border-b-1 border-neutral-200 flex justify-start gap-12">
           <Tabs.Tab
-            value="Menu"
-            className={`font-sora text-neutral-400 text-xs ${page === "Menu" && "font-semibold text-neutral-700"}`}
+            value="menu"
+            className={`font-sora text-neutral-400 text-xs ${page === "menu" && "font-semibold text-neutral-700"}`}
           >
             Menu
           </Tabs.Tab>
           <Tabs.Tab
-            value="Reviews"
-            className={`font-sora text-neutral-400 text-xs ${page === "Reviews" && "font-semibold text-neutral-700"}`}
+            value="reviews"
+            className={`font-sora text-neutral-400 text-xs ${page === "reviews" && "font-semibold text-neutral-700"}`}
           >
             Reviews
           </Tabs.Tab>
           <Tabs.Tab
-            value="Information"
-            className={`font-sora text-neutral-400 text-xs ${page === "Information" && "font-semibold text-neutral-700"}`}
+            value="info"
+            className={`font-sora text-neutral-400 text-xs ${page === "info" && "font-semibold text-neutral-700"}`}
           >
             Information
           </Tabs.Tab>
         </Tabs.List>
 
-        <Tabs.Panel value="Menu">
+        <Tabs.Panel value="menu">
           <Menu services={business.services} />
         </Tabs.Panel>
 
-        <Tabs.Panel value="Reviews">
+        <Tabs.Panel value="reviews">
           <Reviews reviews={business.reviews} />
         </Tabs.Panel>
 
-        <Tabs.Panel value="Information">
+        <Tabs.Panel value="info">
           <Information telephone={business.telephone} />
         </Tabs.Panel>
       </Tabs.Root>
