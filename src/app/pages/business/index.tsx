@@ -175,9 +175,9 @@ type MenuProps = { services: readonly Service[] }
 function Menu({ services }: MenuProps) {
   return (
     <ul className="flex flex-col">
-      {services.slice(0, 5).map((service) => {
+      {services.slice(0, 5).map((service, index) => {
         return (
-          <li className="border-b-1 border-neutral-300">
+          <li key={index} className="border-b-1 border-neutral-300">
             <article className="px-8 py-4 flex flex-col gap-2">
               <h2 className="font-sora text-neutral-700 font-semibold text-sm">
                 {service.name}
@@ -205,9 +205,9 @@ function Reviews({ reviews }: ReviewsProps) {
       {reviews
         .toSorted((a, b) => b.reviewRating - a.reviewRating)
         .slice(0, 5)
-        .map((review) => {
+        .map((review, index) => {
           return (
-            <li className="border-b-1 border-neutral-300">
+            <li key={index} className="border-b-1 border-neutral-300">
               <article className="px-8 py-4 flex flex-col gap-3">
                 <div className="flex flex-row gap-4 items-start">
                   <div className="aspect-square">
@@ -220,8 +220,10 @@ function Reviews({ reviews }: ReviewsProps) {
                     <ul className="flex gap-1">
                       {Array(Math.ceil(review.reviewRating))
                         .fill(0)
-                        .map(() => (
-                          <StarIcon className="text-secondary fill-secondary size-3" />
+                        .map((_, index) => (
+                          <li key={index}>
+                            <StarIcon className="text-secondary fill-secondary size-3" />
+                          </li>
                         ))}
                     </ul>
                   </div>
