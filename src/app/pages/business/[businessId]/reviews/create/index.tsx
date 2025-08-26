@@ -144,11 +144,13 @@ function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
   const [banner, setBanner] = useState<null | Banner>(null)
 
   async function onSubmit(formValues: FormValues) {
+    setBanner(null)
     setStatus(RemoteData.pending)
 
     try {
       await reviews(businessId, formValues)
       setStatus(RemoteData.success(null))
+      setBanner("ReviewCreated")
     } catch (error) {
       setStatus(RemoteData.failure(error))
 
