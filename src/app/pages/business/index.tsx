@@ -3,7 +3,7 @@ import { Tabs } from "@base-ui-components/react/tabs"
 
 import type { BusinessWithReviewsAndServices } from "@/types/business"
 import { LoadingScreen } from "@/components/loading"
-import { useBusinessWithReviewsAndServices } from "@/hooks/business"
+import { useBusinessesWithReviewsAndServices } from "@/hooks/business"
 import { isInitial, isPending, isFailure } from "@/lib/remote-data"
 import {
   ChevronLeftIcon,
@@ -28,7 +28,7 @@ export function Business() {
     throw new ParameterError("Missing :id parameter")
   }
 
-  const remoteData = useBusinessWithReviewsAndServices(id)
+  const remoteData = useBusinessesWithReviewsAndServices(id)
 
   if (isInitial(remoteData) || isPending(remoteData)) {
     return <LoadingScreen />
