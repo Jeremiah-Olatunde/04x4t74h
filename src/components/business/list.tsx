@@ -2,13 +2,10 @@ import type { PropsWithChildren } from "react"
 import { ChevronRight as IconChevronRight } from "lucide-react"
 import { ScrollArea } from "@base-ui-components/react/scroll-area"
 
-import * as Array from "Array"
-import * as Function from "Function"
-
 import { Icon } from "@/components/icon"
+import { LinkBadge } from "@/components/link"
 
 import { type BusinessDetails, Business } from "./card"
-import { LinkBadge } from "../link"
 
 export function Root({ children }: PropsWithChildren<{}>) {
   return <section className="flex flex-col gap-4">{children}</section>
@@ -37,14 +34,11 @@ export function Slider({ businesses }: SliderProps) {
     <ScrollArea.Root>
       <ScrollArea.Viewport className="snap-x snap-mandatory flex gap-2 overflow-x-scroll no-scrollbar">
         <ScrollArea.Content className="contents">
-          {Function.pipe(
-            businesses,
-            Array.map((business) => (
-              <div key={business.id} className="snap-start w-60 shrink-0">
-                <Business details={business} />
-              </div>
-            )),
-          )}
+          {businesses.map((business) => (
+            <div key={business.id} className="snap-start w-60 shrink-0">
+              <Business details={business} />
+            </div>
+          ))}
         </ScrollArea.Content>
       </ScrollArea.Viewport>
     </ScrollArea.Root>

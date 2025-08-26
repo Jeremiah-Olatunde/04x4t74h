@@ -1,4 +1,4 @@
-import { useParams } from "wouter"
+import { Link as WouterLink, useParams } from "wouter"
 import { Tabs } from "@base-ui-components/react/tabs"
 
 import type { BusinessWithReviewsAndServices } from "@/types/business"
@@ -40,8 +40,6 @@ export function Business() {
 
   const business = remoteData.value
 
-  console.log(business)
-
   return (
     <section className="">
       <Hero business={business} />
@@ -58,12 +56,13 @@ function Hero({ business }: HeroProps) {
   return (
     <section className="flex flex-col gap-6 p-6">
       <div className="relative">
-        <button
+        <WouterLink
+          href="/home"
           type="button"
           className="absolute top-2 left-2 bg-white border-1 border-neutral-300 p-2 rounded-xl"
         >
           <ChevronLeftIcon className="text-neutral-600 size-5" />
-        </button>
+        </WouterLink>
         <img
           src={business.logo}
           alt={`${business.name}`}
@@ -104,8 +103,11 @@ function Hero({ business }: HeroProps) {
           <ul className="flex gap-1">
             {Array(Math.ceil(business.rating))
               .fill(0)
-              .map(() => (
-                <StarIcon className="text-secondary fill-secondary size-4" />
+              .map((_, index) => (
+                <StarIcon
+                  key={index}
+                  className="text-secondary fill-secondary size-4"
+                />
               ))}
           </ul>
           <div className="font-sora text-xs text-neutral-400 font-medium">
@@ -173,7 +175,7 @@ type MenuProps = { services: readonly Service[] }
 function Menu({ services }: MenuProps) {
   return (
     <ul className="flex flex-col">
-      {services.map((service) => {
+      {services.slice(0, 5).map((service) => {
         return (
           <li className="border-b-1 border-neutral-300">
             <article className="px-8 py-4 flex flex-col gap-2">
@@ -202,6 +204,7 @@ function Reviews({ reviews }: ReviewsProps) {
     <ul className="flex flex-col">
       {reviews
         .toSorted((a, b) => b.reviewRating - a.reviewRating)
+        .slice(0, 5)
         .map((review) => {
           return (
             <li className="border-b-1 border-neutral-300">

@@ -1,7 +1,13 @@
-type RemoteInitial = { tag: "RemoteInitial" }
-type RemotePending = { tag: "RemotePending" }
-type RemoteFailure<RemoteError> = { tag: "RemoteFailure"; error: RemoteError }
-type RemoteSuccess<RemoteValue> = { tag: "RemoteSuccess"; value: RemoteValue }
+type RemoteInitial = Readonly<{ tag: "RemoteInitial" }>
+type RemotePending = Readonly<{ tag: "RemotePending" }>
+type RemoteFailure<RemoteError> = Readonly<{
+  tag: "RemoteFailure"
+  error: RemoteError
+}>
+type RemoteSuccess<RemoteValue> = Readonly<{
+  tag: "RemoteSuccess"
+  value: RemoteValue
+}>
 
 export type RemoteData<RemoteError, RemoteValue> =
   | RemoteInitial
@@ -42,3 +48,11 @@ export const isSuccess = <A>(
 export const isInitial = (
   data: RemoteData<unknown, unknown>,
 ): data is RemoteInitial => data.tag === "RemoteInitial"
+
+export const map = <E, A, B>(
+  fa: RemoteData<E, A>,
+  f: (a: A) => B,
+): RemoteData<E, B> => {
+  if (isSuccess(fa)) return success(f(fa.value))
+  return fa
+}

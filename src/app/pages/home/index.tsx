@@ -2,11 +2,16 @@ import { Hero } from "./hero"
 import * as BusinessList from "@/components/business/list"
 import { GetRecommendations } from "@/components/card"
 import { useBusinesses } from "@/hooks/business"
-import { isFailure, isInitial, isPending } from "@/lib/remote-data"
+import { isFailure, isInitial, isPending, map } from "@/lib/remote-data"
 import { LoadingScreen } from "@/components/loading"
 
 export function Home() {
-  const remoteData = useBusinesses()
+  const remoteData = map(useBusinesses(), (businesses) => {
+    const tags = [...new Set(businesses.flatMap((b) => b.tags))] as const
+    return group(businesses, tags, (business, tag) => {
+      return business.tags.includes(tag)
+    })
+  })
 
   if (isInitial(remoteData) || isPending(remoteData)) {
     return <LoadingScreen />
@@ -18,12 +23,6 @@ export function Home() {
 
   const businesses = remoteData.value
 
-  const tags = [...new Set(businesses.flatMap((b) => b.tags))] as const
-
-  const grouped = group(businesses, tags, (business, tag) => {
-    return business.tags.includes(tag)
-  })
-
   return (
     <section className="flex flex-col">
       <Hero />
@@ -34,7 +33,7 @@ export function Home() {
         <div className="h-8" />
 
         <div className="flex flex-col gap-8">
-          {[...grouped.entries()].map(([name, businesses]) => {
+          {[...businesses.entries()].slice(0, 5).map(([name, businesses]) => {
             return (
               <BusinessList.Root key={name}>
                 <BusinessList.Header>
@@ -42,7 +41,7 @@ export function Home() {
                   <BusinessList.Link href={`/search?tag=${name}`} />
                 </BusinessList.Header>
 
-                <BusinessList.Slider businesses={businesses} />
+                <BusinessList.Slider businesses={businesses.slice(0, 5)} />
               </BusinessList.Root>
             )
           })}
