@@ -1,10 +1,3 @@
-import { useLocation, useParams } from "wouter"
-import { Tabs } from "@base-ui-components/react/tabs"
-
-import type { BusinessWithReviewsAndServices } from "@/types/business"
-import { LoadingScreen } from "@/components/loading"
-import { useBusinessesWithReviewsAndServices } from "@/hooks/business"
-import * as RemoteData from "@/lib/remote-data"
 import {
   CircleUserRoundIcon,
   ClockIcon,
@@ -13,12 +6,18 @@ import {
   PiggyBankIcon,
   StarIcon,
 } from "lucide-react"
+import type { ReactNode } from "react"
+import { useLocation, useParams } from "wouter"
+import { Tabs } from "@base-ui-components/react/tabs"
+
+import type { BusinessWithReviewsAndServices } from "@/types/business"
+import { useBusinessesWithReviewsAndServices } from "@/hooks/business"
+import * as RemoteData from "@/lib/remote-data"
 import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { PathParameterError } from "@/api/errors"
 import { LinkBack, LinkText } from "@/components/link"
-import type { ReactNode } from "react"
 
 export function Business() {
   const { businessId } = useParams()
@@ -36,12 +35,24 @@ export function Business() {
   return (
     <section className="">
       {RemoteData.fold3(remoteData, {
-        onNone: (): ReactNode => <HeroSkeleton id={businessId} />,
+        onNone: (): ReactNode => {
+          return (
+            <>
+              <HeroSkeleton id={businessId} />
+              <KakashiSkeleton id={businessId} />
+            </>
+          )
+        },
         onFailure: (): ReactNode => null,
-        onSuccess: (business): ReactNode => <Hero business={business} />,
+        onSuccess: (business): ReactNode => {
+          return (
+            <>
+              <Hero business={business} />
+              <Kakashi business={business} />
+            </>
+          )
+        },
       })}
-      {/* <Hero business={business} /> */}
-      {/* <Kakashi business={business} /> */}
     </section>
   )
 }
@@ -166,6 +177,78 @@ function Hero({ business }: HeroProps) {
   )
 }
 
+type KakashiSkeletonProps = { id: string }
+
+function KakashiSkeleton({ id }: KakashiSkeletonProps) {
+  const { page } = useParams()
+  const [_, setLocation] = useLocation()
+
+  const isMenu = page === "menu"
+  const isReviews = page === "reviews"
+  const isInfo = page === "info"
+
+  if (page === undefined) {
+    const tag = "missing"
+    const details = { tag } as const
+    const parameter = "page"
+    const schema = "/business/:id/home/:page"
+    throw new PathParameterError(parameter, schema, details)
+  }
+
+  if (!(isMenu || isReviews || isInfo)) {
+    const value = page
+    const tag = "invalid"
+    const details = { tag, value } as const
+    const parameter = "page"
+    const schema = "/business/:id/home/:page"
+    throw new PathParameterError(parameter, schema, details)
+  }
+
+  return (
+    <section>
+      <Tabs.Root
+        value={page}
+        onValueChange={(page) => {
+          setLocation(`/business/${id}/home/${page}`)
+        }}
+      >
+        <Tabs.List className="px-8 py-4 border-b-1 border-neutral-200 flex justify-start gap-12">
+          <Tabs.Tab
+            value="menu"
+            className={`font-sora text-neutral-400 text-xs ${page === "menu" && "font-semibold text-neutral-700"}`}
+          >
+            Menu
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="reviews"
+            className={`font-sora text-neutral-400 text-xs ${page === "reviews" && "font-semibold text-neutral-700"}`}
+          >
+            Reviews
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="info"
+            className={`font-sora text-neutral-400 text-xs ${page === "info" && "font-semibold text-neutral-700"}`}
+          >
+            Information
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="menu">
+          <MenuSkeleton />
+        </Tabs.Panel>
+
+        <Tabs.Panel value="reviews">
+          <ReviewsSkeleton />
+        </Tabs.Panel>
+
+        <Tabs.Panel value="info">
+          <InfoSkeleton />
+        </Tabs.Panel>
+      </Tabs.Root>
+    </section>
+  )
+}
+
 type KakashiProps = { business: BusinessWithReviewsAndServices }
 
 function Kakashi({ business }: KakashiProps) {
@@ -231,10 +314,33 @@ function Kakashi({ business }: KakashiProps) {
         </Tabs.Panel>
 
         <Tabs.Panel value="info">
-          <Information telephone={business.telephone} />
+          <Info telephone={business.telephone} />
         </Tabs.Panel>
       </Tabs.Root>
     </section>
+  )
+}
+
+function MenuSkeleton() {
+  return (
+    <ul className="flex flex-col">
+      {Array(5)
+        .fill(0)
+        .map((_, index) => {
+          return (
+            <li key={index} className="border-b-1 border-neutral-300">
+              <article className="px-8 py-4 flex flex-col gap-2">
+                <div className="w-40 h-5 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                <div className="flex flex-col gap-1">
+                  <div className="w-full h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                  <div className="w-1/2 h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                </div>
+                <div className="w-30 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+              </article>
+            </li>
+          )
+        })}
+    </ul>
   )
 }
 
@@ -261,6 +367,48 @@ function Menu({ services }: MenuProps) {
           </li>
         )
       })}
+    </ul>
+  )
+}
+
+function ReviewsSkeleton() {
+  return (
+    <ul className="flex flex-col">
+      {Array(5)
+        .fill(0)
+        .map((_, index) => {
+          return (
+            <li key={index} className="border-b-1 border-neutral-300">
+              <article className="px-8 py-4 flex flex-col gap-3">
+                <div className="flex flex-row gap-4 items-start">
+                  <div className="aspect-square">
+                    <CircleUserRoundIcon className="animate-pulse text-neutral-300 size-10 stroke-1" />
+                  </div>
+                  <div className="flex flex-col gap-1 grow-1">
+                    <div className="w-40 h-5 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                    <ul className="flex gap-1">
+                      {Array(5)
+                        .fill(0)
+                        .map((_, index) => (
+                          <StarIcon
+                            key={index}
+                            className="stroke-neutral-100 fill-neutral-100 size-3"
+                          />
+                        ))}
+                    </ul>
+                  </div>
+
+                  <div className="w-15 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <div className="w-full h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                  <div className="w-full h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                  <div className="w-1/2 h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                </div>
+              </article>
+            </li>
+          )
+        })}
     </ul>
   )
 }
@@ -322,9 +470,38 @@ function formatDate(dateString: string): string {
   return formatter.format(date)
 }
 
-type InformationProps = { telephone: string }
+function InfoSkeleton() {
+  return (
+    <section className="px-8 py-6 flex flex-col gap-6">
+      <header>
+        <h2 className="font-sora text-neutral-700 font-medium">
+          Contact Information
+        </h2>
+        <p className="font-sora text-neutral-400 text-xs">
+          Get in touch or connect with us online
+        </p>
+      </header>
 
-function Information({ telephone }: InformationProps) {
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-row gap-4 items-center">
+          <div className="bg-primary/10 rounded-xl p-3">
+            <PhoneIcon className="text-primary fill-primary size-4" />
+          </div>
+          <div className="flex flex-col gap-1 grow-1">
+            <span className="font-sora text-sm font-medium text-neutral-700">
+              Phone
+            </span>
+            <div className="w-30 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+type InfoProps = { telephone: string }
+
+function Info({ telephone }: InfoProps) {
   return (
     <section className="px-8 py-6 flex flex-col gap-6">
       <header>
