@@ -1,25 +1,17 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 
-import * as Dom from "DOM"
-import * as Function from "Function"
-import * as IOOption from "IOOption"
-
 import "./index.css"
-import { App as App_ } from "./app"
+import { App } from "./app"
 
-export function App() {
-  return (
-    <StrictMode>
-      <App_ />
-    </StrictMode>
-  )
+const root = document.getElementById("root")
+
+if (root === null) {
+  throw new Error("Element not found: #root")
 }
 
-Function.pipe(
-  document,
-  Dom.querySelector("#root"),
-  IOOption.map(createRoot),
-  IOOption.map((root) => root.render(<App />)),
-  IOOption.unsafeExpect("Element not found: [#root]"),
+createRoot(root).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
 )

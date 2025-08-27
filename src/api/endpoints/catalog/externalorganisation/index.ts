@@ -8,12 +8,13 @@ import { DURATION, PROBABILITY_LOW } from "@/config"
 import type { Business } from "@/types/business"
 import { sleep } from "@/utils"
 
-export async function externalorganisation(): Promise<readonly Business[]> {
+type ReturnType = Promise<readonly Business[]>
+
+export async function externalorganisation(): ReturnType {
+  const path = "/data/externalorganisation.json"
   const headers = { "Content-Type": "application/json" }
 
-  const promise = fetch("/data/externalorganisation.json", {
-    headers,
-  })
+  const promise = fetch(path, { headers })
 
   await sleep(Math.random() * DURATION)
 

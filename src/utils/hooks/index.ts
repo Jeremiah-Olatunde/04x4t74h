@@ -12,15 +12,33 @@ export function createHookRemoteData<
   f: F<Args, Promise<RemoteValue>>,
 ): F<Args, RemoteData<RemoteError, RemoteValue>> {
   return function (...args: Args): RemoteData<RemoteError, RemoteValue> {
-    const [model, setModel] =
+    const [remoteData, setRemoteData] =
       useState<RemoteData<RemoteError, RemoteValue>>(pending)
 
     useEffect(() => {
+      let aborted = false
+
       f(...args)
-        .then((data) => setModel(success(data)))
-        .catch((error) => setModel(failure(error)))
+        .then((value) => {
+          if (aborted) {
+            return
+          }
+
+          setRemoteData(success(value))
+        })
+        .catch((error) => {
+          if (aborted) {
+            return
+          }
+
+          setRemoteData(failure(error))
+        })
+
+      return () => {
+        aborted = true
+      }
     }, args)
 
-    return model
+    return remoteData
   }
 }
