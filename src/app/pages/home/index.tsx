@@ -62,7 +62,7 @@ export function Home() {
           </div>
         </div>
 
-        <div className="h-8" />
+        <div className="h-4" />
 
         <Hero.Content />
       </Hero.Root>

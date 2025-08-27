@@ -19,10 +19,12 @@ type HeroProps = {}
 
 export function Root({ children }: PropsWithChildren<HeroProps>) {
   return (
-    <header className="rounded-b-2xl bg-primary">
-      <div className="relative rounded-b-2xl bg-[url(/images/bg-guest.png)] bg-cover p-6">
-        {children}
-      </div>
+    <header className="relative rounded-b-2xl bg-primary">
+      <img
+        src="/images/bg-guest-compressed.webp"
+        className="h-full w-full object-cover absolute top-0 left-0 blur-[2px] rounded-b-2xl"
+      />
+      <div className="relative rounded-b-2xl p-6">{children}</div>
     </header>
   )
 }
