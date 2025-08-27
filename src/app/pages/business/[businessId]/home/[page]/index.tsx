@@ -43,7 +43,9 @@ export function Business() {
             </>
           )
         },
-        onFailure: (): ReactNode => null,
+        onFailure: (error): ReactNode => {
+          throw error
+        },
         onSuccess: (business): ReactNode => {
           return (
             <>

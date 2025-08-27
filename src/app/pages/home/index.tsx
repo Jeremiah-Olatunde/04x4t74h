@@ -40,11 +40,11 @@ export function Home() {
       <Hero.Root>
         <div className="flex justify-between items-center">
           {RemoteData.fold3(data, {
-            onFailure: (error): ReactNode => {
-              throw error
-            },
             onNone: (): ReactNode => {
               return <Hero.SelectCitySkeleton />
+            },
+            onFailure: (error): ReactNode => {
+              throw error
             },
             onSuccess: ({ cities }): ReactNode => {
               return (

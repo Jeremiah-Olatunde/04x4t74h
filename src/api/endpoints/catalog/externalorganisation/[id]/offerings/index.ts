@@ -1,32 +1,48 @@
-import { NotFound } from "@/api/errors"
+import {
+  ImATeapot,
+  InternalServerError,
+  NotFound,
+  TooManyRequests,
+  Unauthorized,
+} from "@/api/errors"
+import { DURATION, PROBABILITY_LOW } from "@/config"
 
 import type { BusinessWithReviewsAndServices } from "@/types/business"
+import { sleep } from "@/utils"
 
 export async function offerings(
   id: string,
 ): Promise<BusinessWithReviewsAndServices> {
   const headers = { "Content-Type": "application/json" }
-  const response = await fetch("/data/externalorganisation.json", { headers })
+
+  const promise = fetch("/data/externalorganisation.json", {
+    headers,
+  })
+
+  await sleep(Math.random() * DURATION)
+
+  const response = await promise
 
   if (!response.ok) throw response
 
-  // if (Math.random() < 0.1) {
-  //   throw new Unauthorized("Invalid credentials")
-  // }
-  //
-  // if (Math.random() < 0.1) {
-  //   throw new ImATeapot("No Roman, I can't brew coffee")
-  // }
-  //
-  // if (Math.random() < 0.1) {
-  //   throw new InternalServerError(
-  //     "An unexpected error occurred while processing your request",
-  //   )
-  // }
-  //
-  // if (Math.random() < 0.1) {
-  //   throw new TooManyRequests("Try again after 120 seconds")
-  // }
+  if (Math.random() < PROBABILITY_LOW) {
+    throw new Unauthorized("Invalid credentials")
+  }
+
+  if (Math.random() < PROBABILITY_LOW) {
+    throw new ImATeapot("No Roman, I can't brew coffee")
+  }
+
+  if (Math.random() < PROBABILITY_LOW) {
+    throw new InternalServerError(
+      "An unexpected error occurred while processing your request",
+    )
+  }
+
+  if (Math.random() < PROBABILITY_LOW) {
+    const time = Math.ceil(Math.random() * 120)
+    throw new TooManyRequests(`Try again after ${time} seconds`)
+  }
 
   const businesses: readonly BusinessWithReviewsAndServices[] =
     await response.json()

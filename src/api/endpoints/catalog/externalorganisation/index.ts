@@ -1,30 +1,44 @@
+import {
+  ImATeapot,
+  InternalServerError,
+  TooManyRequests,
+  Unauthorized,
+} from "@/api/errors"
+import { DURATION, PROBABILITY_LOW } from "@/config"
 import type { Business } from "@/types/business"
+import { sleep } from "@/utils"
 
 export async function externalorganisation(): Promise<readonly Business[]> {
   const headers = { "Content-Type": "application/json" }
-  const response = await fetch("/data/externalorganisation.json", {
+
+  const promise = fetch("/data/externalorganisation.json", {
     headers,
   })
 
+  await sleep(Math.random() * DURATION)
+
+  const response = await promise
+
   if (!response.ok) throw response
 
-  // if (Math.random() < 0.1) {
-  //   throw new Unauthorized("Invalid credentials")
-  // }
-  //
-  // if (Math.random() < 0.1) {
-  //   throw new ImATeapot("Who do I look like James Hoffman")
-  // }
-  //
-  // if (Math.random() < 0.1) {
-  //   throw new InternalServerError(
-  //     "An unexpected error occurred while processing your request",
-  //   )
-  // }
-  //
-  // if (Math.random() < 0.1) {
-  //   throw new TooManyRequests("Try again after 120 seconds")
-  // }
+  if (Math.random() < PROBABILITY_LOW) {
+    throw new Unauthorized("Invalid credentials")
+  }
+
+  if (Math.random() < PROBABILITY_LOW) {
+    throw new ImATeapot("Who do I look like James Hoffman")
+  }
+
+  if (Math.random() < PROBABILITY_LOW) {
+    throw new InternalServerError(
+      "An unexpected error occurred while processing your request",
+    )
+  }
+
+  if (Math.random() < PROBABILITY_LOW) {
+    const time = Math.ceil(Math.random() * 120)
+    throw new TooManyRequests(`Try again after ${time} seconds`)
+  }
 
   const businesses: readonly Business[] = await response.json()
   return businesses
