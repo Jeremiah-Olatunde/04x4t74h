@@ -61,11 +61,14 @@ function Hero({ business }: HeroProps) {
         <div className="absolute top-2 left-2">
           <LinkBack href="/home" />
         </div>
-        <img
-          src={business.logo}
-          alt={`${business.name}`}
-          className=" rounded-xl border-1 border-neutral-300 -z-10"
-        />
+
+        <div className="h-62 rounded-t-xl grow-1 bg-neutral-50">
+          <img
+            src={business.logo}
+            alt={`cover photo of ${business.name}`}
+            className="h-full rounded-xl border-1 border-neutral-300 -z-10"
+          />
+        </div>
       </div>
 
       <div className="flex flex-col gap-4">
