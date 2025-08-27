@@ -18,6 +18,7 @@ import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { PathParameterError } from "@/api/errors"
 import { LinkBack, LinkText } from "@/components/link"
+import type { ReactNode } from "react"
 
 export function Business() {
   const { businessId } = useParams()
@@ -32,20 +33,60 @@ export function Business() {
 
   const remoteData = useBusinessesWithReviewsAndServices(businessId)
 
-  if (RemoteData.isInitial(remoteData) || RemoteData.isPending(remoteData)) {
-    return <LoadingScreen />
-  }
-
-  if (RemoteData.isFailure(remoteData)) {
-    throw remoteData.error
-  }
-
-  const business = remoteData.value
-
   return (
     <section className="">
-      <Hero business={business} />
-      <Kakashi business={business} />
+      {RemoteData.fold3(remoteData, {
+        onNone: (): ReactNode => <HeroSkeleton id={businessId} />,
+        onFailure: (): ReactNode => null,
+        onSuccess: (business): ReactNode => <Hero business={business} />,
+      })}
+      {/* <Hero business={business} /> */}
+      {/* <Kakashi business={business} /> */}
+    </section>
+  )
+}
+
+type HeroSkeletonProps = {
+  id: string
+}
+
+function HeroSkeleton({ id }: HeroSkeletonProps) {
+  return (
+    <section className="flex flex-col gap-6 p-6">
+      <div className="relative">
+        <div className="z-20 absolute top-2 left-2 animate-none">
+          <LinkBack href="/home" />
+        </div>
+
+        <div className="h-62 rounded-xl grow-1 bg-neutral-100 border-1 border-neutral-200 animate-pulse" />
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <div>
+          <div className="h-6 w-50 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+        </div>
+        <div className="grow-1 flex flex-col gap-2">
+          <div className="w-40 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-md animate-pulse" />
+          <div className="w-40 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-md animate-pulse" />
+          <div className="w-40 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-md animate-pulse" />
+        </div>
+        <div className="flex gap-2 items-center justify-start">
+          <ul className="flex gap-1">
+            {Array(5)
+              .fill(0)
+              .map((_, index) => (
+                <StarIcon
+                  key={index}
+                  className="stroke-neutral-100 fill-neutral-100 size-4"
+                />
+              ))}
+          </ul>
+          <div className="w-25 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-md animate-pulse" />
+          <LinkText href={`/business/${id}/reviews/create`}>
+            Leave a Review
+          </LinkText>
+        </div>
+      </div>
     </section>
   )
 }
@@ -62,7 +103,7 @@ function Hero({ business }: HeroProps) {
           <LinkBack href="/home" />
         </div>
 
-        <div className="h-62 rounded-t-xl grow-1 bg-neutral-50">
+        <div className="h-62 rounded-xl grow-1 bg-neutral-50">
           <img
             src={business.logo}
             alt={`cover photo of ${business.name}`}

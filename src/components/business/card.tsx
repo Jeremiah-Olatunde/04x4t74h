@@ -55,8 +55,8 @@ export function BusinessSkeleton() {
 
         <div className="p-4 pt-2">
           <div className="flex gap-2 justify-between items-start">
-            <div className="h-4 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
-            <div className="h-4 w-8 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+            <div className="h-3 w-24 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+            <div className="h-3 w-8 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
           </div>
 
           <div className="h-1" />
@@ -65,7 +65,7 @@ export function BusinessSkeleton() {
 
           <div className="h-4" />
 
-          <div className="h-4 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+          <div className="h-3 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
         </div>
       </div>
     </Root>

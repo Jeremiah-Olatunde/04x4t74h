@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react"
-import { LoaderCircleIcon, MenuIcon } from "lucide-react"
+import { MenuIcon } from "lucide-react"
 
 import * as Hero from "./hero"
 import * as BusinessList from "@/components/business/list"
