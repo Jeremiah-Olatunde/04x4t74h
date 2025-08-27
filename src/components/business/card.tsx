@@ -1,8 +1,8 @@
-import { MapPin as IconMapPin, Star as IconStar } from "lucide-react"
+import type { ReactNode } from "react"
 import { Link as WouterLink } from "wouter"
+import { MapPin as IconMapPin, Star as IconStar } from "lucide-react"
 
 import { Icon } from "@/components/icon"
-import type { ReactNode } from "react"
 
 export type BusinessDetails = {
   city: string
@@ -17,14 +17,17 @@ export type BusinessDetails = {
 export function Business({ details }: { details: BusinessDetails }) {
   return (
     <Root>
-      {/* <Button /> */}
-
-      <WouterLink href={`/business/${details.id}/home/menu`}>
-        <img
-          src={details.logo}
-          alt={`cover photo of ${details.name}`}
-          className="rounded-t-xl"
-        />
+      <WouterLink
+        href={`/business/${details.id}/home/menu`}
+        className="flex flex-col h-full w-full"
+      >
+        <div className="rounded-t-xl grow-1 bg-neutral-50">
+          <img
+            src={details.logo}
+            alt={`cover photo of ${details.name}`}
+            className="rounded-t-xl h-full w-full object-cover"
+          />
+        </div>
 
         <div className="p-4 pt-2">
           <div className="flex gap-2 justify-between items-start">
@@ -39,6 +42,32 @@ export function Business({ details }: { details: BusinessDetails }) {
           <Address town={details.town} city={details.city} />
         </div>
       </WouterLink>
+    </Root>
+  )
+}
+
+export function BusinessSkeleton() {
+  return (
+    <Root>
+      <div className="w-full rounded-xl"></div>
+      <div className="flex flex-col h-full w-full">
+        <div className="rounded-t-xl grow-1 bg-neutral-100 border-b-1 border-neutral-200 animate-pulse"></div>
+
+        <div className="p-4 pt-2">
+          <div className="flex gap-2 justify-between items-start">
+            <div className="h-4 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+            <div className="h-4 w-8 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+          </div>
+
+          <div className="h-1" />
+
+          <div className="h-4 w-2/3 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+
+          <div className="h-4" />
+
+          <div className="h-4 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+        </div>
+      </div>
     </Root>
   )
 }

@@ -75,11 +75,20 @@ export function Home() {
         <div className="flex flex-col gap-8">
           {RemoteData.fold3(data, {
             onNone: (): React.ReactNode => {
-              return (
-                <section className="p-8 flex justify-center items-center">
-                  <LoaderCircleIcon className="text-primary size-12 animate-spin" />
-                </section>
-              )
+              return Array(2)
+                .fill(0)
+                .map((_, index) => {
+                  return (
+                    <BusinessList.Root key={index}>
+                      <BusinessList.Header>
+                        <div className="h-8 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+                        <div className="size-8 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+                      </BusinessList.Header>
+
+                      <BusinessList.SliderSkeleton />
+                    </BusinessList.Root>
+                  )
+                })
             },
             onFailure: (error): React.ReactNode => {
               throw error
