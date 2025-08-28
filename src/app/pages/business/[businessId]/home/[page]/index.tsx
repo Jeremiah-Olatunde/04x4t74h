@@ -117,6 +117,7 @@ function Hero({ business }: HeroProps) {
 
         <div className="h-62 rounded-xl grow-1 bg-neutral-50">
           <img
+            onLoad={() => {}}
             src={business.logo}
             alt={`cover photo of ${business.name}`}
             className="object-cover w-full h-full rounded-xl border-1 border-neutral-300 -z-10"

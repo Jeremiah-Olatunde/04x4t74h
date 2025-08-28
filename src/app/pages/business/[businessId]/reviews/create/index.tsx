@@ -270,7 +270,7 @@ function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
 
 function BusinessDetailsSkeleton() {
   return (
-    <div className="p-4 border-1 border-neutral-100 h-38 w-full rounded-xl flex gap-4">
+    <div className="p-4 border-1 border-neutral-100 w-full rounded-xl flex gap-4">
       <div className="h-32 w-40 rounded-xl bg-neutral-100 border-neutral-200 border-1 animate-pulse" />
       <div className="grow-1 flex flex-col gap-2">
         <div className="w-1/2 h-6 bg-neutral-100 border-neutral-200 border-1 rounded-md animate-pulse" />
