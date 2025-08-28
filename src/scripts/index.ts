@@ -4,28 +4,24 @@ import fs from "node:fs"
 import path from "node:path"
 import url from "node:url"
 
-const relativePath = "../../public/data/externalorganisation.json"
-const directory = path.dirname(url.fileURLToPath(import.meta.url))
-const filePath = path.resolve(directory, relativePath)
+type Streets = readonly string[]
+type Towns = readonly (readonly [string, Streets])[]
+type Cities = readonly (readonly [string, Towns])[]
 
-const cities = (function () {
-  const cities = fake.cities({ min: 2, max: 4 }).map((city) => {
-    const towns = fake.towns({ min: 5, max: 10 }).map((town) => {
-      const streets = fake.streets({ min: 10, max: 20 })
-      return [town, streets] as const
-    })
-
-    return [city, towns] as const
-  })
-
-  return cities
-})()
-
-const businesses = (function () {
+function generateBusinesses() {
   const amenities = fake.amenities({ min: 10, max: 20 })
   const categories = fake.categories({ min: 5, max: 10 })
   const paymentOptions = fake.paymentOptions()
   const tags = fake.tags({ min: 20, max: 30 })
+
+  const cities: Cities = fake.cities({ min: 2, max: 4 }).map((city) => {
+    const towns: Towns = fake.towns({ min: 5, max: 10 }).map((town) => {
+      const streets: Streets = fake.streets({ min: 10, max: 20 })
+      return [town, streets]
+    })
+
+    return [city, towns]
+  })
 
   return cities.flatMap(([city, towns]) => {
     return towns.flatMap(([town, streets]) => {
@@ -43,7 +39,24 @@ const businesses = (function () {
       })
     })
   })
-})()
+}
 
-console.log("businesse generated", businesses.length)
-fs.writeFileSync(filePath, JSON.stringify(businesses))
+const businesses = generateBusinesses()
+
+console.log("businesses generated", businesses.length)
+
+{
+  const relativePath = `../../public/data/externalorganisation.json`
+  const directory = path.dirname(url.fileURLToPath(import.meta.url))
+  const filePath = path.resolve(directory, relativePath)
+  fs.writeFileSync(filePath, JSON.stringify(businesses))
+}
+
+{
+  businesses.map((b) => {
+    const relativePath = `../../public/data/externalorganisation/${b.id}.json`
+    const directory = path.dirname(url.fileURLToPath(import.meta.url))
+    const filePath = path.resolve(directory, relativePath)
+    fs.writeFileSync(filePath, JSON.stringify(b))
+  })
+}
