@@ -50,7 +50,7 @@ export function SliderSkeleton() {
     <ScrollArea.Root>
       <ScrollArea.Viewport className="snap-x snap-mandatory flex gap-2 overflow-x-scroll no-scrollbar">
         <ScrollArea.Content className="contents">
-          {Array(2)
+          {Array(5)
             .fill(0)
             .map((_, index) => (
               <div key={index} className="snap-start size-60 shrink-0">

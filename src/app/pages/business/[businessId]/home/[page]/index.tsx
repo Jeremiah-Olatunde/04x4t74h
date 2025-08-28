@@ -1,4 +1,5 @@
 import {
+  CirclePlusIcon,
   CircleUserRoundIcon,
   ClockIcon,
   MapPinIcon,
@@ -6,7 +7,7 @@ import {
   PiggyBankIcon,
   StarIcon,
 } from "lucide-react"
-import type { ReactNode } from "react"
+import { useMemo, useState, type ReactNode } from "react"
 import { useLocation, useParams } from "wouter"
 import { Tabs } from "@base-ui-components/react/tabs"
 
@@ -18,6 +19,7 @@ import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { PathParameterError } from "@/api/errors"
 import { LinkBack, LinkText } from "@/components/link"
+import { ButtonBadge } from "@/components/button"
 
 export function Business() {
   const { businessId } = useParams()
@@ -349,27 +351,41 @@ function MenuSkeleton() {
 type MenuProps = { services: readonly Service[] }
 
 function Menu({ services }: MenuProps) {
+  const [serviceCount, setServiceCount] = useState(5)
+
   return (
-    <ul className="flex flex-col">
-      {services.slice(0, 5).map((service, index) => {
-        return (
-          <li key={index} className="border-b-1 border-neutral-300">
-            <article className="px-8 py-4 flex flex-col gap-2">
-              <h2 className="font-sora text-neutral-700 font-semibold text-sm">
-                {service.name}
-              </h2>
-              <p className="font-sora text-neutral-400 text-xs">
-                {service.description}
-              </p>
-              <div className="font-sora text-neutral-600 text-xs font-semibold">
-                {service.priceSpecification.priceCurrency}{" "}
-                {service.priceSpecification.price}
-              </div>
-            </article>
-          </li>
-        )
-      })}
-    </ul>
+    <>
+      <ul className="flex flex-col">
+        {services.slice(0, serviceCount).map((service, index) => {
+          return (
+            <li key={index} className="border-b-1 border-neutral-300">
+              <article className="px-8 py-4 flex flex-col gap-2">
+                <h2 className="font-sora text-neutral-700 font-semibold text-sm">
+                  {service.name}
+                </h2>
+                <p className="font-sora text-neutral-400 text-xs">
+                  {service.description}
+                </p>
+                <div className="font-sora text-neutral-600 text-xs font-semibold">
+                  {service.priceSpecification.priceCurrency}{" "}
+                  {service.priceSpecification.price}
+                </div>
+              </article>
+            </li>
+          )
+        })}
+      </ul>
+
+      {serviceCount <= services.length && (
+        <button
+          type="button"
+          onClick={() => setServiceCount(serviceCount + 5)}
+          className="w-full border-b-1 border-neutral-300 flex flex-col justify-center items-center py-4"
+        >
+          <span className="font-sora text-neutral-400 text-xs">Show More</span>
+        </button>
+      )}
+    </>
   )
 }
 
@@ -418,12 +434,16 @@ function ReviewsSkeleton() {
 type ReviewsProps = { reviews: readonly Review[] }
 
 function Reviews({ reviews }: ReviewsProps) {
+  const [reviewCount, setReviewCount] = useState(5)
+  const sorted = useMemo(
+    () => reviews.toSorted((a, b) => b.reviewRating - a.reviewRating),
+    [reviews], // benefits of marking everything as readonly ;-)
+  )
+
   return (
-    <ul className="flex flex-col">
-      {reviews
-        .toSorted((a, b) => b.reviewRating - a.reviewRating)
-        .slice(0, 5)
-        .map((review, index) => {
+    <>
+      <ul className="flex flex-col">
+        {sorted.slice(0, reviewCount).map((review, index) => {
           return (
             <li key={index} className="border-b-1 border-neutral-300">
               <article className="px-8 py-4 flex flex-col gap-3">
@@ -456,7 +476,18 @@ function Reviews({ reviews }: ReviewsProps) {
             </li>
           )
         })}
-    </ul>
+      </ul>
+
+      {reviewCount <= reviews.length && (
+        <button
+          type="button"
+          onClick={() => setReviewCount(reviewCount + 5)}
+          className="w-full border-b-1 border-neutral-300 flex flex-col justify-center items-center py-4"
+        >
+          <span className="font-sora text-neutral-400 text-xs">Show More</span>
+        </button>
+      )}
+    </>
   )
 }
 

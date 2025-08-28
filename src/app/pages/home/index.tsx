@@ -75,7 +75,7 @@ export function Home() {
         <div className="flex flex-col gap-8">
           {RemoteData.fold3(data, {
             onNone: (): React.ReactNode => {
-              return Array(2)
+              return Array(5)
                 .fill(0)
                 .map((_, index) => {
                   return (
@@ -108,9 +108,8 @@ export function Home() {
               })
             },
           })}
-
           <ButtonBadge
-            color="white"
+            color="neutral"
             size="md"
             type="button"
             onClick={() => setTagCount(tagCount + 5)}
