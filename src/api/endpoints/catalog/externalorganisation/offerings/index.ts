@@ -8,9 +8,7 @@ import { DURATION, PROBABILITY_LOW } from "@/config"
 import type { Business } from "@/types/business"
 import { sleep } from "@/utils"
 
-type ReturnType = Promise<readonly Business[]>
-
-export async function externalorganisation(): ReturnType {
+export async function fetchBusinessAll(): Promise<readonly Business[]> {
   const path = "/data/externalorganisation.json"
   const headers = { "Content-Type": "application/json" }
 

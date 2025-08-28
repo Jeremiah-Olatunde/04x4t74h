@@ -10,8 +10,8 @@ import { useMemo, useState, type ReactNode } from "react"
 import { useLocation, useParams } from "wouter"
 import { Tabs } from "@base-ui-components/react/tabs"
 
-import type { BusinessWithReviewsAndServices } from "@/types/business"
-import { useBusinessesWithReviewsAndServices } from "@/hooks/business"
+import type { Business } from "@/types/business"
+import { useBusinessOne } from "@/hooks/business"
 import * as RemoteData from "@/lib/remote-data"
 import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
@@ -30,7 +30,7 @@ export function Business() {
     throw new PathParameterError(parameter, schema, details)
   }
 
-  const remoteData = useBusinessesWithReviewsAndServices(businessId)
+  const remoteData = useBusinessOne(businessId)
 
   return (
     <section className="">
@@ -105,7 +105,7 @@ function HeroSkeleton({ id }: HeroSkeletonProps) {
 }
 
 type HeroProps = {
-  business: BusinessWithReviewsAndServices
+  business: Business
 }
 
 function Hero({ business }: HeroProps) {
@@ -255,7 +255,7 @@ function KakashiSkeleton({ id }: KakashiSkeletonProps) {
   )
 }
 
-type KakashiProps = { business: BusinessWithReviewsAndServices }
+type KakashiProps = { business: Business }
 
 function Kakashi({ business }: KakashiProps) {
   const { page } = useParams()

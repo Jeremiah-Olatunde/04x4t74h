@@ -1,7 +1,7 @@
 import type { Review } from "@/types/review"
 import type { Service } from "@/types/service"
 
-export type Business = Readonly<{
+export type BusinessLite = Readonly<{
   amenities: readonly string[]
   businessCategory: string
   businessSubCategory: readonly string[]
@@ -18,7 +18,7 @@ export type Business = Readonly<{
   town: string
 }>
 
-export type BusinessWithReviewsAndServices = Business & {
+export type Business = BusinessLite & {
   reviews: readonly Review[]
   services: readonly Service[]
 }

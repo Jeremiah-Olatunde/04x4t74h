@@ -7,12 +7,10 @@ import {
 } from "@/api/errors"
 import { DURATION, PROBABILITY_LOW } from "@/config"
 
-import type { BusinessWithReviewsAndServices } from "@/types/business"
+import type { Business } from "@/types/business"
 import { sleep } from "@/utils"
 
-export async function offerings(
-  id: string,
-): Promise<BusinessWithReviewsAndServices> {
+export async function fetchBusinessOne(id: string): Promise<Business> {
   const path = `/data/externalorganisation/${id}.json`
   const headers = { "Content-Type": "application/json" }
 
@@ -50,7 +48,7 @@ export async function offerings(
 
   if (!response.ok) throw response
 
-  const business: BusinessWithReviewsAndServices = await response.json()
+  const business: Business = await response.json()
 
   return business
 }

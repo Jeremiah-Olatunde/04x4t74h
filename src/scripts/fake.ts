@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker"
 
-import type { Business, BusinessWithReviewsAndServices } from "@/types/business"
+import type { BusinessLite, Business } from "@/types/business"
 
 type Range = { min: number; max: number }
 
@@ -51,14 +51,17 @@ type Config = Readonly<{
   paymentOptions: readonly string[]
 }>
 
-export function businesses(range: Range, config: Config): readonly Business[] {
+export function businesses(
+  range: Range,
+  config: Config,
+): readonly BusinessLite[] {
   return businessesWithReviewsAndServices(range, config)
 }
 
 export function businessesWithReviewsAndServices(
   range: Range,
   config: Config,
-): readonly BusinessWithReviewsAndServices[] {
+): readonly Business[] {
   const count = faker.number.int(range)
   return Array(count)
     .fill(0)

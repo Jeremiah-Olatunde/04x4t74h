@@ -1,9 +1,9 @@
 import { useParams } from "wouter"
 
 import { BadRequest, PathParameterError } from "@/api/errors"
-import { useBusinessesWithReviewsAndServices } from "@/hooks/business"
+import { useBusinessOne } from "@/hooks/business"
 import { LinkBack } from "@/components/link"
-import type { Business } from "@/types/business"
+import type { BusinessLite } from "@/types/business"
 import * as RemoteData from "@/lib/remote-data"
 import { useState, type ReactNode } from "react"
 import { Icon } from "@/components/icon"
@@ -70,7 +70,7 @@ const defaultValues: FormValues = {
 type ReviewCreateFormProps = { businessId: string }
 function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
   const { showBoundary } = useErrorBoundary()
-  const remoteData = useBusinessesWithReviewsAndServices(businessId)
+  const remoteData = useBusinessOne(businessId)
 
   const { control, handleSubmit, setValue, setError } = useForm<FormValues>({
     criteriaMode: "all",
@@ -280,7 +280,7 @@ function BusinessDetailsSkeleton() {
   )
 }
 
-type BusinessDetailsProps = { business: Business }
+type BusinessDetailsProps = { business: BusinessLite }
 function BusinessDetails({ business }: BusinessDetailsProps) {
   return (
     <div className="p-4 border-1 border-neutral-100 bg-neutral-50 w-full rounded-xl flex gap-4">

@@ -1,15 +1,17 @@
 import { useState, type ReactNode } from "react"
 import { MenuIcon } from "lucide-react"
 
-import * as Hero from "./hero"
-import * as BusinessList from "@/components/business/list"
-import { GetRecommendations } from "@/components/card"
-import { useBusinesses } from "@/hooks/business"
 import * as RemoteData from "@/lib/remote-data"
+import { useBusinessAll } from "@/hooks/business"
+
+import { GetRecommendations } from "@/components/card"
 import { ButtonBadge } from "@/components/button"
+import * as BusinessList from "@/components/business/list"
+
+import * as Hero from "./hero"
 
 export function Home() {
-  const remoteData = useBusinesses()
+  const remoteData = useBusinessAll()
 
   const [city, setCity] = useState<string>()
 
