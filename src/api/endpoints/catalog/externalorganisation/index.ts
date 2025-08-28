@@ -20,8 +20,6 @@ export async function externalorganisation(): ReturnType {
 
   const response = await promise
 
-  if (!response.ok) throw response
-
   if (Math.random() < PROBABILITY_LOW) {
     throw new Unauthorized("Invalid credentials")
   }
@@ -40,6 +38,8 @@ export async function externalorganisation(): ReturnType {
     const time = Math.ceil(Math.random() * 120)
     throw new TooManyRequests(`Try again after ${time} seconds`)
   }
+
+  if (!response.ok) throw response
 
   const businesses: readonly Business[] = await response.json()
   return businesses
