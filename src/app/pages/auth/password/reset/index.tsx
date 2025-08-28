@@ -16,7 +16,7 @@ import { FormHeader, Form, FormField, FormContainer } from "@/components/form"
 import { LinkPill, LinkText } from "@/components/link"
 import { ButtonBadge, ButtonPill } from "@/components/button"
 
-export function ResetPassword() {
+export function PasswordReset() {
   const [, setLocation] = useLocation()
   const [email] = useState("jolatunde@luminara.io")
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -38,7 +38,7 @@ export function ResetPassword() {
         </span>
         <div />
 
-        <LinkPill color="yellow" href="/forgot" size="sm">
+        <LinkPill color="yellow" href="/auth/password/forgot" size="sm">
           Change Email
         </LinkPill>
       </FormHeader>

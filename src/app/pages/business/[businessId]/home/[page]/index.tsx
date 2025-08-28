@@ -156,12 +156,16 @@ function Hero({ business }: HeroProps) {
         </ul>
         <div className="flex gap-2 items-center justify-start">
           <ul className="flex gap-1">
-            {Array(Math.round(business.rating))
+            {Array(5)
               .fill(0)
               .map((_, index) => (
                 <StarIcon
                   key={index}
-                  className="text-secondary fill-secondary size-4"
+                  className={
+                    index + 1 <= Math.round(business.rating)
+                      ? "text-secondary fill-secondary size-4"
+                      : "text-neutral-200 fill-neutral-200 size-4"
+                  }
                 />
               ))}
           </ul>

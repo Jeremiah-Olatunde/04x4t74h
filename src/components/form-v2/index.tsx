@@ -86,17 +86,13 @@ export function FieldError({ children }: FieldErrorProps) {
 
 export function FieldErrors({ errors }: { errors: string[] }) {
   return (
-    <ScrollArea.Root>
-      <ScrollArea.Viewport className="snap-x snap-mandatory flex gap-2 overflow-x-scroll no-scrollbar">
-        <ScrollArea.Content className="contents">
-          {errors.map((error) => (
-            <div key={error} className="snap-start">
-              <FieldError>{error}</FieldError>
-            </div>
-          ))}
-        </ScrollArea.Content>
-      </ScrollArea.Viewport>
-    </ScrollArea.Root>
+    <div className="flex flex-wrap gap-2">
+      {errors.map((error) => (
+        <div key={error} className="snap-start">
+          <FieldError>{error}</FieldError>
+        </div>
+      ))}
+    </div>
   )
 }
 

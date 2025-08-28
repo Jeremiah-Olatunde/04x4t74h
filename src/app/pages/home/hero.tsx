@@ -1,7 +1,9 @@
 import {
   ChevronDownIcon,
+  CompassIcon,
   LoaderCircleIcon,
   LogInIcon,
+  MapPinnedIcon,
   MenuIcon,
   SearchIcon,
   TelescopeIcon,
@@ -102,9 +104,9 @@ export function Sidebar({}: SidebarProps) {
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 bg-black/0 backdrop-blur-[2px] z-20" />
-        <Dialog.Popup className="fixed top-0 right-0 p-1 h-screen z-20">
-          <div className="bg-white border-1 border-neutral-300 h-full rounded-xl flex flex-col justify-between items-center px-6 py-6">
+        <Dialog.Backdrop className="fixed inset-0 bg-black/10 backdrop-blur-[2px] z-20" />
+        <Dialog.Popup className="fixed top-0 right-0 h-screen z-20">
+          <div className="bg-white border-1 border-neutral-300 h-full rounded-s-3xl flex flex-col justify-between items-center px-6 py-10">
             <div>
               <ul className="flex flex-col gap-8 items-center">
                 <li className="">
@@ -114,7 +116,7 @@ export function Sidebar({}: SidebarProps) {
                 <div className="h-0" />
 
                 <li className="">
-                  <TelescopeIcon className="text-neutral-400 size-6" />
+                  <MapPinnedIcon className="text-neutral-400 size-6" />
                 </li>
                 <li className="">
                   <SearchIcon className="text-neutral-400 size-6" />

@@ -63,7 +63,7 @@ export function Login() {
       return
     }
 
-    setTimeout(setLocation, 1000, "~/home")
+    // setTimeout(setLocation, 1000, "~/home")
   }, [status])
 
   async function onSubmit(formValues: FormValues) {
@@ -183,7 +183,7 @@ export function Login() {
                   <FieldErrors errors={errors} />
 
                   <div className="flex justify-end">
-                    <LinkText href="/password/forgot">
+                    <LinkText href="/auth/password/forgot">
                       Forgot Password?
                     </LinkText>
                   </div>

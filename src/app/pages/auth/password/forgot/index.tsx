@@ -11,7 +11,7 @@ import { Logo } from "@/components/logo"
 import { Pill } from "@/components/pill"
 import { Link } from "wouter"
 
-export function ForgotPassword() {
+export function PasswordForgot() {
   return (
     <section className="flex flex-col gap-4 px-6 py-8">
       <Logo size="lg" color="purple" />
@@ -34,7 +34,7 @@ export function ForgotPassword() {
               type="email"
               placeholder="example@gmail.com"
             >
-              <Link href="/reset" className="cursor-pointer">
+              <Link href="/auth/password/reset" className="cursor-pointer">
                 <Pill color="purple" size="sm">
                   Send Token
                 </Pill>
