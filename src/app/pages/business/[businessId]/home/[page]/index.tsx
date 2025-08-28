@@ -490,7 +490,7 @@ function Reviews({ reviews }: ReviewsProps) {
         })}
       </ul>
 
-      {reviewCount <= reviews.length && (
+      {reviewCount < reviews.length && (
         <button
           type="button"
           onClick={() => setReviewCount(reviewCount + 5)}
