@@ -14,7 +14,7 @@ type ReviewData = {
   reviewRating: number
 }
 
-export async function reviews(
+export async function createReview(
   _id: string,
   _reviewData: ReviewData,
 ): Promise<void> {

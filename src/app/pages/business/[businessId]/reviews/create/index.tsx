@@ -26,7 +26,7 @@ import {
 
 import { Controller, useForm } from "react-hook-form"
 import { ButtonBadge } from "@/components/button"
-import { reviews } from "@/api/endpoints/catalog/externalorganisation/[id]/reviews"
+import { createReview } from "@/api/endpoints/catalog/externalorganisation/[id]/reviews"
 import { InvalidData, ReviewCreated } from "@/components/form-v2/banner"
 import { useErrorBoundary } from "react-error-boundary"
 
@@ -90,7 +90,7 @@ function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
     setStatus(RemoteData.pending)
 
     try {
-      await reviews(businessId, formValues)
+      await createReview(businessId, formValues)
       setStatus(RemoteData.success(null))
       setBanner("ReviewCreated")
     } catch (error) {

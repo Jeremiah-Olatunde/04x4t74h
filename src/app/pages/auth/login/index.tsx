@@ -63,7 +63,7 @@ export function Login() {
       return
     }
 
-    // setTimeout(setLocation, 1000, "~/home")
+    setTimeout(setLocation, 1000, "~/home")
   }, [status])
 
   async function onSubmit(formValues: FormValues) {

@@ -1,6 +1,5 @@
 import type { PropsWithChildren } from "react"
 import { EyeOff as IconEyeOff, Eye as IconEye } from "lucide-react"
-import { ScrollArea } from "@base-ui-components/react/scroll-area"
 
 import { Pill } from "@/components/pill"
 import { Icon } from "@/components/icon"

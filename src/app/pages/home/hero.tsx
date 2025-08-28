@@ -1,12 +1,10 @@
 import {
   ChevronDownIcon,
-  CompassIcon,
   LoaderCircleIcon,
   LogInIcon,
   MapPinnedIcon,
   MenuIcon,
   SearchIcon,
-  TelescopeIcon,
 } from "lucide-react"
 
 import { Icon } from "@/components/icon"
