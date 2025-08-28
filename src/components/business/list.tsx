@@ -32,7 +32,7 @@ type SliderProps = Record<"businesses", readonly BusinessDetails[]>
 export function Slider({ businesses }: SliderProps) {
   return (
     <ScrollArea.Root>
-      <ScrollArea.Viewport className="snap-x snap-mandatory flex gap-2 overflow-x-scroll no-scrollbar">
+      <ScrollArea.Viewport className="snap-x snap-mandatory flex gap-2 !overflow-y-hidden">
         <ScrollArea.Content className="contents">
           {businesses.map((business) => (
             <div key={business.id} className="snap-start size-60 shrink-0">
