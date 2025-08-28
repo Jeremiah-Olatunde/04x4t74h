@@ -1,6 +1,29 @@
 import type { Review } from "@/types/review"
 import type { Service } from "@/types/service"
 
+type DayOfWeek =
+  | "MONDAY"
+  | "TUESDAY"
+  | "WEDNESDAY"
+  | "THURSDAY"
+  | "FRIDAY"
+  | "SATURDAY"
+  | "SUNDAY"
+
+type OperatingWindow = Readonly<Record<"opens" | "closes", string>>
+type DailySchedule<D extends DayOfWeek> = Readonly<
+  OperatingWindow & Record<"dayOfWeek", D>
+>
+type WeeklySchedule = readonly [
+  DailySchedule<"MONDAY">,
+  DailySchedule<"TUESDAY">,
+  DailySchedule<"WEDNESDAY">,
+  DailySchedule<"THURSDAY">,
+  DailySchedule<"FRIDAY">,
+  DailySchedule<"SATURDAY">,
+  DailySchedule<"SUNDAY">,
+]
+
 export type BusinessLite = Readonly<{
   amenities: readonly string[]
   businessCategory: string
@@ -16,6 +39,7 @@ export type BusinessLite = Readonly<{
   telephone: string
   tags: readonly string[]
   town: string
+  openingHours: WeeklySchedule
 }>
 
 export type Business = BusinessLite & {

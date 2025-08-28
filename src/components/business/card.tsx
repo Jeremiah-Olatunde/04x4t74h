@@ -21,11 +21,11 @@ export function Business({ details }: { details: BusinessDetails }) {
         href={`/business/${details.id}/home/menu`}
         className="flex flex-col h-full w-full"
       >
-        <div className="rounded-t-xl grow-1 bg-neutral-50">
+        <div className="rounded-t-xl grow-1 min-h-0 w-full bg-neutral-50">
           <img
             src={details.logo}
             alt={`cover photo of ${details.name}`}
-            className="rounded-t-xl h-full w-full object-cover"
+            className="rounded-t-xl h-full w-full object-cover block"
           />
         </div>
 

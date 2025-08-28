@@ -73,7 +73,6 @@ function HeroSkeleton({ id }: HeroSkeletonProps) {
 
         <div className="h-62 rounded-xl grow-1 bg-neutral-100 border-1 border-neutral-200 animate-pulse" />
       </div>
-
       <div className="flex flex-col gap-4">
         <div>
           <div className="h-6 w-50 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
@@ -120,7 +119,7 @@ function Hero({ business }: HeroProps) {
           <img
             src={business.logo}
             alt={`cover photo of ${business.name}`}
-            className="h-full rounded-xl border-1 border-neutral-300 -z-10"
+            className="object-cover w-fullobject-cover w-full  h-full rounded-xl border-1 border-neutral-300 -z-10"
           />
         </div>
       </div>
@@ -360,6 +359,12 @@ type MenuProps = { services: readonly Service[] }
 function Menu({ services }: MenuProps) {
   const [serviceCount, setServiceCount] = useState(5)
 
+  const formatter = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: 2,
+  })
+
   return (
     <>
       <ul className="flex flex-col">
@@ -373,9 +378,8 @@ function Menu({ services }: MenuProps) {
                 <p className="font-sora text-neutral-400 text-xs">
                   {service.description}
                 </p>
-                <div className="font-sora text-neutral-600 text-xs font-semibold">
-                  {service.priceSpecification.priceCurrency}{" "}
-                  {service.priceSpecification.price}
+                <div className="font-sora text-primary text-xs font-semibold">
+                  {formatter.format(service.priceSpecification.price)}
                 </div>
               </article>
             </li>
