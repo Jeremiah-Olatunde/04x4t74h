@@ -119,7 +119,7 @@ function Hero({ business }: HeroProps) {
           <img
             src={business.logo}
             alt={`cover photo of ${business.name}`}
-            className="object-cover w-fullobject-cover w-full  h-full rounded-xl border-1 border-neutral-300 -z-10"
+            className="object-cover w-full h-full rounded-xl border-1 border-neutral-300 -z-10"
           />
         </div>
       </div>
