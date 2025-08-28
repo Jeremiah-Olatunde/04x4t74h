@@ -81,8 +81,8 @@ export function Home() {
                   return (
                     <BusinessList.Root key={index}>
                       <BusinessList.Header>
-                        <div className="h-8 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
-                        <div className="size-8 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+                        <div className="h-8 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-lg" />
+                        <div className="size-8 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-lg" />
                       </BusinessList.Header>
 
                       <BusinessList.SliderSkeleton />

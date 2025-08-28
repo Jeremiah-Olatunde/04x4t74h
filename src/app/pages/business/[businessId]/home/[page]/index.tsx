@@ -1,5 +1,4 @@
 import {
-  CirclePlusIcon,
   CircleUserRoundIcon,
   ClockIcon,
   MapPinIcon,
@@ -19,7 +18,6 @@ import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { PathParameterError } from "@/api/errors"
 import { LinkBack, LinkText } from "@/components/link"
-import { ButtonBadge } from "@/components/button"
 
 export function Business() {
   const { businessId } = useParams()
