@@ -327,24 +327,29 @@ function Kakashi({ business }: KakashiProps) {
 
 function MenuSkeleton() {
   return (
-    <ul className="flex flex-col">
-      {Array(5)
-        .fill(0)
-        .map((_, index) => {
-          return (
-            <li key={index} className="border-b-1 border-neutral-300">
-              <article className="px-8 py-4 flex flex-col gap-2">
-                <div className="w-40 h-5 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
-                <div className="flex flex-col gap-1">
-                  <div className="w-full h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
-                  <div className="w-1/2 h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
-                </div>
-                <div className="w-30 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
-              </article>
-            </li>
-          )
-        })}
-    </ul>
+    <>
+      <ul className="flex flex-col">
+        {Array(5)
+          .fill(0)
+          .map((_, index) => {
+            return (
+              <li key={index} className="border-b-1 border-neutral-300">
+                <article className="px-8 py-4 flex flex-col gap-2">
+                  <div className="w-40 h-5 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                  <div className="flex flex-col gap-1">
+                    <div className="w-full h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                    <div className="w-1/2 h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                  </div>
+                  <div className="w-30 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                </article>
+              </li>
+            )
+          })}
+      </ul>
+      <div className="flex flex-col justify-center items-center py-4">
+        <div className="w-16 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+      </div>
+    </>
   )
 }
 
@@ -391,43 +396,48 @@ function Menu({ services }: MenuProps) {
 
 function ReviewsSkeleton() {
   return (
-    <ul className="flex flex-col">
-      {Array(5)
-        .fill(0)
-        .map((_, index) => {
-          return (
-            <li key={index} className="border-b-1 border-neutral-300">
-              <article className="px-8 py-4 flex flex-col gap-3">
-                <div className="flex flex-row gap-4 items-start">
-                  <div className="aspect-square">
-                    <CircleUserRoundIcon className="animate-pulse text-neutral-300 size-10 stroke-1" />
-                  </div>
-                  <div className="flex flex-col gap-1 grow-1">
-                    <div className="w-40 h-5 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
-                    <ul className="flex gap-1">
-                      {Array(5)
-                        .fill(0)
-                        .map((_, index) => (
-                          <StarIcon
-                            key={index}
-                            className="stroke-neutral-100 fill-neutral-100 size-3"
-                          />
-                        ))}
-                    </ul>
-                  </div>
+    <>
+      <ul className="flex flex-col">
+        {Array(5)
+          .fill(0)
+          .map((_, index) => {
+            return (
+              <li key={index} className="border-b-1 border-neutral-300">
+                <article className="px-8 py-4 flex flex-col gap-3">
+                  <div className="flex flex-row gap-4 items-start">
+                    <div className="aspect-square">
+                      <CircleUserRoundIcon className="animate-pulse text-neutral-300 size-10 stroke-1" />
+                    </div>
+                    <div className="flex flex-col gap-1 grow-1">
+                      <div className="w-40 h-5 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                      <ul className="flex gap-1">
+                        {Array(5)
+                          .fill(0)
+                          .map((_, index) => (
+                            <StarIcon
+                              key={index}
+                              className="stroke-neutral-100 fill-neutral-100 size-3"
+                            />
+                          ))}
+                      </ul>
+                    </div>
 
-                  <div className="w-15 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <div className="w-full h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
-                  <div className="w-full h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
-                  <div className="w-1/2 h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
-                </div>
-              </article>
-            </li>
-          )
-        })}
-    </ul>
+                    <div className="w-15 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <div className="w-full h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                    <div className="w-full h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                    <div className="w-1/2 h-3 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+                  </div>
+                </article>
+              </li>
+            )
+          })}
+      </ul>
+      <div className="flex flex-col justify-center items-center py-4">
+        <div className="w-16 h-4 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+      </div>
+    </>
   )
 }
 
