@@ -1,7 +1,8 @@
 import { Route, Switch, useLocation } from "wouter"
 import { ErrorBoundary } from "react-error-boundary"
 
-import { ApiError, AutoLoginError } from "@/api/errors"
+import { ApiError } from "@/lib/errors/api"
+import { AutoLoginError } from "@/lib/errors/ui"
 import { Unexpected, Http } from "@/components/error"
 
 import { Business } from "@/app/pages/business/[businessId]/home/[page]"

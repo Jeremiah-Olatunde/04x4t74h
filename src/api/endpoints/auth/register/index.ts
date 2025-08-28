@@ -4,7 +4,7 @@ import {
   ImATeapot,
   InternalServerError,
   TooManyRequests,
-} from "@/api/errors"
+} from "@/lib/errors/api"
 import { DURATION, PROBABILITY_HIGH, PROBABILITY_LOW } from "@/config"
 import { sleep } from "@/utils"
 

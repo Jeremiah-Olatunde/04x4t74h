@@ -7,6 +7,9 @@ import {
   LoaderCircle as IconLoaderCircle,
 } from "lucide-react"
 
+import { AutoLoginError } from "@/lib/errors/ui"
+import { ApiError, BadRequest, Conflict } from "@/lib/errors/api"
+
 import { FlagNg } from "@/assets/icons/flag-ng"
 import { ButtonBadge } from "@/components/button"
 import {
@@ -32,7 +35,6 @@ import {
   TelephoneTaken,
 } from "@/components/form-v2/banner"
 
-import { ApiError, AutoLoginError, BadRequest, Conflict } from "@/api/errors"
 import { login } from "@/api/endpoints/auth/login"
 import { register } from "@/api/endpoints/auth/register"
 

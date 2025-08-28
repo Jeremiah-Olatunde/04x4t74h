@@ -4,7 +4,7 @@ import {
   NotFound,
   TooManyRequests,
   Unauthorized,
-} from "@/api/errors"
+} from "@/lib/errors/api"
 import { DURATION, PROBABILITY_LOW } from "@/config"
 
 import type { Business } from "@/types/business"

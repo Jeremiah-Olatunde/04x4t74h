@@ -7,6 +7,8 @@ import { Controller, useForm } from "react-hook-form"
 import { useErrorBoundary } from "react-error-boundary"
 import { useLocation } from "wouter"
 
+import { BadRequest, Unauthorized } from "@/lib/errors/api"
+
 import {
   Field,
   FieldErrors,
@@ -28,7 +30,6 @@ import { Logo } from "@/components/logo"
 import { ButtonBadge } from "@/components/button"
 import { LinkText } from "@/components/link"
 import { login } from "@/api/endpoints/auth/login"
-import { BadRequest, Unauthorized } from "@/api/errors"
 
 type FormValues = {
   email: string

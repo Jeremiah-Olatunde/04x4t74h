@@ -10,13 +10,13 @@ import { useMemo, useState, type ReactNode } from "react"
 import { useLocation, useParams } from "wouter"
 import { Tabs } from "@base-ui-components/react/tabs"
 
+import { PathParameterError } from "@/lib/errors/ui"
 import type { Business } from "@/types/business"
 import { useBusinessOne } from "@/hooks/business"
 import * as RemoteData from "@/lib/remote-data"
 import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
-import { PathParameterError } from "@/api/errors"
 import { LinkBack, LinkText } from "@/components/link"
 
 export function Business() {

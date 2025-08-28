@@ -5,7 +5,7 @@ import {
   NotFound,
   TooManyRequests,
   Unauthorized,
-} from "@/api/errors"
+} from "@/lib/errors/api"
 import { sleep } from "@/utils"
 import { id } from "zod/locales"
 

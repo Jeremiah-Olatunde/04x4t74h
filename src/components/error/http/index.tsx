@@ -1,4 +1,4 @@
-import type { ApiError } from "@/api/errors"
+import type { ApiError } from "@/lib/errors/api"
 import { ButtonBadge } from "@/components/button"
 
 type HttpProps = {

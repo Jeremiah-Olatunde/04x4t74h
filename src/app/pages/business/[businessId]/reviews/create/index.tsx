@@ -1,6 +1,8 @@
 import { useParams } from "wouter"
 
-import { BadRequest, PathParameterError } from "@/api/errors"
+import { BadRequest } from "@/lib/errors/api"
+import { PathParameterError } from "@/lib/errors/ui"
+
 import { useBusinessOne } from "@/hooks/business"
 import { LinkBack } from "@/components/link"
 import type { BusinessLite } from "@/types/business"
