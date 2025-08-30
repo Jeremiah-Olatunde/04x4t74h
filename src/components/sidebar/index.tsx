@@ -1,10 +1,17 @@
-import { Link as WouterLink } from "wouter"
+import { useLocation, Link as WouterLink } from "wouter"
 import { Dialog } from "@base-ui-components/react"
-import { MenuIcon, MapPinnedIcon, SearchIcon, LogInIcon } from "lucide-react"
+import {
+  MenuIcon,
+  MapPinnedIcon,
+  SearchIcon,
+  CircleUserRoundIcon,
+} from "lucide-react"
 
 type SidebarProps = {}
 
 export function Sidebar({}: SidebarProps) {
+  const [wouterLocation] = useLocation()
+
   return (
     <Dialog.Root>
       <Dialog.Trigger className="flex flex-row justify-center items-center gap-1 border-1 border-neutral-300 bg-white rounded-md p-1">
@@ -27,10 +34,18 @@ export function Sidebar({}: SidebarProps) {
                 <div className="h-0" />
 
                 <li className="">
-                  <MapPinnedIcon className="text-neutral-400 size-6" />
+                  <WouterLink href="/home">
+                    <MapPinnedIcon
+                      className={`${wouterLocation === "/home" ? "text-primary/80" : "text-neutral-400"} size-6`}
+                    />
+                  </WouterLink>
                 </li>
                 <li className="">
-                  <SearchIcon className="text-neutral-400 size-6" />
+                  <WouterLink href="/search">
+                    <SearchIcon
+                      className={`${wouterLocation === "/search" ? "text-primary/80" : "text-neutral-400"} size-6`}
+                    />
+                  </WouterLink>
                 </li>
               </ul>
             </div>
@@ -38,7 +53,7 @@ export function Sidebar({}: SidebarProps) {
             <ul>
               <li>
                 <WouterLink href="/auth/login">
-                  <LogInIcon className="text-neutral-400 size-6" />
+                  <CircleUserRoundIcon className="text-neutral-400 size-8" />
                 </WouterLink>
               </li>
             </ul>

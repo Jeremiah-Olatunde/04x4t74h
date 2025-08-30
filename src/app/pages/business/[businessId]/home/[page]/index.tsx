@@ -1,9 +1,7 @@
 import {
   CircleUserRoundIcon,
   ClockIcon,
-  FullscreenIcon,
   MapPinIcon,
-  MaximizeIcon,
   PhoneIcon,
   PiggyBankIcon,
   StarIcon,
@@ -22,7 +20,7 @@ import type { Review } from "@/types/review"
 import { LinkText } from "@/components/link"
 import { Topbar } from "@/components/topbar"
 import { Logo } from "@/components/logo"
-import { ButtonLike, ButtonShare } from "@/components/button"
+import { ButtonShare } from "@/components/button"
 
 export function Business() {
   const { businessId } = useParams()

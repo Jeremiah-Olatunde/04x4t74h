@@ -123,7 +123,7 @@ export function PasswordReset() {
                   Didn't recieve an OTP?
                 </span>
 
-                <LinkText href="/forgot">Resend it</LinkText>
+                <LinkText href="/auth/password/forgot">Resend it</LinkText>
               </div>
 
               <div className="flex items-center justify-between gap-1">

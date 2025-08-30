@@ -13,6 +13,9 @@ import { Login } from "@/app/pages/auth/login"
 import { PasswordForgot } from "@/app/pages/auth/password/forgot"
 import { PasswordReset } from "@/app/pages/auth/password/reset"
 import { SignUp } from "@/app/pages/auth/sign-up"
+import { Search } from "../pages/search"
+import { Recommendations } from "../pages/recommendations"
+import { Tags } from "../pages/tags"
 
 export function Router() {
   const [_, setLocation] = useLocation()
@@ -64,6 +67,12 @@ export function Router() {
         <Route path="/auth/password" component={PasswordForgot} />
         <Route path="/auth/password/forgot" component={PasswordForgot} />
         <Route path="/auth/password/reset" component={PasswordReset} />
+
+        <Route path="/search" component={Search} />
+
+        <Route path="/recommendations" component={Recommendations} />
+
+        <Route path="/tags/:tagName" component={Tags} />
 
         <Route>page not found</Route>
       </Switch>

@@ -118,7 +118,7 @@ export function Content() {
         </div>
 
         <WouterLink
-          href="#"
+          href="/search"
           className="bg-white cursor-pointer basis-3/5 p-2 gap-2 rounded-md flex items-center"
         >
           <Icon color="neutral" icon={SearchIcon} size="sm" />
