@@ -28,7 +28,9 @@ export function Sidebar({}: SidebarProps) {
             <div>
               <ul className="flex flex-col gap-8 items-center">
                 <li className="">
-                  <MenuIcon className="text-neutral-400 size-6" />
+                  <Dialog.Close>
+                    <MenuIcon className="text-neutral-400 size-6" />
+                  </Dialog.Close>
                 </li>
 
                 <div className="h-0" />
