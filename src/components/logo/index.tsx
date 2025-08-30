@@ -1,5 +1,5 @@
 import { Link as LinkWouter } from "wouter"
-import { cva } from "class-variance-authority"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import logoPrimary from "@/assets/icons/logo-primary.svg"
 import logoWhite from "@/assets/icons/logo-white.svg"
@@ -15,9 +15,10 @@ const text = (function () {
   const color = { purple, white, primary } as const
 
   const sm = tw``
+  const md = tw`text-xl`
   const lg = tw`text-3xl`
 
-  const size = { sm, lg } as const
+  const size = { sm, md, lg } as const
 
   const variants = { color, size } as const
 
@@ -28,18 +29,30 @@ const image = (function () {
   const base = tw``
 
   const sm = tw`size-4`
+  const md = tw`size-6`
   const lg = tw`size-8`
 
-  const variants = { size: { sm, lg } } as const
+  const variants = { size: { sm, md, lg } } as const
 
   return cva(base, { variants })
 })()
+
+type TextVariants = VariantProps<typeof text>
+export type TextVariantProps = {
+  size: NonNullable<TextVariants["size"]>
+  color: NonNullable<TextVariants["color"]>
+}
+
+type ImageVariants = VariantProps<typeof image>
+export type ImageVariantProps = {
+  size: NonNullable<ImageVariants["size"]>
+}
 
 export function Logo({
   size,
   color,
 }: {
-  size: "sm" | "lg"
+  size: "sm" | "md" | "lg"
   color: "purple" | "primary" | "white"
 }) {
   return (

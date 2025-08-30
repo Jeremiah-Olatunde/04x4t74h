@@ -56,7 +56,7 @@ type LinkBackProps = { href: string }
 export function LinkBack({ href }: LinkBackProps) {
   return (
     <LinkWouter href={href} className="w-min">
-      <div className="w-min bg-white border-1 border-neutral-300 p-2 rounded-xl">
+      <div className="w-min bg-white border-1 border-neutral-300 p-1 rounded-lg">
         <ChevronLeftIcon className="text-neutral-400 size-5" />
       </div>
     </LinkWouter>

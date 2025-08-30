@@ -18,6 +18,8 @@ import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { LinkBack, LinkText } from "@/components/link"
+import { Topbar } from "@/components/topbar"
+import { Logo } from "@/components/logo"
 
 export function Business() {
   const { businessId } = useParams()
@@ -33,7 +35,14 @@ export function Business() {
   const remoteData = useBusinessOne(businessId)
 
   return (
-    <section className="">
+    <section className="flex flex-col gap-6">
+      <div />
+      <div className="px-6">
+        <Topbar href="/home">
+          <Logo size="md" color="purple" />
+        </Topbar>
+      </div>
+
       {RemoteData.fold3(remoteData, {
         onNone: (): ReactNode => {
           return (
@@ -65,14 +74,8 @@ type HeroSkeletonProps = {
 
 function HeroSkeleton({ id }: HeroSkeletonProps) {
   return (
-    <section className="flex flex-col gap-6 p-6">
-      <div className="relative">
-        <div className="z-20 absolute top-2 left-2 animate-none">
-          <LinkBack href="/home" />
-        </div>
-
-        <div className="h-62 rounded-xl grow-1 bg-neutral-100 border-1 border-neutral-200 animate-pulse" />
-      </div>
+    <section className="flex flex-col gap-6 px-6">
+      <div className="h-62 rounded-xl grow-1 bg-neutral-100 border-1 border-neutral-200 animate-pulse" />
       <div className="flex flex-col gap-4">
         <div>
           <div className="h-6 w-50 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
@@ -109,20 +112,14 @@ type HeroProps = {
 
 function Hero({ business }: HeroProps) {
   return (
-    <section className="flex flex-col gap-6 p-6">
-      <div className="relative">
-        <div className="absolute top-2 left-2">
-          <LinkBack href="/home" />
-        </div>
-
-        <div className="h-62 rounded-xl grow-1 bg-neutral-50">
-          <img
-            onLoad={() => {}}
-            src={business.logo}
-            alt={`cover photo of ${business.name}`}
-            className="object-cover w-full h-full rounded-xl border-1 border-neutral-300 -z-10"
-          />
-        </div>
+    <section className="flex flex-col gap-6 px-6">
+      <div className="h-62 rounded-xl grow-1 bg-neutral-50">
+        <img
+          onLoad={() => {}}
+          src={business.logo}
+          alt={`cover photo of ${business.name}`}
+          className="object-cover w-full h-full rounded-xl border-1 border-neutral-300 -z-10"
+        />
       </div>
 
       <div className="flex flex-col gap-4">

@@ -31,6 +31,7 @@ import { ButtonBadge } from "@/components/button"
 import { createReview } from "@/api/endpoints/catalog/externalorganisation/[id]/reviews"
 import { InvalidData, ReviewCreated } from "@/components/form-v2/banner"
 import { useErrorBoundary } from "react-error-boundary"
+import { Topbar } from "@/components/topbar"
 
 export function ReviewCreate() {
   const { businessId } = useParams()
@@ -44,15 +45,13 @@ export function ReviewCreate() {
   }
 
   return (
-    <section className="px-6 py-8 min-h-screen flex flex-col gap-8">
-      <header className="relative flex justify-center items-center gap-4">
-        <div className="absolute left-0 top-1/2 -translate-y-1/2">
-          <LinkBack href={`~/business/${businessId}/home/menu`} />
-        </div>
-        <h1 className="font-sora text-xl text-neutral-700 font-bold">
+    <section className="px-6 min-h-screen flex flex-col gap-6">
+      <div />
+      <Topbar href={`~/business/${businessId}/home/menu`}>
+        <h1 className="font-sora text-lg text-neutral-700 font-bold">
           Leave a Review
         </h1>
-      </header>
+      </Topbar>
 
       <ReviewCreateForm businessId={businessId} />
     </section>

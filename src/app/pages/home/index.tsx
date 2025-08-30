@@ -9,6 +9,7 @@ import { ButtonBadge } from "@/components/button"
 import * as BusinessList from "@/components/business/list"
 
 import * as Hero from "./hero"
+import { Sidebar } from "@/components/sidebar"
 
 export function Home() {
   const remoteData = useBusinessAll()
@@ -36,7 +37,7 @@ export function Home() {
   return (
     <section className="relative flex flex-col">
       <div className="fixed top-6 right-6 z-10">
-        <Hero.Sidebar />
+        <Sidebar />
       </div>
 
       <Hero.Root>
