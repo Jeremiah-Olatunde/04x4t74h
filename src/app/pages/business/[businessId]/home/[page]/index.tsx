@@ -1,7 +1,9 @@
 import {
   CircleUserRoundIcon,
   ClockIcon,
+  FullscreenIcon,
   MapPinIcon,
+  MaximizeIcon,
   PhoneIcon,
   PiggyBankIcon,
   StarIcon,
@@ -17,9 +19,10 @@ import * as RemoteData from "@/lib/remote-data"
 import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
-import { LinkBack, LinkText } from "@/components/link"
+import { LinkText } from "@/components/link"
 import { Topbar } from "@/components/topbar"
 import { Logo } from "@/components/logo"
+import { ButtonLike, ButtonShare } from "@/components/button"
 
 export function Business() {
   const { businessId } = useParams()
@@ -110,10 +113,36 @@ type HeroProps = {
   business: Business
 }
 
+class BusinessSharingError extends Error {}
+
 function Hero({ business }: HeroProps) {
   return (
     <section className="flex flex-col gap-6 px-6">
-      <div className="h-62 rounded-xl grow-1 bg-neutral-50">
+      <div className="h-62 rounded-xl grow-1 bg-neutral-50 relative">
+        <div className="p-2 flex flex-row gap-1 absolute bottom-0 right-0">
+          <ButtonShare
+            onClick={() => {
+              const text = `Discover ${business.name} in ${business.town}, ${business.city} with Plazzaa.`
+              const url = `https://plazzaa.com/business/${business.id}/home/menu`
+              const title = `${business.name} on Plazzaa`
+              const shareData = { text, title, url }
+
+              if (navigator.canShare?.()) {
+                navigator
+                  .share(shareData)
+                  .then(() => {
+                    console.log("sharing successful")
+                  })
+                  .catch((cause) => {
+                    const message = "Unable to share business"
+                    throw new BusinessSharingError(message, { cause })
+                  })
+              } else {
+                console.log("sharing not available")
+              }
+            }}
+          />
+        </div>
         <img
           onLoad={() => {}}
           src={business.logo}
