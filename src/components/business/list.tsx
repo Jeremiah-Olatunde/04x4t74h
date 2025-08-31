@@ -36,7 +36,7 @@ export function Slider({ businesses }: SliderProps) {
         <ScrollArea.Content className="contents">
           {businesses.map((business) => (
             <div key={business.id} className="snap-start size-60 shrink-0">
-              <Business details={business} />
+              <Business details={business} size="sm" />
             </div>
           ))}
         </ScrollArea.Content>

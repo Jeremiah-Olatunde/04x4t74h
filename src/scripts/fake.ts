@@ -93,7 +93,7 @@ export function businessesWithReviewsAndServices(
       rating: faker.number.float({ min: 3, max: 5, fractionDigits: 1 }),
       street: config.street,
       telephone: faker.phone.number(),
-      tags: faker.helpers.arrayElements(config.tags),
+      tags: faker.helpers.arrayElements(config.tags, { min: 2, max: 5 }),
       town: config.town,
       reviews: Array(faker.number.int({ min: 3, max: 30 }))
         .fill(0)

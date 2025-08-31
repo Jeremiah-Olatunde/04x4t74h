@@ -4,6 +4,8 @@ import { MapPin as IconMapPin, Star as IconStar } from "lucide-react"
 
 import { Icon } from "@/components/icon"
 
+type CardSize = { size: "sm" | "lg" }
+
 export type BusinessDetails = {
   city: string
   id: string
@@ -14,7 +16,9 @@ export type BusinessDetails = {
   town: string
 }
 
-export function Business({ details }: { details: BusinessDetails }) {
+type BusinessProps = { details: BusinessDetails; size: "sm" | "lg" }
+
+export function Business({ details, size }: BusinessProps) {
   return (
     <Root>
       <WouterLink
@@ -29,17 +33,17 @@ export function Business({ details }: { details: BusinessDetails }) {
           />
         </div>
 
-        <div className="p-4 pt-2">
+        <div className={size === "sm" ? `p-4 pt-2` : `p-6 pt-4`}>
           <div className="flex gap-2 justify-between items-start">
-            <Budget />
-            <Rating rating={details.rating} />
+            <Budget size={size} />
+            <Rating rating={details.rating} size={size} />
           </div>
 
-          <Header title={details.name} />
+          <Header title={details.name} size={size} />
 
           <div className="h-4" />
 
-          <Address town={details.town} city={details.city} />
+          <Address town={details.town} city={details.city} size={size} />
         </div>
       </WouterLink>
     </Root>
@@ -80,54 +84,63 @@ function Root({ children }: { children: ReactNode }) {
   )
 }
 
-function Address({ town, city }: { town: string; city: string }) {
+type AddressProps = CardSize & { town: string; city: string }
+function Address({ town, city, size }: AddressProps) {
   return (
     <address className="flex justify-start items-center gap-1">
       <Icon color="neutral" icon={IconMapPin} size="xs" />
-      <span className="font-sora text-xxs text-neutral-400 font-light not-italic">
+      <span
+        className={`
+          ${size === "sm" ? "text-xxs" : "text-xs"}
+          font-sora  text-neutral-400 font-light not-italic
+        `}
+      >
         {town}, {city}
       </span>
     </address>
   )
 }
 
-function Header({ title }: { title: string }) {
+type HeaderProps = CardSize & { title: string }
+function Header({ title, size }: HeaderProps) {
   return (
     <header>
-      <h2 className="font-sora font-medium text-neutral-700 text-xs truncate">
+      <h2
+        className={`
+          ${size === "sm" ? "text-xs" : "text-sm"}
+          font-sora font-medium text-neutral-700  truncate
+        `}
+      >
         {title}
       </h2>
     </header>
   )
 }
 
-function Rating({ rating }: { rating: number }) {
+type RatingProps = CardSize & { rating: number }
+function Rating({ rating, size }: RatingProps) {
   return (
     <div className="flex gap-1 items-center">
-      <IconStar className="size-3 stroke-secondary fill-secondary" />
-      <span className="font-sora text-xxs">{rating}</span>
+      <IconStar
+        className={`${size === "sm" ? "size-3" : "size-4"} stroke-secondary fill-secondary`}
+      />
+      <span className={`${size === "sm" ? "text-xxs" : "text-xs"} font-sora`}>
+        {rating}
+      </span>
     </div>
   )
 }
 
-function Budget() {
+type BudgetProps = CardSize
+function Budget({ size }: BudgetProps) {
   return (
-    <p className="font-sora text-xxs text-neutral-400 font-light">
+    <p
+      className={`
+        ${size === "sm" ? "text-xxs" : "text-xs"}
+        font-sora text-neutral-400 font-light
+      `}
+    >
       (N15,000 to unlimited)
     </p>
   )
 }
-
-// function Button() {
-//   return (
-//     <button type="button" className="absolute top-2 right-2 cursor-pointer">
-//       <div className="rounded-full p-2 flex justify-center items-center bg-red-400">
-//         {Math.random() < 0.5 ? (
-//           <IconHeart className="size-3 stroke-white" />
-//         ) : (
-//           <IconHeart className="size-3 stroke-white fill-white " />
-//         )}
-//       </div>
-//     </button>
-//   )
-// }
