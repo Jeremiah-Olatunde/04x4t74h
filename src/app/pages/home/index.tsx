@@ -2,7 +2,7 @@ import { useState, type ReactNode } from "react"
 import { MenuIcon } from "lucide-react"
 
 import * as RemoteData from "@/lib/remote-data"
-import { useBusinessAll } from "@/hooks/business"
+import { useBusinessAllCache } from "@/hooks/business"
 
 import { GetRecommendations } from "@/components/card"
 import { ButtonBadge } from "@/components/button"
@@ -12,7 +12,7 @@ import * as Hero from "./hero"
 import { Sidebar } from "@/components/sidebar"
 
 export function Home() {
-  const remoteData = useBusinessAll()
+  const remoteData = useBusinessAllCache()
 
   const [city, setCity] = useState<string>()
 

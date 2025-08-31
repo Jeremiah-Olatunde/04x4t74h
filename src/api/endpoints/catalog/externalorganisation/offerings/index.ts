@@ -42,3 +42,25 @@ export async function fetchBusinessAll(): Promise<readonly Business[]> {
   const businesses: readonly Business[] = await response.json()
   return businesses
 }
+
+type BusinessCacheAll = null | readonly Business[]
+type BusinessCacheOne = Readonly<Record<string, Business>>
+type BusinessCache = { all: BusinessCacheAll; one: BusinessCacheOne }
+
+export async function fetchBusinessAllCache(
+  cache: BusinessCache,
+): Promise<[BusinessCache, readonly Business[]]> {
+  if (cache.all !== null) {
+    console.log("[cache hit] Business All")
+    return [cache, cache.all]
+  }
+
+  console.log("[cache miss] Business All")
+
+  const all = await fetchBusinessAll()
+  const one = Object.fromEntries(all.map((b) => [b.id, b] as const))
+
+  console.log("Cache State", { all, one })
+
+  return [{ all, one }, all]
+}

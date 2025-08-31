@@ -3,8 +3,7 @@ import { useParams } from "wouter"
 import { BadRequest } from "@/lib/errors/api"
 import { PathParameterError } from "@/lib/errors/ui"
 
-import { useBusinessOne } from "@/hooks/business"
-import { LinkBack } from "@/components/link"
+import { useBusinessOneCache } from "@/hooks/business"
 import type { BusinessLite } from "@/types/business"
 import * as RemoteData from "@/lib/remote-data"
 import { useState, type ReactNode } from "react"
@@ -71,7 +70,7 @@ const defaultValues: FormValues = {
 type ReviewCreateFormProps = { businessId: string }
 function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
   const { showBoundary } = useErrorBoundary()
-  const remoteData = useBusinessOne(businessId)
+  const remoteData = useBusinessOneCache(businessId)
 
   const { control, handleSubmit, setValue, setError } = useForm<FormValues>({
     criteriaMode: "all",

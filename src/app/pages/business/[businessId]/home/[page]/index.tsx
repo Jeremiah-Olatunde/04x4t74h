@@ -12,7 +12,7 @@ import { Tabs } from "@base-ui-components/react/tabs"
 
 import { PathParameterError } from "@/lib/errors/ui"
 import type { Business } from "@/types/business"
-import { useBusinessOne } from "@/hooks/business"
+import { useBusinessOne, useBusinessOneCache } from "@/hooks/business"
 import * as RemoteData from "@/lib/remote-data"
 import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
@@ -33,7 +33,7 @@ export function Business() {
     throw new PathParameterError(parameter, schema, details)
   }
 
-  const remoteData = useBusinessOne(businessId)
+  const remoteData = useBusinessOneCache(businessId)
 
   return (
     <section className="flex flex-col gap-6">
