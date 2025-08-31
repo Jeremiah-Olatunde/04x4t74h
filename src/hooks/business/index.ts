@@ -1,15 +1,10 @@
+import { useEffect, useState } from "react"
+
 import { createHookRemoteData } from "@/utils/hooks"
-import {
-  fetchBusinessOne,
-  fetchBusinessOneCache,
-} from "@/api/endpoints/catalog/externalorganisation/[id]/offerings"
-import {
-  fetchBusinessAll,
-  fetchBusinessAllCache,
-} from "@/api/endpoints/catalog/externalorganisation/offerings"
+import { fetchBusinessOne } from "@/api/endpoints/catalog/externalorganisation/[id]/offerings"
+import { fetchBusinessAll } from "@/api/endpoints/catalog/externalorganisation/offerings"
 import type { Business } from "@/types/business"
 import * as RemoteData from "@/lib/remote-data"
-import { useEffect, useState } from "react"
 
 export const useBusinessOne = createHookRemoteData(fetchBusinessOne)
 export const useBusinessAll = createHookRemoteData(fetchBusinessAll)
@@ -20,6 +15,29 @@ type BusinessCache = { all: BusinessCacheAll; one: BusinessCacheOne }
 
 let CACHE: BusinessCache = { all: null, one: {} }
 
+function getBusinessOne(cache: BusinessCache, id: string): Business | null {
+  return cache.one[id] ?? null
+}
+
+function getBusinessAll(cache: BusinessCache): readonly Business[] | null {
+  return cache.all ?? null
+}
+
+function setBusinessOne(
+  cache: BusinessCache,
+  business: Business,
+): BusinessCache {
+  const all = cache.all
+  const one = { ...cache.one, [business.id]: business }
+  return { all, one }
+}
+
+function setBusinessAll(businesses: readonly Business[]): BusinessCache {
+  const all = businesses
+  const one = Object.fromEntries(all.map((b) => [b.id, b] as const))
+  return { all, one }
+}
+
 export const useBusinessOneCache = function (id: string) {
   type T = RemoteData.RemoteData<unknown, Business>
   const [remoteData, setRemoteData] = useState<T>(RemoteData.pending)
@@ -27,17 +45,24 @@ export const useBusinessOneCache = function (id: string) {
   useEffect(() => {
     let aborted = false
 
-    fetchBusinessOneCache(id, CACHE)
-      .then(([cache, value]) => {
+    const cached = getBusinessOne(CACHE, id)
+
+    if (cached !== null) {
+      setRemoteData(RemoteData.success(cached))
+    }
+
+    fetchBusinessOne(id)
+      .then((value) => {
         if (aborted) {
           return
         }
 
         setRemoteData(RemoteData.success(value))
+        CACHE = setBusinessOne(CACHE, value)
 
-        fetchBusinessAllCache(cache)
-          .then(([cache]) => {
-            CACHE = cache
+        fetchBusinessAll()
+          .then((value) => {
+            CACHE = setBusinessAll(value)
           })
           .catch((_error) => {
             console.warn("Error occured while prefetching all businesses")
@@ -54,7 +79,7 @@ export const useBusinessOneCache = function (id: string) {
     return () => {
       aborted = true
     }
-  }, [id, CACHE])
+  }, [id])
 
   return remoteData
 }
@@ -66,14 +91,20 @@ export const useBusinessAllCache = function () {
   useEffect(() => {
     let aborted = false
 
-    fetchBusinessAllCache(CACHE)
-      .then(([cache, value]) => {
+    const cached = getBusinessAll(CACHE)
+
+    if (cached !== null) {
+      setRemoteData(RemoteData.success(cached))
+    }
+
+    fetchBusinessAll()
+      .then((value) => {
         if (aborted) {
           return
         }
 
         setRemoteData(RemoteData.success(value))
-        CACHE = cache
+        CACHE = setBusinessAll(value)
       })
       .catch((error) => {
         if (aborted) {
@@ -86,7 +117,7 @@ export const useBusinessAllCache = function () {
     return () => {
       aborted = true
     }
-  }, [CACHE])
+  }, [])
 
   return remoteData
 }

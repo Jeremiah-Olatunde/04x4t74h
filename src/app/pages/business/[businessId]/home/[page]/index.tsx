@@ -12,7 +12,7 @@ import { Tabs } from "@base-ui-components/react/tabs"
 
 import { PathParameterError } from "@/lib/errors/ui"
 import type { Business } from "@/types/business"
-import { useBusinessOne, useBusinessOneCache } from "@/hooks/business"
+import { useBusinessOneCache } from "@/hooks/business"
 import * as RemoteData from "@/lib/remote-data"
 import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
