@@ -72,10 +72,13 @@ export function businessesWithReviewsAndServices(
       city: config.city,
       description: faker.lorem.paragraph(),
       id: faker.string.uuid(),
-      logo: faker.image.urlPicsumPhotos({
-        width: faker.number.int({ min: 300, max: 600 }),
-        height: faker.number.int({ min: 300, max: 600 }),
-      }),
+      logo: "/images/business.jpg",
+      // logo: faker.image.urlPicsumPhotos({
+      //   width: faker.number.int({ min: 300, max: 600 }),
+      //   height: faker.number.int({ min: 300, max: 600 }),
+      //   blur: 0,
+      //   grayscale: false,
+      // }),
       name: faker.company.name(),
       openingHours: [
         { opens: "T09:00:00Z", closes: "T09:00:00Z", dayOfWeek: "MONDAY" },
