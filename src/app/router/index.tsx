@@ -11,7 +11,6 @@ import { ReviewCreate } from "@/app/pages/business/[businessId]/reviews/create"
 import { Home } from "@/app/pages/home"
 import { Login } from "@/app/pages/auth/login"
 import { PasswordForgot } from "@/app/pages/auth/password/forgot"
-import { PasswordReset } from "@/app/pages/auth/password/reset"
 import { SignUp } from "@/app/pages/auth/sign-up"
 import { Search } from "../pages/search"
 import { Recommendations } from "../pages/recommendations"
@@ -66,7 +65,6 @@ export function Router() {
         <Route path="/auth/sign-up" component={SignUp} />
         <Route path="/auth/password" component={PasswordForgot} />
         <Route path="/auth/password/forgot" component={PasswordForgot} />
-        <Route path="/auth/password/reset" component={PasswordReset} />
 
         <Route path="/search" component={Search} />
 

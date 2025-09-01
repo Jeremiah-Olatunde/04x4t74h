@@ -31,16 +31,17 @@ export function Tags() {
     return businesses.filter((business) => business.tags.includes(tagName))
   })
 
-  console.log(filtered)
-
   return (
-    <section className="px-6 py-8 min-h-screen flex flex-col gap-6">
-      <Topbar href="/home">
-        <h1 className="font-sora text-xl text-neutral-700 font-bold">
-          {formatted}
-        </h1>
-      </Topbar>
-      <section>
+    <section className="min-h-screen flex flex-col gap-6">
+      <div />
+      <div className="px-6">
+        <Topbar href="/home">
+          <h1 className="font-sora text-xl text-neutral-700 font-bold">
+            {formatted}
+          </h1>
+        </Topbar>
+      </div>
+      <section className="px-6">
         <ul className="flex flex-col gap-6">
           {RemoteData.fold3(filtered, {
             onNone: (): React.ReactNode => {
@@ -48,8 +49,8 @@ export function Tags() {
                 .fill(0)
                 .map((_, index) => {
                   return (
-                    <li key={index}>
-                      <BusinessSkeleton />
+                    <li key={index} className="h-80">
+                      <BusinessSkeleton size="lg" />
                     </li>
                   )
                 })

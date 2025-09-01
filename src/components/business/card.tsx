@@ -50,26 +50,26 @@ export function Business({ details, size }: BusinessProps) {
   )
 }
 
-export function BusinessSkeleton() {
+export function BusinessSkeleton({ size }: CardSize) {
   return (
     <Root>
       <div className="w-full rounded-xl"></div>
       <div className="flex flex-col h-full w-full">
         <div className="rounded-t-xl grow-1 bg-neutral-100 border-b-1 border-neutral-200 animate-pulse"></div>
 
-        <div className="p-4 pt-2">
+        <div className={size === "sm" ? `p-4 pt-2` : `p-6 pt-4`}>
           <div className="flex gap-2 justify-between items-start">
-            <div className="h-3 w-24 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
-            <div className="h-3 w-8 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+            <div className="h-4 w-24 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+            <div className="h-4 w-8 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
           </div>
 
           <div className="h-1" />
 
-          <div className="h-4 w-2/3 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+          <div className="h-5 w-2/3 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
 
           <div className="h-4" />
 
-          <div className="h-3 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
+          <div className="h-4 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
         </div>
       </div>
     </Root>
@@ -119,13 +119,18 @@ function Header({ title, size }: HeaderProps) {
 
 type RatingProps = CardSize & { rating: number }
 function Rating({ rating, size }: RatingProps) {
+  const formatter = new Intl.NumberFormat("en-NG", {
+    style: "decimal",
+    minimumFractionDigits: 1,
+  })
+
   return (
     <div className="flex gap-1 items-center">
       <IconStar
         className={`${size === "sm" ? "size-3" : "size-4"} stroke-secondary fill-secondary`}
       />
       <span className={`${size === "sm" ? "text-xxs" : "text-xs"} font-sora`}>
-        {rating}
+        {formatter.format(rating)}
       </span>
     </div>
   )

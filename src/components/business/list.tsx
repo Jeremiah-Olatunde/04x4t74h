@@ -54,7 +54,7 @@ export function SliderSkeleton() {
             .fill(0)
             .map((_, index) => (
               <div key={index} className="snap-start size-60 shrink-0">
-                <BusinessSkeleton />
+                <BusinessSkeleton size="sm" />
               </div>
             ))}
         </ScrollArea.Content>

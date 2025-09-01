@@ -39,7 +39,7 @@ export function Business() {
     <section className="flex flex-col gap-6">
       <div />
       <div className="px-6">
-        <Topbar href="/home">
+        <Topbar>
           <Logo size="md" color="purple" />
         </Topbar>
       </div>

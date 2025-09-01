@@ -13,7 +13,11 @@ export function Recommendations() {
         recommendations that match your taste. This feature is still in the
         works—check back soon.
       </Placeholder.Content>
-      <Placeholder.LinkHome />
+
+      <div className="flex justify-start gap-1">
+        <Placeholder.Back />
+        <Placeholder.Home />
+      </div>
     </Placeholder.Root>
   )
 }

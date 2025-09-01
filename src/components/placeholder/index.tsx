@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react"
 import { LinkBadge } from "@/components/link"
+import { ButtonBackText } from "@/components/button"
 
 type PlaceholderProps = {
   title: string
@@ -58,12 +59,18 @@ export function Content({ children }: ContentProps) {
   return <p className="font-sora text-neutral-600">{children}</p>
 }
 
-export function LinkHome() {
+export function Back() {
   return (
-    <div className="flex justify-start">
-      <LinkBadge href="/home" size="md" color="white">
-        Home
-      </LinkBadge>
+    <div>
+      <ButtonBackText />
     </div>
+  )
+}
+
+export function Home() {
+  return (
+    <LinkBadge href="/home" size="md" color="white">
+      Home
+    </LinkBadge>
   )
 }

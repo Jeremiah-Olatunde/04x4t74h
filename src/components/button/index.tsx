@@ -2,7 +2,7 @@ import type { ComponentProps, PropsWithChildren } from "react"
 
 import { Badge, type BadgeVariantProps } from "@/components/badge"
 import { Pill, type PillVariantProps } from "@/components/pill"
-import { HeartIcon, Share2Icon } from "lucide-react"
+import { ChevronLeftIcon, HeartIcon, Share2Icon } from "lucide-react"
 
 type ButtonBadgeProps = ComponentProps<"button"> & BadgeVariantProps
 
@@ -72,5 +72,35 @@ export function ButtonShare({ ...props }: PropsWithChildren<ButtonShareProps>) {
     <button type="button" className="rounded-full bg-[#FF6B6B] p-2" {...props}>
       <Share2Icon className="size-4 fill-none stroke-white" />
     </button>
+  )
+}
+
+type ButtonBackProps = {}
+
+export function ButtonBack({ children }: PropsWithChildren<ButtonBackProps>) {
+  return (
+    <button type="button" className="w-min" onClick={() => history.back()}>
+      {children}
+    </button>
+  )
+}
+
+export function ButtonBackIcon() {
+  return (
+    <ButtonBack>
+      <div className="w-min bg-white border-1 border-neutral-300 p-1 rounded-lg">
+        <ChevronLeftIcon className="text-neutral-400 size-5" />
+      </div>
+    </ButtonBack>
+  )
+}
+
+export function ButtonBackText() {
+  return (
+    <ButtonBack>
+      <Badge size="md" color="neutral">
+        Back
+      </Badge>
+    </ButtonBack>
   )
 }

@@ -12,7 +12,11 @@ export function Search() {
         This is where you’ll be able to search and discover businesses near you.
         We’re still building this feature—check back soon.
       </Placeholder.Content>
-      <Placeholder.LinkHome />
+
+      <div className="flex justify-start gap-1">
+        <Placeholder.Back />
+        <Placeholder.Home />
+      </div>
     </Placeholder.Root>
   )
 }
