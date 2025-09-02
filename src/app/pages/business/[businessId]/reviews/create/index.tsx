@@ -59,6 +59,8 @@ export function ReviewCreate() {
         </p>
       </header>
 
+      <div className="h-6" />
+
       <ReviewCreateForm businessId={businessId} />
     </section>
   )
