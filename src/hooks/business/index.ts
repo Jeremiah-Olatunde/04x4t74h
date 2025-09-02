@@ -49,6 +49,7 @@ export const useBusinessOneCache = function (id: string) {
 
     if (cached !== null) {
       setRemoteData(RemoteData.success(cached))
+      return
     }
 
     fetchBusinessOne(id)
@@ -95,6 +96,7 @@ export const useBusinessAllCache = function () {
 
     if (cached !== null) {
       setRemoteData(RemoteData.success(cached))
+      return
     }
 
     fetchBusinessAll()
