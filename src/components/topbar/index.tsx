@@ -1,6 +1,6 @@
 import { ChevronLeftIcon } from "lucide-react"
 import { LogoText } from "@/components/logo"
-import { Menu } from "../menu/menu-b"
+import { Menu } from "@/components/menu"
 
 type TopbarProps = {}
 export function Topbar({}: TopbarProps) {
@@ -12,7 +12,7 @@ export function Topbar({}: TopbarProps) {
           className="flex gap-1 items-center"
           onClick={() => history.back()}
         >
-          <ChevronLeftIcon className="text-neutral-600 size-6" />
+          <ChevronLeftIcon className="text-neutral-400 size-6" />
         </button>
         <div className="place-self-center">
           <LogoText />

@@ -1,3 +1,4 @@
+import { Link as LinkWouter, useLocation } from "wouter"
 import { Dialog } from "@base-ui-components/react"
 import {
   ChartNoAxesGanttIcon,
@@ -7,11 +8,13 @@ import {
   SearchIcon,
   UserRoundIcon,
   XIcon,
+  type LucideIcon,
 } from "lucide-react"
 
 type MenuProps = {}
-
 export function Menu({}: MenuProps) {
+  const [wouterLocation] = useLocation()
+
   return (
     <Dialog.Root>
       <Dialog.Trigger className="flex gap-1 justify-center items-center">
@@ -31,30 +34,40 @@ export function Menu({}: MenuProps) {
                 </Dialog.Close>
               </div>
 
-              <div className="flex justify-center items-center grow">
+              <nav className="flex justify-center items-center grow">
                 <ul className="flex flex-col gap-8">
-                  <li className="flex justify-start items-center gap-4">
-                    <MapPinnedIcon className="text-primary/75 size-8" />
-                    <div className="font-sora text-2xl font-medium text-primary/75">
-                      Discover
-                    </div>
+                  <li className="">
+                    <LinkWouter href="/home">
+                      <Item
+                        text="Discover"
+                        active={wouterLocation.startsWith("/home")}
+                        icon={MapPinnedIcon}
+                      />
+                    </LinkWouter>
                   </li>
 
-                  <li className="flex justify-start items-start gap-4">
-                    <SearchIcon className="text-neutral-300 size-8" />
-                    <span className="font-sora text-2xl font-medium text-neutral-300">
-                      Search
-                    </span>
+                  <li className="">
+                    <LinkWouter href="/search">
+                      <Item
+                        text="Search"
+                        active={wouterLocation.startsWith("/search")}
+                        icon={SearchIcon}
+                      />
+                    </LinkWouter>
                   </li>
 
-                  <li className="flex justify-start items-start gap-4">
-                    <UserRoundIcon className="text-neutral-300 size-8" />
-                    <span className="font-sora text-2xl font-medium text-neutral-300">
-                      Account
-                    </span>
+                  <li className="">
+                    <LinkWouter href="/auth/login">
+                      <Item
+                        text="Account"
+                        active={wouterLocation.startsWith("/auth")}
+                        icon={UserRoundIcon}
+                      />
+                    </LinkWouter>
                   </li>
                 </ul>
-              </div>
+              </nav>
+
               <div className="flex flex-col justify-center items-center gap-1 font-sora text-sm font-medium text-neutral-400">
                 <div className="flex justify-center items-center gap-1">
                   <PhoneIcon className="text-neutral-400 size-4" />
@@ -70,5 +83,25 @@ export function Menu({}: MenuProps) {
         </Dialog.Popup>
       </Dialog.Portal>
     </Dialog.Root>
+  )
+}
+
+type ItemProps = {
+  icon: LucideIcon
+  text: string
+  active: boolean
+}
+
+function Item({ active, icon: Icon, text }: ItemProps) {
+  return (
+    <div
+      className={`
+        flex justify-start items-center gap-4
+          ${active ? "text-primary/75" : "text-neutral-300"}
+      `}
+    >
+      <Icon className="size-8" />
+      <div className="font-sora text-2xl font-medium">{text}</div>
+    </div>
   )
 }
