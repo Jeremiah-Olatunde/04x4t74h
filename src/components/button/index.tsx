@@ -2,7 +2,12 @@ import type { ComponentProps, PropsWithChildren } from "react"
 
 import { Badge, type BadgeVariantProps } from "@/components/badge"
 import { Pill, type PillVariantProps } from "@/components/pill"
-import { ChevronLeftIcon, HeartIcon, Share2Icon } from "lucide-react"
+import {
+  ArrowUpIcon,
+  ChevronLeftIcon,
+  HeartIcon,
+  Share2Icon,
+} from "lucide-react"
 
 type ButtonBadgeProps = ComponentProps<"button"> & BadgeVariantProps
 
@@ -102,5 +107,19 @@ export function ButtonBackText() {
         Back
       </Badge>
     </ButtonBack>
+  )
+}
+
+export function ButtonScrollTop() {
+  return (
+    <div className="fixed bottom-0 right-0 p-4 z-10">
+      <button
+        type="button"
+        className="p-2 rounded-full bg-primary  flex place-items-center"
+        onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        <ArrowUpIcon className="text-white size-6" />
+      </button>
+    </div>
   )
 }

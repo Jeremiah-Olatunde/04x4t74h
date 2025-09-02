@@ -1,16 +1,13 @@
 import { useState, type ReactNode } from "react"
-import { MenuIcon } from "lucide-react"
 
 import * as RemoteData from "@/lib/remote-data"
 import { useBusinessAllCache } from "@/hooks/business"
 
 import { GetRecommendations } from "@/components/card"
-import { ButtonBadge } from "@/components/button"
+import { ButtonBadge, ButtonScrollTop } from "@/components/button"
 import * as BusinessList from "@/components/business/list"
 
 import * as Hero from "./hero"
-import { Sidebar } from "@/components/sidebar"
-import { Menu } from "@/components/menu"
 import { Logo } from "@/components/logo"
 
 export function Home() {
@@ -38,7 +35,7 @@ export function Home() {
 
   return (
     <section className="relative flex flex-col">
-      <Menu />
+      <ButtonScrollTop />
 
       <Hero.Root>
         <div className="flex justify-between items-center">

@@ -18,7 +18,7 @@ import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { LinkText } from "@/components/link"
-import { ButtonLike, ButtonShare } from "@/components/button"
+import { ButtonLike, ButtonScrollTop, ButtonShare } from "@/components/button"
 import { Topbar } from "@/components/topbar"
 
 export function Business() {
@@ -37,6 +37,7 @@ export function Business() {
   return (
     <section className="min-h-screen">
       <Topbar />
+      <ButtonScrollTop />
 
       {RemoteData.fold3(remoteData, {
         onNone: (): ReactNode => {

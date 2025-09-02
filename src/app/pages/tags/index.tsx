@@ -9,6 +9,7 @@ import {
   BusinessSkeleton,
 } from "@/components/business/card"
 import { Topbar } from "@/components/topbar"
+import { ButtonScrollTop } from "@/components/button"
 
 export function Tags() {
   const { tagName } = useParams()
@@ -30,6 +31,7 @@ export function Tags() {
   return (
     <section className="min-h-screen">
       <Topbar />
+      <ButtonScrollTop />
 
       <section className="px-6">
         <ul className="flex flex-col gap-6">
