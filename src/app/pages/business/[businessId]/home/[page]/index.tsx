@@ -1,4 +1,6 @@
 import {
+  ArrowLeftIcon,
+  ChevronRightIcon,
   CircleUserRoundIcon,
   ClockIcon,
   MapPinIcon,
@@ -18,7 +20,12 @@ import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { LinkText } from "@/components/link"
-import { ButtonShare } from "@/components/button"
+import {
+  ButtonBackIcon,
+  ButtonBackText,
+  ButtonLike,
+  ButtonShare,
+} from "@/components/button"
 import { Menu } from "@/components/menu"
 
 export function Business() {
@@ -110,8 +117,24 @@ class BusinessSharingError extends Error {}
 function Hero({ business }: HeroProps) {
   return (
     <section className="flex flex-col gap-6 px-6">
+      <div className="flex justify-start items-start">
+        <button
+          type="button"
+          className="flex gap-1 items-center"
+          onClick={() => history.back()}
+        >
+          <ArrowLeftIcon className="text-neutral-600 size-4" />
+          <span className="font-sora text-neutral-600 text-sm font-bold">
+            Back
+          </span>
+        </button>
+      </div>
+
       <div className="h-62 rounded-xl grow-1 bg-neutral-50 relative">
-        <div className="p-2 flex flex-row gap-1 absolute bottom-0 right-0">
+        {/* <div className="absolute top-0 left-0 p-2"> */}
+        {/*   <ButtonBackIcon /> */}
+        {/* </div> */}
+        <div className="p-2 flex flex-row gap-1 absolute top-0 right-0">
           <ButtonShare
             onClick={() => {
               const text = `Discover ${business.name} in ${business.town}, ${business.city} with Plazzaa.`
@@ -134,6 +157,7 @@ function Hero({ business }: HeroProps) {
               }
             }}
           />
+          <ButtonLike active={false} />
         </div>
         <img
           onLoad={() => {}}
