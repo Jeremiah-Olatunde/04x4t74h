@@ -7,9 +7,12 @@ import {
   XIcon,
   type LucideIcon,
 } from "lucide-react"
+import { Link as LinkWouter, useLocation } from "wouter"
 
 type MenuProps = {}
 export function Menu({}: MenuProps) {
+  const [wouterLocation] = useLocation()
+
   return (
     <Dialog.Root>
       <Dialog.Trigger className="">
@@ -23,12 +26,42 @@ export function Menu({}: MenuProps) {
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 bg-gradient-to-b from-black/20 to-black/75 backdrop-blur-xs z-10" />
         <Dialog.Popup className="">
-          <div className="fixed bottom-0 right-0 z-10 p-4 flex flex-col justify-center items-end gap-1">
-            <Item active={true} icon={MapPinnedIcon} text="Discover" />
-            <Item active={false} icon={SearchIcon} text="Search" />
-            <Item active={false} icon={UserRoundIcon} text="Account" />
-            <Item active={false} icon={XIcon} text="Menu" />
-          </div>
+          <nav className="fixed bottom-0 right-0 z-10 p-4 flex flex-col justify-center items-end gap-1">
+            <ul className="flex flex-col justify-center items-end gap-1">
+              <li>
+                <LinkWouter href="/home">
+                  <Item
+                    active={wouterLocation === "/home"}
+                    icon={MapPinnedIcon}
+                    text="Discover"
+                  />
+                </LinkWouter>
+              </li>
+
+              <li>
+                <LinkWouter href="/search">
+                  <Item
+                    active={wouterLocation === "/search"}
+                    icon={SearchIcon}
+                    text="Search"
+                  />
+                </LinkWouter>
+              </li>
+
+              <li>
+                <LinkWouter href="/auth/login">
+                  <Item
+                    active={wouterLocation === "/auth/login"}
+                    icon={UserRoundIcon}
+                    text="Account"
+                  />
+                </LinkWouter>
+              </li>
+            </ul>
+            <Dialog.Close>
+              <Item active={false} icon={XIcon} text="Menu" />
+            </Dialog.Close>
+          </nav>
         </Dialog.Popup>
       </Dialog.Portal>
     </Dialog.Root>
