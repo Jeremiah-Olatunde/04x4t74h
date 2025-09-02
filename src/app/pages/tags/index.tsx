@@ -3,14 +3,12 @@ import { useParams } from "wouter"
 import { useBusinessAllCache } from "@/hooks/business"
 import { PathParameterError } from "@/lib/errors/ui"
 import * as RemoteData from "@/lib/remote-data"
-import { LinkBack } from "@/components/link"
-import type { PropsWithChildren } from "react"
-import { ListFilterIcon } from "lucide-react"
 
 import {
   Business as BusinessCard,
   BusinessSkeleton,
 } from "@/components/business/card"
+import { Topbar } from "@/components/topbar"
 
 export function Tags() {
   const { tagName } = useParams()
@@ -23,7 +21,7 @@ export function Tags() {
     throw new PathParameterError(parameter, schema, details)
   }
 
-  const formatted = tagName.charAt(0).toUpperCase() + tagName.slice(1)
+  // const formatted = tagName.charAt(0).toUpperCase() + tagName.slice(1)
 
   const remoteData = useBusinessAllCache()
 
@@ -34,13 +32,11 @@ export function Tags() {
   return (
     <section className="min-h-screen flex flex-col gap-6">
       <div />
+
       <div className="px-6">
-        <Topbar href="/home">
-          <h1 className="font-sora text-xl text-neutral-700 font-bold">
-            {formatted}
-          </h1>
-        </Topbar>
+        <Topbar />
       </div>
+
       <section className="px-6">
         <ul className="flex flex-col gap-6">
           {RemoteData.fold3(filtered, {
@@ -71,30 +67,5 @@ export function Tags() {
         </ul>
       </section>
     </section>
-  )
-}
-
-type TopbarProps = { href: string }
-function Topbar({ href, children }: PropsWithChildren<TopbarProps>) {
-  return (
-    <section className="relative flex flex-row justify-between items-center">
-      <LinkBack href={href} />
-      <ButtonFilters />
-      <div className="absolute top-1/2 left-1/2 -translate-1/2">{children}</div>
-    </section>
-  )
-}
-
-type ButtonFiltersProps = {}
-function ButtonFilters({}: ButtonFiltersProps) {
-  return (
-    <button
-      className="flex flex-row gap-1 bg-primary p-2 rounded-lg items-center justify-center"
-      type="button"
-      onClick={() => {}}
-    >
-      <ListFilterIcon className="text-white size-3" />
-      <span className="font-sora text-white text-xs font-medium">Filters</span>
-    </button>
   )
 }

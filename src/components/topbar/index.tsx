@@ -1,14 +1,20 @@
-import { Sidebar } from "@/components/sidebar"
 import type { PropsWithChildren } from "react"
-import { ButtonBackIcon } from "../button"
+import { ArrowLeftIcon } from "lucide-react"
 
 type TopbarProps = {}
-export function Topbar({ children }: PropsWithChildren<TopbarProps>) {
+export function Topbar({}: TopbarProps) {
   return (
     <section className="relative flex flex-row justify-between items-center">
-      <ButtonBackIcon />
-      <Sidebar />
-      <div className="absolute top-1/2 left-1/2 -translate-1/2">{children}</div>
+      <button
+        type="button"
+        className="flex gap-1 items-center"
+        onClick={() => history.back()}
+      >
+        <ArrowLeftIcon className="text-neutral-600 size-4" />
+        <span className="font-sora text-neutral-600 text-sm font-bold">
+          Back
+        </span>
+      </button>
     </section>
   )
 }

@@ -15,6 +15,7 @@ import {
   StarIcon,
   LoaderCircleIcon,
   CheckCheckIcon,
+  ArrowLeftIcon,
 } from "lucide-react"
 import {
   Field,
@@ -44,12 +45,24 @@ export function ReviewCreate() {
   }
 
   return (
-    <section className="px-6 py-8 min-h-screen flex flex-col gap-6">
-      <Topbar>
-        <h1 className="font-sora text-xl text-neutral-700 font-bold">
-          Leave a Review
+    <section className="min-h-screen flex flex-col gap-6">
+      <div />
+
+      <div className="px-6">
+        <Topbar />
+      </div>
+
+      <header className="px-6 flex flex-col items-center gap-1">
+        <h1>
+          <span className="font-sora text-xl font-bold text-neutral-600">
+            Leave a Review
+          </span>
         </h1>
-      </Topbar>
+
+        <p className="font-sora text-sm text-neutral-400">
+          Share and shape the community.
+        </p>
+      </header>
 
       <ReviewCreateForm businessId={businessId} />
     </section>
@@ -119,7 +132,10 @@ function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} className="grow-1 flex flex-col">
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      className="px-6 grow-1 flex flex-col"
+    >
       <FormGroup name="create-review">
         {banner === "ReviewCreated" && <ReviewCreated />}
         {banner === "InvalidData" && <InvalidData />}
