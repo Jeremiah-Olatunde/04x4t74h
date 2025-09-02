@@ -10,6 +10,7 @@ import * as BusinessList from "@/components/business/list"
 
 import * as Hero from "./hero"
 import { Sidebar } from "@/components/sidebar"
+import { Menu } from "@/components/menu"
 
 export function Home() {
   const remoteData = useBusinessAllCache()
@@ -36,6 +37,8 @@ export function Home() {
 
   return (
     <section className="relative flex flex-col">
+      <Menu />
+
       <div className="fixed top-6 right-6 z-10">
         <Sidebar />
       </div>
