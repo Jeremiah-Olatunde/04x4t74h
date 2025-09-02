@@ -1,4 +1,9 @@
-import type { ComponentProps, PropsWithChildren } from "react"
+import {
+  useEffect,
+  useState,
+  type ComponentProps,
+  type PropsWithChildren,
+} from "react"
 
 import { Badge, type BadgeVariantProps } from "@/components/badge"
 import { Pill, type PillVariantProps } from "@/components/pill"
@@ -111,6 +116,20 @@ export function ButtonBackText() {
 }
 
 export function ButtonScrollTop() {
+  const [top, setTop] = useState(true)
+
+  useEffect(() => {
+    const handler = () => setTop(window.scrollY === 0)
+    handler()
+
+    window.addEventListener("scroll", handler)
+    return () => window.removeEventListener("scroll", handler)
+  }, [])
+
+  if (top) {
+    return <></>
+  }
+
   return (
     <div className="fixed bottom-0 right-0 p-4 z-10">
       <button
