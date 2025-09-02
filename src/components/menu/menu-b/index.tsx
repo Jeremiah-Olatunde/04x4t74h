@@ -11,14 +11,16 @@ import {
   type LucideIcon,
 } from "lucide-react"
 
-type MenuProps = {}
-export function Menu({}: MenuProps) {
+type MenuProps = { color: "neutral" | "white" }
+export function Menu({ color }: MenuProps) {
   const [wouterLocation] = useLocation()
 
   return (
     <Dialog.Root>
       <Dialog.Trigger className="flex gap-1 justify-center items-center">
-        <ChartNoAxesGanttIcon className="text-neutral-400 size-6" />
+        <ChartNoAxesGanttIcon
+          className={`size-6 ${color === "neutral" ? "text-neutral-400" : "text-white"}`}
+        />
       </Dialog.Trigger>
 
       <Dialog.Portal>

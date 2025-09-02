@@ -18,7 +18,7 @@ export function Topbar({}: TopbarProps) {
           <LogoText />
         </div>
         <div className="place-self-end">
-          <Menu />
+          <Menu color="neutral" />
         </div>
       </section>
     </div>

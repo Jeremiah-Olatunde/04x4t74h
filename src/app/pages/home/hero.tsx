@@ -84,6 +84,10 @@ export function SelectCity({
 export function Content() {
   return (
     <div>
+      <Logo size="sm" color="white" />
+
+      <div className="h-4" />
+
       <h1 className="font-sora text-white font-bold text-2xl text-center">
         Best of the city, <br />
         Currated just for you.
