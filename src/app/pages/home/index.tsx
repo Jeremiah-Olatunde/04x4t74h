@@ -11,6 +11,7 @@ import * as BusinessList from "@/components/business/list"
 import * as Hero from "./hero"
 import { Sidebar } from "@/components/sidebar"
 import { Menu } from "@/components/menu"
+import { Logo } from "@/components/logo"
 
 export function Home() {
   const remoteData = useBusinessAllCache()
@@ -39,12 +40,10 @@ export function Home() {
     <section className="relative flex flex-col">
       <Menu />
 
-      <div className="fixed top-6 right-6 z-10">
-        <Sidebar />
-      </div>
-
       <Hero.Root>
         <div className="flex justify-between items-center">
+          <Logo size="md" color="white" />
+
           {RemoteData.fold3(data, {
             onNone: (): ReactNode => {
               return <Hero.SelectCitySkeleton />
@@ -62,13 +61,9 @@ export function Home() {
               )
             },
           })}
-
-          <div className="opacity-0 border-1 border-neutral-300 bg-white rounded-lg p-0.5">
-            <MenuIcon className="text-neutral-400 size-6" />
-          </div>
         </div>
 
-        <div className="h-4" />
+        <div className="h-10" />
 
         <Hero.Content />
       </Hero.Root>

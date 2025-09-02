@@ -84,10 +84,6 @@ export function SelectCity({
 export function Content() {
   return (
     <div>
-      <Logo color="white" size="sm" />
-
-      <div className="h-4" />
-
       <h1 className="font-sora text-white font-bold text-2xl text-center">
         Best of the city, <br />
         Currated just for you.
@@ -108,7 +104,7 @@ export function Content() {
         </span>
       </div>
 
-      <div className="h-2" />
+      <div className="h-4" />
 
       <div className="flex gap-2 items-center">
         <div className="basis-2/5">
