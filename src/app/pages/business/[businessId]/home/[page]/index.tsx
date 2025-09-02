@@ -18,9 +18,8 @@ import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { LinkText } from "@/components/link"
-import { Topbar } from "@/components/topbar"
-import { Logo } from "@/components/logo"
 import { ButtonShare } from "@/components/button"
+import { Menu } from "@/components/menu"
 
 export function Business() {
   const { businessId } = useParams()
@@ -37,12 +36,7 @@ export function Business() {
 
   return (
     <section className="flex flex-col gap-6">
-      <div />
-      <div className="px-6">
-        <Topbar>
-          <Logo size="md" color="purple" />
-        </Topbar>
-      </div>
+      <Menu />
 
       {RemoteData.fold3(remoteData, {
         onNone: (): ReactNode => {
@@ -336,15 +330,15 @@ function Kakashi({ business }: KakashiProps) {
         </Tabs.List>
 
         <Tabs.Panel value="menu">
-          <Menu services={business.services} />
+          <MenuTab services={business.services} />
         </Tabs.Panel>
 
         <Tabs.Panel value="reviews">
-          <Reviews reviews={business.reviews} />
+          <ReviewsTab reviews={business.reviews} />
         </Tabs.Panel>
 
         <Tabs.Panel value="info">
-          <Info telephone={business.telephone} />
+          <InfoTab telephone={business.telephone} />
         </Tabs.Panel>
       </Tabs.Root>
     </section>
@@ -379,9 +373,9 @@ function MenuSkeleton() {
   )
 }
 
-type MenuProps = { services: readonly Service[] }
+type MenuTabProps = { services: readonly Service[] }
 
-function Menu({ services }: MenuProps) {
+function MenuTab({ services }: MenuTabProps) {
   const [serviceCount, setServiceCount] = useState(5)
 
   const formatter = new Intl.NumberFormat("en-NG", {
@@ -472,12 +466,19 @@ function ReviewsSkeleton() {
   )
 }
 
-type ReviewsProps = { reviews: readonly Review[] }
+type ReviewsTabProps = { reviews: readonly Review[] }
 
-function Reviews({ reviews }: ReviewsProps) {
+function ReviewsTab({ reviews }: ReviewsTabProps) {
+  console.log()
+
   const [reviewCount, setReviewCount] = useState(5)
   const sorted = useMemo(
-    () => reviews.toSorted((a, b) => b.reviewRating - a.reviewRating),
+    () =>
+      reviews.toSorted((a, b) => {
+        const timeA = new Date(a.createdOn).getTime()
+        const timeB = new Date(b.createdOn).getTime()
+        return timeB - timeA
+      }),
     [reviews], // benefits of marking everything as readonly ;-)
   )
 
@@ -573,9 +574,9 @@ function InfoSkeleton() {
   )
 }
 
-type InfoProps = { telephone: string }
+type InfoTabProps = { telephone: string }
 
-function Info({ telephone }: InfoProps) {
+function InfoTab({ telephone }: InfoTabProps) {
   return (
     <section className="px-8 py-6 flex flex-col gap-6">
       <header>
