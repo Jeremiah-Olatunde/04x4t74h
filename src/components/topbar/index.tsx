@@ -1,20 +1,26 @@
-import type { PropsWithChildren } from "react"
-import { ArrowLeftIcon } from "lucide-react"
+import { ChevronLeftIcon } from "lucide-react"
+import { LogoText } from "@/components/logo"
+import { Menu } from "../menu/menu-b"
 
 type TopbarProps = {}
 export function Topbar({}: TopbarProps) {
   return (
-    <section className="relative flex flex-row justify-between items-center">
-      <button
-        type="button"
-        className="flex gap-1 items-center"
-        onClick={() => history.back()}
-      >
-        <ArrowLeftIcon className="text-neutral-600 size-4" />
-        <span className="font-sora text-neutral-600 text-sm font-bold">
-          Back
-        </span>
-      </button>
-    </section>
+    <div>
+      <section className="w-full p-6 grid grid-cols-3">
+        <button
+          type="button"
+          className="flex gap-1 items-center"
+          onClick={() => history.back()}
+        >
+          <ChevronLeftIcon className="text-neutral-600 size-6" />
+        </button>
+        <div className="place-self-center">
+          <LogoText />
+        </div>
+        <div className="place-self-end">
+          <Menu />
+        </div>
+      </section>
+    </div>
   )
 }

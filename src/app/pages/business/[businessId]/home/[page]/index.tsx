@@ -1,5 +1,4 @@
 import {
-  ArrowLeftIcon,
   CircleUserRoundIcon,
   ClockIcon,
   MapPinIcon,
@@ -20,7 +19,6 @@ import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { LinkText } from "@/components/link"
 import { ButtonLike, ButtonShare } from "@/components/button"
-import { Menu } from "@/components/menu"
 import { Topbar } from "@/components/topbar"
 
 export function Business() {
@@ -37,12 +35,8 @@ export function Business() {
   const remoteData = useBusinessOneCache(businessId)
 
   return (
-    <section className="flex flex-col gap-6">
-      <Menu />
-
-      <div className="px-6">
-        <Topbar />
-      </div>
+    <section className="min-h-screen">
+      <Topbar />
 
       {RemoteData.fold3(remoteData, {
         onNone: (): ReactNode => {

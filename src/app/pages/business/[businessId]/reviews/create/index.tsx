@@ -15,7 +15,6 @@ import {
   StarIcon,
   LoaderCircleIcon,
   CheckCheckIcon,
-  ArrowLeftIcon,
 } from "lucide-react"
 import {
   Field,
@@ -45,12 +44,8 @@ export function ReviewCreate() {
   }
 
   return (
-    <section className="min-h-screen flex flex-col gap-6">
-      <div />
-
-      <div className="px-6">
-        <Topbar />
-      </div>
+    <section className="min-h-screen">
+      <Topbar />
 
       <header className="px-6 flex flex-col items-center gap-1">
         <h1>

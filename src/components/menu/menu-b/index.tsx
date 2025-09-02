@@ -1,5 +1,6 @@
 import { Dialog } from "@base-ui-components/react"
 import {
+  ChartNoAxesGanttIcon,
   MapPinIcon,
   MapPinnedIcon,
   PhoneIcon,
@@ -13,14 +14,8 @@ type MenuProps = {}
 export function Menu({}: MenuProps) {
   return (
     <Dialog.Root>
-      <Dialog.Trigger className="">
-        <div className="fixed bottom-0 right-0 z-10 p-4">
-          <div className="bg-white p-2 rounded-sm border-1 border-neutral-400 flex gap-1 justify-center items-center">
-            <span className="font-sora text-neutral-400 text-xs uppercase tracking-widest font-bold">
-              Menu
-            </span>
-          </div>
-        </div>
+      <Dialog.Trigger className="flex gap-1 justify-center items-center">
+        <ChartNoAxesGanttIcon className="text-neutral-400 size-6" />
       </Dialog.Trigger>
 
       <Dialog.Portal>

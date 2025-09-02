@@ -21,8 +21,6 @@ export function Tags() {
     throw new PathParameterError(parameter, schema, details)
   }
 
-  // const formatted = tagName.charAt(0).toUpperCase() + tagName.slice(1)
-
   const remoteData = useBusinessAllCache()
 
   const filtered = RemoteData.map(remoteData, (businesses) => {
@@ -30,12 +28,8 @@ export function Tags() {
   })
 
   return (
-    <section className="min-h-screen flex flex-col gap-6">
-      <div />
-
-      <div className="px-6">
-        <Topbar />
-      </div>
+    <section className="min-h-screen">
+      <Topbar />
 
       <section className="px-6">
         <ul className="flex flex-col gap-6">
