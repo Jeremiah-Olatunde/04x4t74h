@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from "react"
 import { LinkBadge } from "@/components/link"
 import { ButtonBackText } from "@/components/button"
+import { Topbar } from "@/components/topbar"
 
 type PlaceholderProps = {
   title: string
@@ -9,27 +10,32 @@ type PlaceholderProps = {
 }
 export function Placeholder({ title, subtitle, text }: PlaceholderProps) {
   return (
-    <section className="h-screen flex flex-col gap-4 px-6 py-8 justify-center">
-      <header className="flex flex-col">
-        <h1 className="font-sora text-xl text-neutral-600 font-medium">
-          {title}
-        </h1>
-        <p className="text-neutral-400 text-sm font-medium font-sora">
-          {subtitle}
-        </p>
-      </header>
+    <Root>
+      <Header>
+        <Title>{title}</Title>
+        <Subtitle>{subtitle}</Subtitle>
+      </Header>
 
-      <p className="font-sora text-neutral-600">{text}</p>
-    </section>
+      <Content>{text}</Content>
+
+      <div className="flex justify-start gap-1">
+        <Back />
+        <Home />
+      </div>
+    </Root>
   )
 }
 
 type RootProps = {}
 export function Root({ children }: PropsWithChildren<RootProps>) {
   return (
-    <section className="h-screen flex flex-col gap-4 px-6 py-8 justify-center">
-      {children}
-    </section>
+    <div className="h-screen flex flex-col">
+      <Topbar />
+
+      <section className="grow flex flex-col gap-4 px-6 py-8 justify-center">
+        {children}
+      </section>
+    </div>
   )
 }
 
