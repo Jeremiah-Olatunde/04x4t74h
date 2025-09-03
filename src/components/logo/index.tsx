@@ -57,7 +57,7 @@ export function LogoText({
 }) {
   return (
     <LinkWouter
-      href="~/home"
+      href="/discover/home"
       className="w-min-content flex flex-row items-center justify-center"
     >
       <img
@@ -72,7 +72,7 @@ export function LogoText({
 export function Logo() {
   return (
     <LinkWouter
-      href="~/home"
+      href="/discover/home"
       className="w-min-content flex flex-row items-center justify-center"
     >
       <img src={logoPrimary} className="size-6" />

@@ -97,7 +97,7 @@ export function Home() {
                   <BusinessList.Root key={tag}>
                     <BusinessList.Header>
                       <BusinessList.Title title={tag} />
-                      <BusinessList.Link href={`/tags/${tag}`} />
+                      <BusinessList.Link href={`/discover/tags/${tag}`} />
                     </BusinessList.Header>
 
                     <BusinessList.Slider businesses={businesses.slice(0, 5)} />

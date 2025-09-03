@@ -75,7 +75,7 @@ export function Back() {
 
 export function Home() {
   return (
-    <LinkBadge href="/home" size="md" color="white">
+    <LinkBadge href="/discover/home" size="md" color="white">
       Home
     </LinkBadge>
   )

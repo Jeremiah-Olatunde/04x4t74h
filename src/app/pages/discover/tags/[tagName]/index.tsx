@@ -11,7 +11,7 @@ import {
 import { Topbar } from "@/components/topbar"
 import { ButtonScrollTop } from "@/components/button"
 
-export function Tags() {
+export function Tag() {
   const { tagName } = useParams()
 
   if (tagName === undefined) {

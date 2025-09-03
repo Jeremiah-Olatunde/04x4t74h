@@ -1,24 +1,18 @@
 import { Link as LinkWouter, useLocation } from "wouter"
 import { Dialog } from "@base-ui-components/react"
 import {
-  ArrowRightIcon,
   ArrowUpRightIcon,
   ChartNoAxesGanttIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
   MapPinIcon,
   MapPinnedIcon,
-  MinusIcon,
-  MoveUpRightIcon,
   PhoneIcon,
   SearchIcon,
   UserRoundIcon,
   XIcon,
   type LucideIcon,
 } from "lucide-react"
-import { ButtonBadge } from "@/components/button"
 import { LinkBadge } from "@/components/link"
-import { LogoText, Logo } from "@/components/logo"
+import { Logo } from "@/components/logo"
 import type { PropsWithChildren } from "react"
 
 type MenuProps = { color: "neutral" | "white" }
@@ -48,22 +42,30 @@ export function Menu({ color }: MenuProps) {
 
               <Navigation>
                 <NavigationItem
-                  active={wouterLocation.startsWith("/home")}
+                  active={wouterLocation.startsWith("/discover")}
                   icon={MapPinnedIcon}
                   text="Discover"
-                  href="/discover"
+                  href="/discover/home"
                 >
-                  <SubItem active={true} text="Home" href="/discover/home" />
-                  <SubItem active={false} text="Tags" href="/discover/tags" />
                   <SubItem
-                    active={false}
+                    active={wouterLocation.startsWith("/discover/home")}
+                    text="Home"
+                    href="/discover/home"
+                  />
+                  <SubItem
+                    active={wouterLocation.startsWith("/discover/tags")}
+                    text="Tags"
+                    href="/discover/tags"
+                  />
+                  <SubItem
+                    active={wouterLocation.startsWith("/discover/categories")}
                     text="Categories"
                     href="/discover/categories"
                   />
                   <SubItem
-                    active={false}
-                    text="Locations"
-                    href="/discover/locations"
+                    active={wouterLocation.startsWith("/discover/cities")}
+                    text="Cities"
+                    href="/discover/cities"
                   />
                 </NavigationItem>
                 <NavigationItem

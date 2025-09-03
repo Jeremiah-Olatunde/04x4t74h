@@ -1,0 +1,5 @@
+export { Home } from "./home"
+export { Tags } from "./tags"
+export { Tag } from "./tags/[tagName]"
+export { Cities } from "./cities"
+export { Categories } from "./categories"
