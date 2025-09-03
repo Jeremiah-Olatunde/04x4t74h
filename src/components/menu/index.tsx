@@ -1,1 +1,1 @@
-export { Menu } from "./menu-b"
+export { Menu } from "./menu-c"

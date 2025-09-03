@@ -1,3 +1,4 @@
+import { Link as LinkWouter, useLocation } from "wouter"
 import { Dialog } from "@base-ui-components/react"
 import {
   MapPinnedIcon,
@@ -7,7 +8,6 @@ import {
   XIcon,
   type LucideIcon,
 } from "lucide-react"
-import { Link as LinkWouter, useLocation } from "wouter"
 
 type MenuProps = {}
 export function Menu({}: MenuProps) {

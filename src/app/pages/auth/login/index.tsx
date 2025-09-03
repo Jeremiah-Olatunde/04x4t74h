@@ -26,7 +26,7 @@ import {
   InvalidCredentials,
 } from "@/components/form-v2/banner"
 
-import { Logo } from "@/components/logo"
+import { LogoText } from "@/components/logo"
 import { ButtonBadge } from "@/components/button"
 import { LinkText } from "@/components/link"
 import { login } from "@/api/endpoints/auth/login"
@@ -107,7 +107,7 @@ export function Login() {
 
   return (
     <section className="flex flex-col gap-4 px-6 py-8">
-      <Logo size="lg" color="purple" />
+      <LogoText size="lg" color="purple" />
 
       <div className="h-8" />
 

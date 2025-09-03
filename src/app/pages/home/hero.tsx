@@ -1,7 +1,7 @@
 import { ChevronDownIcon, LoaderCircleIcon, SearchIcon } from "lucide-react"
 
 import { Icon } from "@/components/icon"
-import { Logo } from "@/components/logo"
+import { LogoText } from "@/components/logo"
 import { LinkBadge } from "@/components/link"
 import { Select } from "@base-ui-components/react/select"
 import { Link as WouterLink } from "wouter"
@@ -84,7 +84,7 @@ export function SelectCity({
 export function Content() {
   return (
     <div>
-      <Logo size="sm" color="white" />
+      <LogoText size="sm" color="white" />
 
       <div className="h-4" />
 

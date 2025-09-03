@@ -8,8 +8,6 @@ import { ButtonBadge, ButtonScrollTop } from "@/components/button"
 import * as BusinessList from "@/components/business/list"
 
 import * as Hero from "./hero"
-import { Logo } from "@/components/logo"
-import { Topbar } from "@/components/topbar"
 import { Menu } from "@/components/menu"
 
 export function Home() {

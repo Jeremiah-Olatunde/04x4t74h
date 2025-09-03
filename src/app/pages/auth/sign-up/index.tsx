@@ -23,7 +23,7 @@ import {
   FormGroupTitle,
 } from "@/components/form-v2"
 
-import { Logo } from "@/components/logo"
+import { LogoText } from "@/components/logo"
 import { LinkText } from "@/components/link"
 
 import {
@@ -150,7 +150,7 @@ export function SignUp() {
 
   return (
     <section className="flex flex-col gap-4 px-6 py-8">
-      <Logo color="purple" size="lg" />
+      <LogoText color="purple" size="lg" />
 
       <div className="h-8" />
 

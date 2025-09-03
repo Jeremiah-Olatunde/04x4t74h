@@ -48,7 +48,7 @@ export type ImageVariantProps = {
   size: NonNullable<ImageVariants["size"]>
 }
 
-export function Logo({
+export function LogoText({
   size,
   color,
 }: {
@@ -69,7 +69,7 @@ export function Logo({
   )
 }
 
-export function LogoText() {
+export function Logo() {
   return (
     <LinkWouter
       href="~/home"
