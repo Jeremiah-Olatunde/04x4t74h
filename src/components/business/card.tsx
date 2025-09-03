@@ -129,7 +129,9 @@ function Rating({ rating, size }: RatingProps) {
       <IconStar
         className={`${size === "sm" ? "size-3" : "size-4"} stroke-secondary fill-secondary`}
       />
-      <span className={`${size === "sm" ? "text-xxs" : "text-xs"} font-sora`}>
+      <span
+        className={`${size === "sm" ? "text-xxs" : "text-xs"} font-semibold font-sora`}
+      >
         {formatter.format(rating)}
       </span>
     </div>
