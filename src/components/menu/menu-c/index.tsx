@@ -3,9 +3,12 @@ import { Dialog } from "@base-ui-components/react"
 import {
   ArrowUpRightIcon,
   ChartNoAxesGanttIcon,
+  ChevronDownIcon,
   MapPinIcon,
   MapPinnedIcon,
+  MinusIcon,
   PhoneIcon,
+  PlusIcon,
   SearchIcon,
   UserRoundIcon,
   XIcon,
@@ -13,7 +16,7 @@ import {
 } from "lucide-react"
 import { LinkBadge } from "@/components/link"
 import { Logo } from "@/components/logo"
-import type { PropsWithChildren } from "react"
+import { useState, type PropsWithChildren } from "react"
 
 type MenuProps = { color: "neutral" | "white" }
 export function Menu({ color }: MenuProps) {
@@ -123,21 +126,36 @@ function NavigationItem({
   href,
   children,
 }: PropsWithChildren<ItemProps>) {
+  const [expanded, setExpanded] = useState(false)
+
   return (
     <li>
-      <LinkWouter href={href}>
-        <div
-          className={`
+      <div className="flex flex-row justify-between">
+        <LinkWouter href={href} className="w-full">
+          <div
+            className={`
+              grow
         flex gap-4 justify-start items-center 
         ${active ? "text-neutral-500" : "text-neutral-300"}
       `}
-        >
-          <Icon className="size-6" />
-          <span className="font-sora font-semibold text-2xl">{text}</span>
-        </div>
-      </LinkWouter>
+          >
+            <Icon className="size-6" />
+            <span className="font-sora font-semibold text-2xl">{text}</span>
+          </div>
+        </LinkWouter>
+
+        {children && (
+          <button type="button" onClick={() => setExpanded(!expanded)}>
+            <PlusIcon
+              className={`size-6 ${active ? "text-neutral-500" : "text-neutral-300"}`}
+            />
+          </button>
+        )}
+      </div>
       <div className="h-4" />
-      {children && <ul className="flex flex-col gap-4 px-10">{children}</ul>}
+      {children && expanded && (
+        <ul className="flex flex-col gap-4 px-10">{children}</ul>
+      )}
     </li>
   )
 }
