@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from "lucide-react"
 import type { PropsWithChildren } from "react"
+import { Link as LinkWouter } from "wouter"
 
 export function Root({ children }: PropsWithChildren<{}>) {
   return (
@@ -9,12 +10,19 @@ export function Root({ children }: PropsWithChildren<{}>) {
   )
 }
 
-type CrumbProps = { children: string }
-export function Crumb({ children }: CrumbProps) {
+type CrumbProps = { children: string; active?: boolean; href: string }
+export function Crumb({ active, children, href }: CrumbProps) {
   return (
-    <div className="font-sora text-xs font-semibold text-neutral-400">
-      {children}
-    </div>
+    <LinkWouter href={href}>
+      <div
+        className={`
+        font-sora font-semibold text-xxs capitalize 
+        ${active ? "text-primary" : "text-neutral-400"}
+      `}
+      >
+        {children}
+      </div>
+    </LinkWouter>
   )
 }
 
