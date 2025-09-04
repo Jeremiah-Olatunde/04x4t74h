@@ -9,6 +9,7 @@ import * as BusinessList from "@/components/business/list"
 
 import * as Hero from "./hero"
 import { Menu } from "@/components/menu"
+import { group } from "@/utils"
 
 export function Home() {
   const remoteData = useBusinessAllCache()
@@ -26,11 +27,11 @@ export function Home() {
 
     const targetCity = city ?? cities[0]
     const filtered = businesses.filter((b) => b.city === targetCity)
-    const groups = group(filtered, tags, (business, tag) => {
+    const byTags = group(filtered, tags, (business, tag) => {
       return business.tags.includes(tag)
     })
 
-    return { cities, groups }
+    return { cities, byTags }
   })
 
   return (
@@ -91,8 +92,8 @@ export function Home() {
             onFailure: (error): React.ReactNode => {
               throw error
             },
-            onSuccess: ({ groups }): React.ReactNode => {
-              return groups.slice(0, tagCount).map(([tag, businesses]) => {
+            onSuccess: ({ byTags }): React.ReactNode => {
+              return byTags.slice(0, tagCount).map(([tag, businesses]) => {
                 return (
                   <BusinessList.Root key={tag}>
                     <BusinessList.Header>
@@ -118,20 +119,4 @@ export function Home() {
       </section>
     </section>
   )
-}
-
-export function group<T>(
-  items: readonly T[],
-  groups: readonly string[],
-  belongs: (item: T, group: string) => boolean,
-) {
-  const map: Map<string, T[]> = new Map(groups.map((g) => [g, []]))
-
-  for (const group of groups) {
-    for (const item of items) {
-      if (belongs(item, group)) map.get(group)?.push(item)
-    }
-  }
-
-  return map.entries().toArray()
 }
