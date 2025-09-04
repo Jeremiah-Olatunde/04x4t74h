@@ -1,18 +1,17 @@
-import { ButtonBadge, ButtonScrollTop } from "@/components/button"
-import * as BusinessList from "@/components/business/list"
-import * as Placeholder from "@/components/placeholder"
-import { useBusinessAllCache } from "@/hooks/business"
 import { useState } from "react"
-import * as RemoteData from "@/lib/remote-data"
-import { group } from "@/utils"
-import * as Breadcrumbs from "@/components/breadcrumbs"
-import { ArrowUpAZIcon, ListFilterIcon } from "lucide-react"
-import { Topbar } from "@/components/topbar"
 import { Link as LinkWouter } from "wouter"
+
+import { group } from "@/utils"
+import { useBusinessAllCache } from "@/hooks/business"
+import { ButtonBadge, ButtonScrollTop } from "@/components/button"
+import { Topbar } from "@/components/topbar"
+import * as BusinessList from "@/components/business/list"
+import * as RemoteData from "@/lib/remote-data"
+import * as Breadcrumbs from "@/components/breadcrumbs"
 
 export function Tags() {
   const remoteData = useBusinessAllCache()
-  const [city, setCity] = useState<string>()
+  const [city] = useState<string>()
   const [tagCount, setTagCount] = useState(5)
 
   const data = RemoteData.map(remoteData, (businesses) => {
@@ -51,7 +50,7 @@ export function Tags() {
               <ul className="flex flex-row flex-wrap gap-2 justify-center">
                 {tags.map((tag) => {
                   return (
-                    <li>
+                    <li key={tag}>
                       <LinkWouter href={`/discover/tags/${tag}`}>
                         <div className="font-sora font-medium text-xs text-neutral-400 border-1 border-neutral-300 p-1 rounded-md capitalize">
                           {tag}

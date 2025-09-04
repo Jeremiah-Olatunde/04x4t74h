@@ -3,10 +3,8 @@ import { Dialog } from "@base-ui-components/react"
 import {
   ArrowUpRightIcon,
   ChartNoAxesGanttIcon,
-  ChevronDownIcon,
   MapPinIcon,
   MapPinnedIcon,
-  MinusIcon,
   PhoneIcon,
   PlusIcon,
   SearchIcon,
