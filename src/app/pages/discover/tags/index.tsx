@@ -8,6 +8,7 @@ import { Topbar } from "@/components/topbar"
 import * as BusinessList from "@/components/business/list"
 import * as RemoteData from "@/lib/remote-data"
 import * as Breadcrumbs from "@/components/breadcrumbs"
+import * as Header from "@/components/header"
 
 export function Tags() {
   const remoteData = useBusinessAllCache()
@@ -36,7 +37,24 @@ export function Tags() {
       <Topbar />
 
       <section className="p-6 pt-0 flex flex-col gap-4">
-        <Header />
+        <div className="flex flex-col justify-center items-center gap-2">
+          <Breadcrumbs.Root>
+            <Breadcrumbs.Crumb href="/discover/home">
+              Discover
+            </Breadcrumbs.Crumb>
+            <Breadcrumbs.Divider />
+            <Breadcrumbs.Crumb href="#" active>
+              Tags
+            </Breadcrumbs.Crumb>
+          </Breadcrumbs.Root>
+
+          <Header.Root>
+            <Header.Title>Explore by Tags</Header.Title>
+            <Header.Subtitle>
+              Explore businesses grouped by what they do
+            </Header.Subtitle>
+          </Header.Root>
+        </div>
 
         {RemoteData.fold3(data, {
           onNone: (): React.ReactNode => {
@@ -100,6 +118,7 @@ export function Tags() {
               })
             },
           })}
+
           <ButtonBadge
             color="neutral"
             size="md"
@@ -114,31 +133,4 @@ export function Tags() {
   )
 }
 
-function Header() {
-  return (
-    <header className="flex flex-col justify-center items-center">
-      <Breadcrumbs.Root>
-        <Breadcrumbs.Crumb href="/discover/home">Discover</Breadcrumbs.Crumb>
-        <Breadcrumbs.Divider />
-        <Breadcrumbs.Crumb href="#" active>
-          Tags
-        </Breadcrumbs.Crumb>
-      </Breadcrumbs.Root>
-
-      <div className="h-2" />
-
-      <h1>
-        <span className="font-bold text-xl font-sora text-neutral-600 capitalize">
-          Explore by Tags
-        </span>
-      </h1>
-      <p className="font-sora text-sm text-neutral-400">
-        Explore businesses grouped by what they do
-      </p>
-
-      <div className="h-2" />
-
-      <div className="flex justify-center items-center gap-1"></div>
-    </header>
-  )
-}
+function Badge() {}

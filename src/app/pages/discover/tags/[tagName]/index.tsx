@@ -12,9 +12,12 @@ import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import { ButtonBadge, ButtonScrollTop } from "@/components/button"
 import { ArrowUpAZIcon, ListFilterIcon } from "lucide-react"
+import { useState } from "react"
 
 export function Tag() {
   const { tagName } = useParams()
+
+  const [tagCount, setTagCount] = useState(5)
 
   if (tagName === undefined) {
     const tag = "missing"
@@ -63,7 +66,7 @@ export function Tag() {
               throw error
             },
             onSuccess: (businesses): React.ReactNode => {
-              return businesses.map((business) => {
+              return businesses.slice(0, tagCount).map((business) => {
                 return (
                   <li key={business.id} className="h-80">
                     <BusinessCard details={business} size="lg" />
@@ -73,6 +76,19 @@ export function Tag() {
             },
           })}
         </ul>
+
+        <div className="h-6" />
+
+        <ButtonBadge
+          color="neutral"
+          size="md"
+          type="button"
+          onClick={() => setTagCount(tagCount + 5)}
+        >
+          Show More
+        </ButtonBadge>
+
+        <div className="h-6" />
       </section>
     </section>
   )
@@ -106,47 +122,6 @@ function HeaderA({ tagName }: { tagName: string }) {
             <ListFilterIcon className="size-3" />
           </div>
         </ButtonBadge>
-      </div>
-    </header>
-  )
-}
-
-function HeaderB({ tagName }: { tagName: string }) {
-  return (
-    <header className="flex flex-col justify-center items-start">
-      <Breadcrumbs.Root>
-        <Breadcrumbs.Crumb href="/discover/home">Discover</Breadcrumbs.Crumb>
-        <Breadcrumbs.Divider />
-        <Breadcrumbs.Crumb href="/discover/tags">Tags</Breadcrumbs.Crumb>
-        <Breadcrumbs.Divider />
-        <Breadcrumbs.Crumb href="#" active>
-          {tagName}
-        </Breadcrumbs.Crumb>
-      </Breadcrumbs.Root>
-
-      <div className="h-2" />
-
-      <div className="w-full flex flex-row justify-between items-center">
-        <h1>
-          <span className="font-bold text-2xl font-sora text-neutral-600 capitalize">
-            {tagName}
-          </span>
-        </h1>
-
-        <div className="flex justify-center items-center gap-1">
-          <ButtonBadge size="sm" color="white">
-            <div className="flex gap-1 items-center justify-center">
-              Sort
-              <ArrowUpAZIcon className="size-3" />
-            </div>
-          </ButtonBadge>
-          <ButtonBadge size="sm" color="purple">
-            <div className="flex gap-1 items-center justify-center">
-              Filter
-              <ListFilterIcon className="size-3" />
-            </div>
-          </ButtonBadge>
-        </div>
       </div>
     </header>
   )
