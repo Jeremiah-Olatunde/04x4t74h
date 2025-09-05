@@ -9,6 +9,7 @@ import * as BusinessList from "@/components/business/list"
 import * as RemoteData from "@/lib/remote-data"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import * as Header from "@/components/header"
+import { LinkBadge } from "@/components/link"
 
 export function Tags() {
   const remoteData = useBusinessAllCache()
@@ -56,31 +57,43 @@ export function Tags() {
           </Header.Root>
         </div>
 
-        {RemoteData.fold3(data, {
-          onNone: (): React.ReactNode => {
-            return null
-          },
-          onFailure: (error): React.ReactNode => {
-            throw error
-          },
-          onSuccess: ({ tags }): React.ReactNode => {
-            return (
-              <ul className="flex flex-row flex-wrap gap-2 justify-center">
-                {tags.map((tag) => {
+        <ul className="flex flex-row flex-wrap gap-2 justify-center">
+          {RemoteData.fold3(data, {
+            onNone: (): React.ReactNode => {
+              return Array(15)
+                .fill(0)
+                .map((_, index) => {
+                  const width = 40 + Math.random() * 40
                   return (
-                    <li key={tag}>
-                      <LinkWouter href={`/discover/tags/${tag}`}>
-                        <div className="font-sora font-medium text-xs text-neutral-400 border-1 border-neutral-300 p-1 rounded-md capitalize">
-                          {tag}
-                        </div>
-                      </LinkWouter>
+                    <li key={index}>
+                      <div
+                        className={`p-1 h-6 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-sm`}
+                        style={{ width: `${width}px` }}
+                      />
                     </li>
                   )
-                })}
-              </ul>
-            )
-          },
-        })}
+                })
+            },
+            onFailure: (error): React.ReactNode => {
+              throw error
+            },
+            onSuccess: ({ tags }): React.ReactNode => {
+              return tags.map((tag) => {
+                return (
+                  <li key={tag}>
+                    <LinkBadge
+                      href={`/discover/tags/${tag}`}
+                      size="sm"
+                      color="light"
+                    >
+                      {tag}
+                    </LinkBadge>
+                  </li>
+                )
+              })
+            },
+          })}
+        </ul>
 
         <div className="flex flex-col gap-8">
           {RemoteData.fold3(data, {
