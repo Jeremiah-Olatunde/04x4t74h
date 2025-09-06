@@ -61,17 +61,14 @@ export function Router() {
         <Route path="/explore" component={Explore.Explore} />
 
         <Route path="/explore/tags" component={Explore.Tags} />
-        <Route path="/explore/tags/:tagName" component={Explore.Tag} />
+        <Route path="/explore/tags/:name" component={Explore.Tag} />
 
         <Route path="/explore/cities" component={Explore.Cities} />
-        <Route path="/explore/cities/:cityName" component={Explore.City} />
+        <Route path="/explore/cities/:name" component={Explore.City} />
 
         <Route path="/explore/categories" component={Explore.Categories} />
 
-        <Route
-          path="/explore/categories/:categoryName"
-          component={Explore.Category}
-        />
+        <Route path="/explore/categories/:name" component={Explore.Category} />
 
         <Route path="/business/:businessId/home/:page" component={Business} />
         <Route

@@ -64,19 +64,46 @@ export function getCitiesWithTowns(bs: Businesses): Cities {
 
 type GroupedBusinesses = readonly (readonly [string, Businesses])[]
 
-export function groupByCities(businesses: Businesses): GroupedBusinesses {
+export function groupByCity(businesses: Businesses): GroupedBusinesses {
   return groupBy(businesses, "city")
 }
 
-export function groupByTowns(businesses: Businesses): GroupedBusinesses {
+export function groupByTown(businesses: Businesses): GroupedBusinesses {
   return groupBy(businesses, "town")
 }
 
-export function groupByCategories(businesses: Businesses): GroupedBusinesses {
+export function groupByCategory(businesses: Businesses): GroupedBusinesses {
   return groupBy(businesses, "businessCategory")
 }
 
-export function groupByTags(businesses: Businesses): GroupedBusinesses {
+export function groupByTag(businesses: Businesses): GroupedBusinesses {
   const tags = getTags(businesses)
   return group(businesses, tags, (b, tag) => b.tags.includes(tag))
+}
+
+export function getInCity(businesses: Businesses, city: string): Businesses {
+  const grouped = groupByCity(businesses)
+  const found = grouped.find(([c]) => c === city)
+  return found ? found[1] : []
+}
+
+export function getInTown(businesses: Businesses, town: string): Businesses {
+  const grouped = groupByTown(businesses)
+  const found = grouped.find(([c]) => c === town)
+  return found ? found[1] : []
+}
+
+export function getInCategory(
+  businesses: Businesses,
+  category: string,
+): Businesses {
+  const grouped = groupByCategory(businesses)
+  const found = grouped.find(([c]) => c === category)
+  return found ? found[1] : []
+}
+
+export function getWithTag(businesses: Businesses, tag: string): Businesses {
+  const grouped = groupByTag(businesses)
+  const found = grouped.find(([c]) => c === tag)
+  return found ? found[1] : []
 }

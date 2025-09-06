@@ -8,9 +8,11 @@ import {
 import { Badge, type BadgeVariantProps } from "@/components/badge"
 import { Pill, type PillVariantProps } from "@/components/pill"
 import {
+  ArrowUpAZIcon,
   ArrowUpIcon,
   ChevronLeftIcon,
   HeartIcon,
+  ListFilterIcon,
   Share2Icon,
 } from "lucide-react"
 
@@ -95,26 +97,6 @@ export function ButtonBack({ children }: PropsWithChildren<ButtonBackProps>) {
   )
 }
 
-export function ButtonBackIcon() {
-  return (
-    <ButtonBack>
-      <div className="w-min bg-white border-1 border-neutral-300 p-1 rounded-lg">
-        <ChevronLeftIcon className="text-neutral-400 size-5" />
-      </div>
-    </ButtonBack>
-  )
-}
-
-export function ButtonBackText() {
-  return (
-    <ButtonBack>
-      <Badge size="md" color="neutral">
-        Back
-      </Badge>
-    </ButtonBack>
-  )
-}
-
 export function ButtonScrollTop() {
   const [top, setTop] = useState(true)
 
@@ -140,5 +122,29 @@ export function ButtonScrollTop() {
         <ArrowUpIcon className="text-white size-6" />
       </button>
     </div>
+  )
+}
+
+type ButtonFilterProps = {} & ComponentProps<"button">
+export function ButtonFilter({}: ButtonFilterProps) {
+  return (
+    <ButtonBadge size="sm" color="purple">
+      <div className="flex gap-1 items-center justify-center">
+        Filter
+        <ListFilterIcon className="size-3" />
+      </div>
+    </ButtonBadge>
+  )
+}
+
+type ButtonSortProps = {} & ComponentProps<"button">
+export function ButtonSort({}: ButtonSortProps) {
+  return (
+    <ButtonBadge size="sm" color="white">
+      <div className="flex gap-1 items-center justify-center">
+        Sort
+        <ArrowUpAZIcon className="size-3" />
+      </div>
+    </ButtonBadge>
   )
 }

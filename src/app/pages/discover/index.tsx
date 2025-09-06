@@ -9,7 +9,7 @@ import * as BusinessGroup from "@/components/business/group"
 
 import * as Hero from "./hero"
 import { Menu } from "@/components/menu"
-import { group } from "@/utils"
+import { getCities, getInCity, groupByTag } from "@/utils/business"
 
 export function Discover() {
   const remoteData = useBusinessAllCache()
@@ -19,19 +19,10 @@ export function Discover() {
   const [tagCount, setTagCount] = useState(5)
 
   const data = RemoteData.map(remoteData, (businesses) => {
-    const cities = new Set(businesses.map((b) => b.city))
-      .values()
-      .toArray() as readonly string[]
-
-    const tags = [...new Set(businesses.flatMap((b) => b.tags))] as const
-
-    const targetCity = city ?? cities[0]
-    const filtered = businesses.filter((b) => b.city === targetCity)
-    const byTags = group(filtered, tags, (business, tag) => {
-      return business.tags.includes(tag)
-    })
-
-    return { cities, byTags }
+    const cities = getCities(businesses)
+    const filtered = getInCity(businesses, city ?? cities[0])
+    const byTag = groupByTag(filtered)
+    return { cities, byTag }
   })
 
   return (
@@ -81,8 +72,8 @@ export function Discover() {
                 .fill(0)
                 .map((_, index) => <BusinessGroup.Skeleton key={index} />)
             },
-            onSuccess: ({ byTags }): React.ReactNode => {
-              return byTags.slice(0, tagCount).map(([tag, businesses]) => {
+            onSuccess: ({ byTag }): React.ReactNode => {
+              return byTag.slice(0, tagCount).map(([tag, businesses]) => {
                 return (
                   <BusinessGroup.Root key={tag}>
                     <BusinessGroup.Header>

@@ -5,6 +5,8 @@ import { Link as LinkWouter } from "wouter"
 import type { Business } from "@/types/business"
 import { Icon } from "@/components/icon"
 
+export * as Header from "./header"
+
 type CardProps = { business: Business }
 
 export function Card({ business }: CardProps) {
@@ -65,34 +67,34 @@ export function Card({ business }: CardProps) {
 }
 
 type RootProps = {}
-export function Root({ children }: PropsWithChildren<RootProps>) {
+export function List({ children }: PropsWithChildren<RootProps>) {
   return <ul className="flex flex-col gap-6">{children}</ul>
 }
 
 export function Skeleton() {
   return (
-    <Root>
+    <List>
       {Array(10)
         .fill(0)
         .map((_, i) => (
           <div
             key={i}
-            className="size-full relative rounded-xl border border-neutral-100"
+            className="w-full h-90 relative rounded-xl border border-neutral-100"
           >
             <div className="flex flex-col h-full w-full">
-              <div className="rounded-t-xl grow-1 bg-neutral-100 border-b-1 border-neutral-200 animate-pulse"></div>
+              <div className="rounded-t-xl grow-1 bg-neutral-100 border-b-1 border-neutral-200 animate-pulse" />
 
-              <div className="p-4 pt-2">
+              <div className="p-6 pt-4">
                 <div className="flex gap-2 justify-between items-start">
                   <div className="h-4 w-24 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
                   <div className="h-4 w-8 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
                 </div>
 
-                <div className="h-1" />
+                <div className="h-2" />
 
                 <div className="h-5 w-2/3 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
 
-                <div className="h-4" />
+                <div className="h-6" />
 
                 <div className="h-4 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
               </div>
@@ -100,6 +102,6 @@ export function Skeleton() {
           </div>
         ))}
       )
-    </Root>
+    </List>
   )
 }

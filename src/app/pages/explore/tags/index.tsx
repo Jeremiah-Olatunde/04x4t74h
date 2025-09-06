@@ -1,6 +1,5 @@
 import { useState } from "react"
 
-import { group } from "@/utils"
 import { useBusinessAllCache } from "@/hooks/business"
 import { ButtonBadge, ButtonScrollTop } from "@/components/button"
 import { Topbar } from "@/components/topbar"
@@ -9,26 +8,15 @@ import * as RemoteData from "@/lib/remote-data"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import * as Header from "@/components/header"
 import { LinkBadge } from "@/components/link"
+import { groupByTag } from "@/utils/business"
 
 export function Tags() {
+  const [count, setCount] = useState(5)
   const remoteData = useBusinessAllCache()
-  const [city] = useState<string>()
-  const [tagCount, setTagCount] = useState(5)
 
   const data = RemoteData.map(remoteData, (businesses) => {
-    const cities = new Set(businesses.map((b) => b.city))
-      .values()
-      .toArray() as readonly string[]
-
-    const tags = [...new Set(businesses.flatMap((b) => b.tags))] as const
-
-    const targetCity = city ?? cities[0]
-    const filtered = businesses.filter((b) => b.city === targetCity)
-    const byTags = group(filtered, tags, (business, tag) => {
-      return business.tags.includes(tag)
-    })
-
-    return { cities, byTags, tags }
+    const grouped = groupByTag(businesses)
+    return { grouped }
   })
 
   return (
@@ -74,16 +62,16 @@ export function Tags() {
             onFailure: (error): React.ReactNode => {
               throw error
             },
-            onSuccess: ({ tags }): React.ReactNode => {
-              return tags.map((tag) => {
+            onSuccess: ({ grouped }): React.ReactNode => {
+              return grouped.map(([name]) => {
                 return (
-                  <li key={tag}>
+                  <li key={name}>
                     <LinkBadge
-                      href={`/explore/tags/${tag}`}
+                      href={`/explore/tags/${name}`}
                       size="sm"
                       color="light"
                     >
-                      {tag}
+                      {name}
                     </LinkBadge>
                   </li>
                 )
@@ -102,13 +90,13 @@ export function Tags() {
             onFailure: (error): React.ReactNode => {
               throw error
             },
-            onSuccess: ({ byTags }): React.ReactNode => {
-              return byTags.slice(0, tagCount).map(([tag, businesses]) => {
+            onSuccess: ({ grouped }): React.ReactNode => {
+              return grouped.slice(0, count).map(([name, businesses]) => {
                 return (
-                  <BusinessGroup.Root key={tag}>
+                  <BusinessGroup.Root key={name}>
                     <BusinessGroup.Header>
-                      <BusinessGroup.Title title={tag} />
-                      <BusinessGroup.Link href={`/explore/tags/${tag}`} />
+                      <BusinessGroup.Title title={name} />
+                      <BusinessGroup.Link href={`/explore/tags/${name}`} />
                     </BusinessGroup.Header>
 
                     <BusinessGroup.Slider>
@@ -126,7 +114,7 @@ export function Tags() {
             color="neutral"
             size="md"
             type="button"
-            onClick={() => setTagCount(tagCount + 5)}
+            onClick={() => setCount(count + 5)}
           >
             Show More
           </ButtonBadge>

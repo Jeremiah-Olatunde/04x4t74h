@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react"
 import { LinkBadge } from "@/components/link"
-import { ButtonBackText } from "@/components/button"
+import { ButtonBadge } from "@/components/button"
 import { Topbar } from "@/components/topbar"
 
 type PlaceholderProps = {
@@ -68,7 +68,9 @@ export function Content({ children }: ContentProps) {
 export function Back() {
   return (
     <div>
-      <ButtonBackText />
+      <ButtonBadge color="neutral" size="md">
+        Back
+      </ButtonBadge>
     </div>
   )
 }
