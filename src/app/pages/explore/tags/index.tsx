@@ -1,11 +1,10 @@
 import { useState } from "react"
-import { Link as LinkWouter } from "wouter"
 
 import { group } from "@/utils"
 import { useBusinessAllCache } from "@/hooks/business"
 import { ButtonBadge, ButtonScrollTop } from "@/components/button"
 import { Topbar } from "@/components/topbar"
-import * as BusinessList from "@/components/business/list"
+import * as BusinessGroup from "@/components/business/group"
 import * as RemoteData from "@/lib/remote-data"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import * as Header from "@/components/header"
@@ -40,9 +39,7 @@ export function Tags() {
       <section className="p-6 pt-0 flex flex-col gap-4">
         <div className="flex flex-col justify-center items-center gap-2">
           <Breadcrumbs.Root>
-            <Breadcrumbs.Crumb href="/discover/home">
-              Discover
-            </Breadcrumbs.Crumb>
+            <Breadcrumbs.Crumb href="/explore">Explore</Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />
             <Breadcrumbs.Crumb href="#" active>
               Tags
@@ -82,7 +79,7 @@ export function Tags() {
                 return (
                   <li key={tag}>
                     <LinkBadge
-                      href={`/discover/tags/${tag}`}
+                      href={`/explore/tags/${tag}`}
                       size="sm"
                       color="light"
                     >
@@ -100,18 +97,7 @@ export function Tags() {
             onNone: (): React.ReactNode => {
               return Array(5)
                 .fill(0)
-                .map((_, index) => {
-                  return (
-                    <BusinessList.Root key={index}>
-                      <BusinessList.Header>
-                        <div className="h-8 w-30 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-lg" />
-                        <div className="size-8 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-lg" />
-                      </BusinessList.Header>
-
-                      <BusinessList.SliderSkeleton />
-                    </BusinessList.Root>
-                  )
-                })
+                .map((_, index) => <BusinessGroup.Skeleton key={index} />)
             },
             onFailure: (error): React.ReactNode => {
               throw error
@@ -119,14 +105,18 @@ export function Tags() {
             onSuccess: ({ byTags }): React.ReactNode => {
               return byTags.slice(0, tagCount).map(([tag, businesses]) => {
                 return (
-                  <BusinessList.Root key={tag}>
-                    <BusinessList.Header>
-                      <BusinessList.Title title={tag} />
-                      <BusinessList.Link href={`/discover/tags/${tag}`} />
-                    </BusinessList.Header>
+                  <BusinessGroup.Root key={tag}>
+                    <BusinessGroup.Header>
+                      <BusinessGroup.Title title={tag} />
+                      <BusinessGroup.Link href={`/explore/tags/${tag}`} />
+                    </BusinessGroup.Header>
 
-                    <BusinessList.Slider businesses={businesses.slice(0, 5)} />
-                  </BusinessList.Root>
+                    <BusinessGroup.Slider>
+                      {businesses.slice(0, 5).map((b) => (
+                        <BusinessGroup.Card key={b.id} business={b} />
+                      ))}
+                    </BusinessGroup.Slider>
+                  </BusinessGroup.Root>
                 )
               })
             },
@@ -145,5 +135,3 @@ export function Tags() {
     </section>
   )
 }
-
-function Badge() {}

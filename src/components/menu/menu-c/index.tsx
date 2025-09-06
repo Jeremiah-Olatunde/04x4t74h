@@ -3,11 +3,14 @@ import { Dialog } from "@base-ui-components/react"
 import {
   ArrowUpRightIcon,
   ChartNoAxesGanttIcon,
+  CompassIcon,
+  HouseIcon,
   MapPinIcon,
   MapPinnedIcon,
   PhoneIcon,
   PlusIcon,
   SearchIcon,
+  TelescopeIcon,
   UserRoundIcon,
   XIcon,
   type LucideIcon,
@@ -44,37 +47,49 @@ export function Menu({ color }: MenuProps) {
               <Navigation>
                 <NavigationItem
                   active={wouterLocation.startsWith("/discover")}
-                  icon={MapPinnedIcon}
+                  icon={TelescopeIcon}
                   text="Discover"
-                  href="/discover/home"
+                  href="/discover"
                 >
                   <SubItem
-                    active={wouterLocation.startsWith("/discover/home")}
-                    text="Home"
-                    href="/discover/home"
-                  />
-                  <SubItem
-                    active={wouterLocation.startsWith("/discover/tags")}
-                    text="Tags"
-                    href="/discover/tags"
-                  />
-                  <SubItem
-                    active={wouterLocation.startsWith("/discover/categories")}
-                    text="Categories"
-                    href="/discover/categories"
-                  />
-                  <SubItem
-                    active={wouterLocation.startsWith("/discover/cities")}
-                    text="Cities"
-                    href="/discover/cities"
+                    active={wouterLocation.startsWith(
+                      "/discover/recommendations",
+                    )}
+                    text="Recommendations"
+                    href="/discover/recommendations"
                   />
                 </NavigationItem>
+
+                <NavigationItem
+                  active={wouterLocation.startsWith("/explore")}
+                  icon={MapPinnedIcon}
+                  text="Explore"
+                  href="/explore"
+                >
+                  <SubItem
+                    active={wouterLocation.startsWith("/explore/tags")}
+                    text="Tags"
+                    href="/explore/tags"
+                  />
+                  <SubItem
+                    active={wouterLocation.startsWith("/explore/categories")}
+                    text="Categories"
+                    href="/explore/categories"
+                  />
+                  <SubItem
+                    active={wouterLocation.startsWith("/explore/cities")}
+                    text="Cities"
+                    href="/explore/cities"
+                  />
+                </NavigationItem>
+
                 <NavigationItem
                   active={wouterLocation.startsWith("/search")}
                   icon={SearchIcon}
                   text="Search"
                   href="/search"
                 />
+
                 <NavigationItem
                   active={false}
                   icon={UserRoundIcon}

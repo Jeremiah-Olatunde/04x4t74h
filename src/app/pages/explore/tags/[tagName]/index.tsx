@@ -1,18 +1,16 @@
+import { ArrowUpAZIcon, ListFilterIcon } from "lucide-react"
+import { useState } from "react"
 import { useParams } from "wouter"
 
 import { useBusinessAllCache } from "@/hooks/business"
 import { PathParameterError } from "@/lib/errors/ui"
 import * as RemoteData from "@/lib/remote-data"
 
-import {
-  Business as BusinessCard,
-  BusinessSkeleton,
-} from "@/components/business/card"
+import * as BusinessList from "@/components/business/list"
+
 import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import { ButtonBadge, ButtonScrollTop } from "@/components/button"
-import { ArrowUpAZIcon, ListFilterIcon } from "lucide-react"
-import { useState } from "react"
 
 export function Tag() {
   const { tagName } = useParams()
@@ -49,7 +47,7 @@ export function Tag() {
 
         <div className="h-6" />
 
-        <ul className="flex flex-col gap-6">
+        <BusinessList.Root>
           {RemoteData.fold3(filtered, {
             onNone: (): React.ReactNode => {
               return Array(5)
@@ -57,7 +55,7 @@ export function Tag() {
                 .map((_, index) => {
                   return (
                     <li key={index} className="h-80">
-                      <BusinessSkeleton size="lg" />
+                      <BusinessList.Skeleton />
                     </li>
                   )
                 })
@@ -66,16 +64,12 @@ export function Tag() {
               throw error
             },
             onSuccess: (businesses): React.ReactNode => {
-              return businesses.slice(0, tagCount).map((business) => {
-                return (
-                  <li key={business.id} className="h-80">
-                    <BusinessCard details={business} size="lg" />
-                  </li>
-                )
+              return businesses.slice(0, tagCount).map((b) => {
+                return <BusinessList.Card key={b.id} business={b} />
               })
             },
           })}
-        </ul>
+        </BusinessList.Root>
 
         <div className="h-6" />
 
@@ -131,9 +125,9 @@ function HeaderC({ tagName, count }: { tagName: string; count?: number }) {
   return (
     <header className="flex flex-col justify-center items-start">
       <Breadcrumbs.Root>
-        <Breadcrumbs.Crumb href="/discover/home">Discover</Breadcrumbs.Crumb>
+        <Breadcrumbs.Crumb href="/explore">Explore</Breadcrumbs.Crumb>
         <Breadcrumbs.Divider />
-        <Breadcrumbs.Crumb href="/discover/tags">Tags</Breadcrumbs.Crumb>
+        <Breadcrumbs.Crumb href="/explore/tags">Tags</Breadcrumbs.Crumb>
         <Breadcrumbs.Divider />
         <Breadcrumbs.Crumb href="#" active>
           {tagName}

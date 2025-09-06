@@ -8,12 +8,12 @@ import { Unexpected, Http } from "@/components/error"
 import { Business } from "@/app/pages/business/[businessId]/home/[page]"
 import { ReviewCreate } from "@/app/pages/business/[businessId]/reviews/create"
 
-import { Categories, Cities, Home, Tag, Tags } from "@/app/pages/discover"
+import * as Explore from "@/app/pages/explore"
+import * as Discover from "@/app/pages/discover"
 import { Login } from "@/app/pages/auth/login"
 import { PasswordForgot } from "@/app/pages/auth/password/forgot"
 import { SignUp } from "@/app/pages/auth/sign-up"
 import { Search } from "../pages/search"
-import { Recommendations } from "../pages/recommendations"
 
 export function Router() {
   const [_, setLocation] = useLocation()
@@ -50,15 +50,28 @@ export function Router() {
       }}
     >
       <Switch>
-        <Route path="/" component={() => <Redirect to="/discover/home" />} />
+        <Route path="/" component={() => <Redirect to="/discover" />} />
 
-        <Route path="/discover/home" component={Home} />
+        <Route path="/discover" component={Discover.Discover} />
+        <Route
+          path="/discover/recommendations"
+          component={Discover.Recommendations}
+        />
 
-        <Route path="/discover/tags" component={Tags} />
-        <Route path="/discover/tags/:tagName" component={Tag} />
+        <Route path="/explore" component={Explore.Explore} />
 
-        <Route path="/discover/cities" component={Cities} />
-        <Route path="/discover/categories" component={Categories} />
+        <Route path="/explore/tags" component={Explore.Tags} />
+        <Route path="/explore/tags/:tagName" component={Explore.Tag} />
+
+        <Route path="/explore/cities" component={Explore.Cities} />
+        <Route path="/explore/cities/:cityName" component={Explore.City} />
+
+        <Route path="/explore/categories" component={Explore.Categories} />
+
+        <Route
+          path="/explore/categories/:categoryName"
+          component={Explore.Category}
+        />
 
         <Route path="/business/:businessId/home/:page" component={Business} />
         <Route
@@ -73,8 +86,6 @@ export function Router() {
         <Route path="/auth/password/forgot" component={PasswordForgot} />
 
         <Route path="/search" component={Search} />
-
-        <Route path="/recommendations" component={Recommendations} />
 
         <Route>page not found</Route>
       </Switch>
