@@ -20,6 +20,14 @@ export function group<T>(
   return map.entries().toArray()
 }
 
+export function groupBy<K extends string, T extends Record<K, string>>(
+  items: readonly T[],
+  key: K,
+) {
+  const groups = get(key, items)
+  return group(items, groups, (item, group) => item[key] === group)
+}
+
 export function get<K extends keyof V, V>(key: K, values: readonly V[]) {
   const items = values.map((value) => value[key])
   return new Set(items).values().toArray()
@@ -52,4 +60,23 @@ export function getCitiesWithTowns(bs: Businesses): Cities {
   })
 
   return withTowns
+}
+
+type GroupedBusinesses = readonly (readonly [string, Businesses])[]
+
+export function groupByCities(businesses: Businesses): GroupedBusinesses {
+  return groupBy(businesses, "city")
+}
+
+export function groupByTowns(businesses: Businesses): GroupedBusinesses {
+  return groupBy(businesses, "town")
+}
+
+export function groupByCategories(businesses: Businesses): GroupedBusinesses {
+  return groupBy(businesses, "businessCategory")
+}
+
+export function groupByTags(businesses: Businesses): GroupedBusinesses {
+  const tags = getTags(businesses)
+  return group(businesses, tags, (b, tag) => b.tags.includes(tag))
 }
