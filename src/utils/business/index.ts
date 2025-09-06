@@ -20,9 +20,26 @@ export function group<T>(
   return map.entries().toArray()
 }
 
+export function get<K extends keyof V, V>(key: K, values: readonly V[]) {
+  const items = values.map((value) => value[key])
+  return new Set(items).values().toArray()
+}
+
 export function getCities(businesses: Businesses): readonly string[] {
-  const cities = businesses.map((business) => business.city)
-  return new Set(cities).values().toArray()
+  return get("city", businesses)
+}
+
+export function getTowns(businesses: Businesses): readonly string[] {
+  return get("town", businesses)
+}
+
+export function getCategories(businesses: Businesses): readonly string[] {
+  return get("businessCategory", businesses)
+}
+
+export function getTags(businesses: Businesses): readonly string[] {
+  const items = businesses.flatMap((business) => business.tags)
+  return new Set(items).values().toArray()
 }
 
 export function getCitiesWithTowns(bs: Businesses): Cities {
