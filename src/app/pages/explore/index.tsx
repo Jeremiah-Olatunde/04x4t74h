@@ -1,9 +1,9 @@
 export { Tags } from "./tags"
 export { Tag } from "./tags/[name]"
 export { Cities } from "./cities"
-export { City } from "./cities/[cityName]"
+export { City } from "./cities/[name]"
 export { Categories } from "./categories"
-export { Category } from "./categories/[categoryName]"
+export { Category } from "./categories/[name]"
 
 import * as Placeholder from "@/components/placeholder"
 

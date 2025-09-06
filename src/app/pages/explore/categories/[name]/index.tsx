@@ -10,9 +10,9 @@ import * as BusinessList from "@/components/business/list"
 import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import { ButtonBadge, ButtonScrollTop } from "@/components/button"
-import { getWithTag } from "@/utils/business"
+import { getInCategory } from "@/utils/business"
 
-export function Tag() {
+export function Category() {
   const { name } = useParams()
 
   const [count, setCount] = useState(5)
@@ -21,14 +21,14 @@ export function Tag() {
     const tag = "missing"
     const details = { tag } as const
     const parameter = "name"
-    const schema = "/tags/:name"
+    const schema = "/categories/:name"
     throw new PathParameterError(parameter, schema, details)
   }
 
   const remoteData = useBusinessAllCache()
 
   const businesses = RemoteData.map(remoteData, (businesses) => {
-    return getWithTag(businesses, name)
+    return getInCategory(businesses, name)
   })
 
   return (
@@ -41,7 +41,9 @@ export function Tag() {
           <Breadcrumbs.Root>
             <Breadcrumbs.Crumb href="/explore">Explore</Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />
-            <Breadcrumbs.Crumb href="/explore/tags">Tags</Breadcrumbs.Crumb>
+            <Breadcrumbs.Crumb href="/explore/categories">
+              Categories
+            </Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />
             <Breadcrumbs.Crumb href="#" active>
               {name}
@@ -66,8 +68,9 @@ export function Tag() {
                         <span className="font-semibold">
                           {businesses.length}
                         </span>
-                        <span> businesses tagged under </span>
+                        <span> businesses under the </span>
                         <span className="font-semibold capitalize">{name}</span>
+                        <span> category</span>
                       </>
                     )
                   },
