@@ -21,7 +21,7 @@ export function Crumb({ active, children, href }: CrumbProps) {
       <LinkWouter href={href}>
         <div
           className={`
-        font-sora font-semibold text-xxs capitalize 
+        font-sora font-semibold text-xxs capitalize whitespace-nowrap
         ${active ? "text-primary" : "text-neutral-400"}
       `}
         >
