@@ -3,8 +3,6 @@ import { Dialog } from "@base-ui-components/react"
 import {
   ArrowUpRightIcon,
   ChartNoAxesGanttIcon,
-  CompassIcon,
-  HouseIcon,
   MapPinIcon,
   MapPinnedIcon,
   PhoneIcon,
@@ -71,11 +69,13 @@ export function Menu({ color }: MenuProps) {
                     text="Tags"
                     href="/explore/tags"
                   />
+
                   <SubItem
                     active={wouterLocation.startsWith("/explore/categories")}
                     text="Categories"
                     href="/explore/categories"
                   />
+
                   <SubItem
                     active={wouterLocation.startsWith("/explore/cities")}
                     text="Cities"
