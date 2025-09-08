@@ -2,6 +2,7 @@ export { Tags } from "./tags"
 export { Tag } from "./tags/[name]"
 export { Cities } from "./cities"
 export { City } from "./cities/[city]"
+export { Town } from "./cities/[city]/[town]"
 export { Categories } from "./categories"
 export { Category } from "./categories/[name]"
 

@@ -1,21 +1,22 @@
-import { useState, type ReactNode } from "react"
-import { useParams } from "wouter"
+import { useState } from "react"
 
 import { useBusinessAllCache } from "@/hooks/business"
-import { PathParameterError } from "@/lib/errors/ui"
-import * as RemoteData from "@/lib/remote-data"
-
-import * as BusinessList from "@/components/business/list"
-
-import { Topbar } from "@/components/topbar"
-import * as Breadcrumbs from "@/components/breadcrumbs"
 import { ButtonBadge, ButtonScrollTop } from "@/components/button"
-import { getInCity } from "@/utils/business"
+import { Topbar } from "@/components/topbar"
+import * as BusinessGroup from "@/components/business/group"
+import * as RemoteData from "@/lib/remote-data"
+import * as Breadcrumbs from "@/components/breadcrumbs"
+import * as Header from "@/components/header"
+import { LinkBadge } from "@/components/link"
+import { getInCity, groupByTown } from "@/utils/business"
+import { useParams } from "wouter"
+import { PathParameterError } from "@/lib/errors/ui"
 
 export function City() {
   const { city } = useParams()
 
   const [count, setCount] = useState(5)
+  const remoteData = useBusinessAllCache()
 
   if (city === undefined) {
     const tag = "missing"
@@ -25,19 +26,19 @@ export function City() {
     throw new PathParameterError(parameter, schema, details)
   }
 
-  const remoteData = useBusinessAllCache()
-
-  const businesses = RemoteData.map(remoteData, (businesses) => {
-    return getInCity(businesses, city)
+  const data = RemoteData.map(remoteData, (businesses) => {
+    const inCity = getInCity(businesses, city)
+    const grouped = groupByTown(inCity)
+    return { grouped }
   })
 
   return (
-    <section className="min-h-screen">
-      <Topbar />
+    <section className="relative flex flex-col">
       <ButtonScrollTop />
+      <Topbar />
 
-      <section className="px-6">
-        <div className="flex flex-col gap-2">
+      <section className="p-6 pt-0 flex flex-col gap-4">
+        <div className="flex flex-col justify-center items-center gap-2">
           <Breadcrumbs.Root>
             <Breadcrumbs.Crumb href="/explore">Explore</Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />
@@ -48,66 +49,91 @@ export function City() {
             </Breadcrumbs.Crumb>
           </Breadcrumbs.Root>
 
-          <BusinessList.Header.Root
-            handleFilter={() => {}}
-            handleSort={() => {}}
-          >
-            <BusinessList.Header.Header>
-              <BusinessList.Header.Title>{city}</BusinessList.Header.Title>
-              <BusinessList.Header.Subtitle>
-                {RemoteData.fold3(businesses, {
-                  onFailure: (error): ReactNode => {
-                    throw error
-                  },
-                  onNone: (): ReactNode => <BusinessList.Header.Skeleton />,
-                  onSuccess: (businesses): ReactNode => {
-                    return (
-                      <>
-                        <span className="font-semibold">
-                          {businesses.length}
-                        </span>
-                        <span> businesses under the </span>
-                        <span className="font-semibold capitalize">{city}</span>
-                        <span> city</span>
-                      </>
-                    )
-                  },
-                })}
-              </BusinessList.Header.Subtitle>
-            </BusinessList.Header.Header>
-          </BusinessList.Header.Root>
+          <Header.Root>
+            <Header.Title>Explore {city}</Header.Title>
+            <Header.Subtitle>Find your next stop in {city}.</Header.Subtitle>
+          </Header.Root>
         </div>
 
-        <div className="h-6" />
+        <ul className="flex flex-row flex-wrap gap-2 justify-center">
+          {RemoteData.fold3(data, {
+            onNone: (): React.ReactNode => {
+              return Array(4)
+                .fill(0)
+                .map((_, index) => {
+                  const width = 40 + Math.random() * 40
+                  return (
+                    <li key={index}>
+                      <div
+                        className={`p-1 h-6 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-sm`}
+                        style={{ width: `${width}px` }}
+                      />
+                    </li>
+                  )
+                })
+            },
+            onFailure: (error): React.ReactNode => {
+              throw error
+            },
+            onSuccess: ({ grouped }): React.ReactNode => {
+              return grouped.map(([name]) => {
+                return (
+                  <li key={name}>
+                    <LinkBadge
+                      href={`/explore/cities/${city}/${name}/`}
+                      size="sm"
+                      color="light"
+                    >
+                      {name}
+                    </LinkBadge>
+                  </li>
+                )
+              })
+            },
+          })}
+        </ul>
 
-        {RemoteData.fold3(businesses, {
-          onFailure: (error): React.ReactNode => {
-            throw error
-          },
-          onNone: (): React.ReactNode => <BusinessList.Skeleton />,
-          onSuccess: (businesses): React.ReactNode => {
-            return (
-              <BusinessList.List>
-                {businesses.slice(0, count).map((b) => {
-                  return <BusinessList.Card key={b.id} business={b} />
-                })}
-              </BusinessList.List>
-            )
-          },
-        })}
+        <div className="flex flex-col gap-8">
+          {RemoteData.fold3(data, {
+            onNone: (): React.ReactNode => {
+              return Array(5)
+                .fill(0)
+                .map((_, index) => <BusinessGroup.Skeleton key={index} />)
+            },
+            onFailure: (error): React.ReactNode => {
+              throw error
+            },
+            onSuccess: ({ grouped }): React.ReactNode => {
+              return grouped.slice(0, count).map(([name, businesses]) => {
+                return (
+                  <BusinessGroup.Root key={name}>
+                    <BusinessGroup.Header>
+                      <BusinessGroup.Title title={name} />
+                      <BusinessGroup.Link
+                        href={`/explore/cities/${city}/${name}/`}
+                      />
+                    </BusinessGroup.Header>
 
-        <div className="h-6" />
+                    <BusinessGroup.Slider>
+                      {businesses.slice(0, 5).map((b) => (
+                        <BusinessGroup.Card key={b.id} business={b} />
+                      ))}
+                    </BusinessGroup.Slider>
+                  </BusinessGroup.Root>
+                )
+              })
+            },
+          })}
 
-        <ButtonBadge
-          color="neutral"
-          size="md"
-          type="button"
-          onClick={() => setCount(count + 5)}
-        >
-          Show More
-        </ButtonBadge>
-
-        <div className="h-6" />
+          <ButtonBadge
+            color="neutral"
+            size="md"
+            type="button"
+            onClick={() => setCount(count + 5)}
+          >
+            Show More
+          </ButtonBadge>
+        </div>
       </section>
     </section>
   )

@@ -65,6 +65,7 @@ export function Router() {
 
         <Route path="/explore/cities" component={Explore.Cities} />
         <Route path="/explore/cities/:city" component={Explore.City} />
+        <Route path="/explore/cities/:city/:town" component={Explore.Town} />
 
         <Route path="/explore/categories" component={Explore.Categories} />
 

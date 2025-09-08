@@ -4,13 +4,13 @@ type RootProps = {}
 export function Root({ children }: PropsWithChildren<RootProps>) {
   return (
     <header>
-      <div className="flex flex-col items-center">{children}</div>
+      <div className="flex flex-col items-center gap-1">{children}</div>
     </header>
   )
 }
 
-type TitleProps = { children: string }
-export function Title({ children }: TitleProps) {
+type TitleProps = {}
+export function Title({ children }: PropsWithChildren<TitleProps>) {
   return (
     <h1>
       <span className="font-sora text-xl font-bold text-neutral-600">
@@ -20,11 +20,9 @@ export function Title({ children }: TitleProps) {
   )
 }
 
-type SubtitleProps = { children: string }
-export function Subtitle({ children }: SubtitleProps) {
+type SubtitleProps = {}
+export function Subtitle({ children }: PropsWithChildren<SubtitleProps>) {
   return (
-    <p>
-      <span className="font-sora text-sm text-neutral-400">{children}</span>
-    </p>
+    <p className="font-sora text-sm text-neutral-400 text-center">{children}</p>
   )
 }
