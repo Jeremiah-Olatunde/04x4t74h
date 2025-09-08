@@ -67,7 +67,7 @@ export function Cities() {
                 return (
                   <li key={name}>
                     <LinkBadge
-                      href={`/explore/categories/${name}`}
+                      href={`/explore/cities/${name}`}
                       size="sm"
                       color="light"
                     >
@@ -96,9 +96,7 @@ export function Cities() {
                   <BusinessGroup.Root key={name}>
                     <BusinessGroup.Header>
                       <BusinessGroup.Title title={name} />
-                      <BusinessGroup.Link
-                        href={`/explore/categories/${name}`}
-                      />
+                      <BusinessGroup.Link href={`/explore/cities/${name}`} />
                     </BusinessGroup.Header>
 
                     <BusinessGroup.Slider>
