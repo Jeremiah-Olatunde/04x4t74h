@@ -68,7 +68,6 @@ export function Router() {
         <Route path="/explore/cities/:city/:town" component={Explore.Town} />
 
         <Route path="/explore/categories" component={Explore.Categories} />
-
         <Route path="/explore/categories/:name" component={Explore.Category} />
 
         <Route path="/business/:businessId/home/:page" component={Business} />
