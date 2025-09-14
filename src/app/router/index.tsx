@@ -60,6 +60,8 @@ export function Router() {
 
         <Route path="/explore" component={Explore.Explore} />
 
+        <Route path="/explore/businesses" component={Explore.Businesses} />
+
         <Route path="/explore/tags" component={Explore.Tags} />
         <Route path="/explore/tags/:name" component={Explore.Tag} />
 

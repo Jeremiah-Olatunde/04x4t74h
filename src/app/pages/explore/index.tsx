@@ -7,6 +7,7 @@ import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import * as Header from "@/components/header"
 
+export { Businesses } from "./businesses"
 export { Tags } from "./tags"
 export { Tag } from "./tags/[name]"
 export { Cities } from "./cities"

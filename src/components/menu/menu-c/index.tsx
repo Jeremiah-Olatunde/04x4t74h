@@ -71,15 +71,21 @@ export function Menu({ color }: MenuProps) {
                   />
 
                   <SubItem
+                    active={wouterLocation.startsWith("/explore/cities")}
+                    text="Cities"
+                    href="/explore/cities"
+                  />
+
+                  <SubItem
                     active={wouterLocation.startsWith("/explore/categories")}
                     text="Categories"
                     href="/explore/categories"
                   />
 
                   <SubItem
-                    active={wouterLocation.startsWith("/explore/cities")}
-                    text="Cities"
-                    href="/explore/cities"
+                    active={wouterLocation.startsWith("/explore/businesses")}
+                    text="Businesses"
+                    href="/explore/businesses"
                   />
                 </NavigationItem>
 
