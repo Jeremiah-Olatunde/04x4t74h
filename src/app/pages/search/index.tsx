@@ -10,6 +10,7 @@ import { Topbar } from "@/components/topbar"
 import { Pill } from "@/components/pill"
 
 export * from "./results"
+export * from "./results/filter"
 
 type FormValues = { term: string }
 const defaultValues: FormValues = { term: "" }
@@ -30,7 +31,7 @@ export function Search() {
 
   function onSubmit(formValues: FormValues) {
     const params = new URLSearchParams(formValues)
-    setLocation(`/search/results?${params}`)
+    setLocation(`/results?${params}`)
   }
 
   return (

@@ -44,7 +44,7 @@ export function ReviewCreate() {
   }
 
   return (
-    <section className="min-h-screen">
+    <section className="min-h-svh">
       <Topbar />
 
       <header className="px-6 flex flex-col items-center gap-1">

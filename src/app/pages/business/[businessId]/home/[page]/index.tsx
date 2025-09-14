@@ -135,7 +135,7 @@ function Hero({ business }: HeroProps) {
               }
             }}
           />
-          <ButtonLike active={false} />
+          {/* <ButtonLike active={false} /> */}
         </div>
         <img
           onLoad={() => {}}
@@ -235,7 +235,7 @@ function KakashiSkeleton({ id }: KakashiSkeletonProps) {
       <Tabs.Root
         value={page}
         onValueChange={(page) => {
-          setLocation(`/business/${id}/home/${page}`)
+          setLocation(`/business/${id}/home/${page}`, { replace: true })
         }}
       >
         <Tabs.List className="px-8 py-4 border-b-1 border-neutral-200 flex justify-start gap-12">
@@ -307,7 +307,8 @@ function Kakashi({ business }: KakashiProps) {
       <Tabs.Root
         value={page}
         onValueChange={(page) => {
-          setLocation(`/business/${business.id}/home/${page}`)
+          const replace = true
+          setLocation(`/business/${business.id}/home/${page}`, { replace })
         }}
       >
         <Tabs.List className="px-8 py-4 border-b-1 border-neutral-200 flex justify-start gap-12">
