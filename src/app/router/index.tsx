@@ -10,10 +10,10 @@ import { ReviewCreate } from "@/app/pages/business/[businessId]/reviews/create"
 
 import * as Explore from "@/app/pages/explore"
 import * as Discover from "@/app/pages/discover"
+import * as Search from "@/app/pages/search"
 import { Login } from "@/app/pages/auth/login"
 import { PasswordForgot } from "@/app/pages/auth/password/forgot"
 import { SignUp } from "@/app/pages/auth/sign-up"
-import { Search } from "../pages/search"
 
 export function Router() {
   const [_, setLocation] = useLocation()
@@ -82,7 +82,8 @@ export function Router() {
         <Route path="/auth/password" component={PasswordForgot} />
         <Route path="/auth/password/forgot" component={PasswordForgot} />
 
-        <Route path="/search" component={Search} />
+        <Route path="/search" component={Search.Search} />
+        <Route path="/search/results" component={Search.Results} />
 
         <Route>page not found</Route>
       </Switch>
