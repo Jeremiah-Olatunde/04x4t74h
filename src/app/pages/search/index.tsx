@@ -11,8 +11,8 @@ import { Pill } from "@/components/pill"
 
 export * from "./results"
 
-type FormValues = { search: string }
-const defaultValues: FormValues = { search: "" }
+type FormValues = { term: string }
+const defaultValues: FormValues = { term: "" }
 
 export function Search() {
   const [, setLocation] = useLocation()
@@ -53,7 +53,7 @@ export function Search() {
         >
           <ButtonSearch />
           <Controller
-            name="search"
+            name="term"
             control={control}
             rules={{
               required: {
@@ -74,12 +74,13 @@ export function Search() {
                   <Input
                     id={field.name}
                     {...field}
+                    placeholder="Search businesses on Plazzaa..."
                     className="
-                w-0 grow 
-                font-sora text-xs text-neutral-600 
-                border-none outline-none
-                placeholder:text-neutral-400
-              "
+                      w-0 grow 
+                      font-sora text-xs text-neutral-600 
+                      border-none outline-none
+                      placeholder:text-neutral-400
+                    "
                   />
                   {errors.slice(0, 1).map((error) => {
                     return (

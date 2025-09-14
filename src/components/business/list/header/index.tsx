@@ -23,7 +23,11 @@ export function Title({ children }: TitleProps) {
 
 type SubtitleProps = {}
 export function Subtitle({ children }: PropsWithChildren<SubtitleProps>) {
-  return <p className="font-sora text-xs text-neutral-400">{children}</p>
+  return (
+    <p className="font-sora text-xs text-neutral-400 truncate w-full">
+      {children}
+    </p>
+  )
 }
 
 type RootProps = { handleFilter: () => void; handleSort: () => void }
@@ -33,8 +37,8 @@ export function Root({
   handleSort,
 }: PropsWithChildren<RootProps>) {
   return (
-    <div className="w-full flex flex-row justify-between items-center">
-      <div className="grow">{children}</div>
+    <div className="w-full flex flex-row gap-2 justify-between items-center">
+      <div className="grow min-w-0">{children}</div>
 
       <div className="flex flex-col justify-center items-center gap-1">
         <ButtonFilter onClick={handleFilter} />

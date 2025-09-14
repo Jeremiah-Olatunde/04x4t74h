@@ -1,4 +1,5 @@
 import type { Business } from "@/types/business"
+import Fuse from "fuse.js"
 
 type Businesses = readonly Business[]
 type Towns = readonly string[]
@@ -106,4 +107,15 @@ export function getWithTag(businesses: Businesses, tag: string): Businesses {
   const grouped = groupByTag(businesses)
   const found = grouped.find(([c]) => c === tag)
   return found ? found[1] : []
+}
+
+export function search(businesses: Businesses, term: string): Businesses {
+  if (term === "") return businesses
+
+  const keys = ["name"]
+  const threshold = 0.4
+  const fuse = new Fuse(businesses, { keys, threshold })
+  const results = fuse.search(term)
+
+  return results.map((result) => result.item)
 }
