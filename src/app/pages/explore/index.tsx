@@ -40,7 +40,7 @@ export function Explore() {
 
         <div className="h-4" />
 
-        <div className="flex flex-col gap-4">
+        <ul className="flex flex-col gap-4">
           <div className="h-0.25 bg-neutral-200 w-full" />
 
           <ExploreItem
@@ -66,7 +66,15 @@ export function Explore() {
           />
 
           <div className="h-0.25 bg-neutral-200 w-full" />
-        </div>
+
+          <ExploreItem
+            href="/explore/businesses"
+            title="Businesses"
+            text="Browse all the businesses Plazzaa has to offer"
+          />
+
+          <div className="h-0.25 bg-neutral-200 w-full" />
+        </ul>
       </section>
     </section>
   )
@@ -82,22 +90,24 @@ export function ExploreItem({
   href: string
 }) {
   return (
-    <div className="gap-2 flex flex-row justify-center items-center">
-      <div>
-        <div className="font-sora font-bold text-neutral-600 text-xl">
-          {title}
-        </div>
-        <div className="h-1" />
-        <div className="font-sora  text-neutral-400 text-sm">{text}</div>
-      </div>
-
-      <div className="h-2" />
-
+    <li>
       <LinkWouter href={href}>
-        <div className="flex items-center justify-center gap-1 w-min font-sora font-semibold text-sm text-neutral-400">
-          <ArrowRightIcon className="size-6" />
+        <div className="gap-2 flex flex-row justify-between items-center">
+          <div>
+            <div className="font-sora font-bold text-neutral-600 text-xl">
+              {title}
+            </div>
+            <div className="h-1" />
+            <div className="font-sora  text-neutral-400 text-sm">{text}</div>
+          </div>
+
+          <div className="h-2" />
+
+          <div className="flex items-center justify-center gap-1 w-min font-sora font-semibold text-sm text-neutral-400">
+            <ArrowRightIcon className="size-6" />
+          </div>
         </div>
       </LinkWouter>
-    </div>
+    </li>
   )
 }

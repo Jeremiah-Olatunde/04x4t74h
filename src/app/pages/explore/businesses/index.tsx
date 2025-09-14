@@ -1,8 +1,6 @@
 import { useState, type ReactNode } from "react"
-import { useParams } from "wouter"
 
 import { useBusinessAllCache } from "@/hooks/business"
-import { PathParameterError } from "@/lib/errors/ui"
 import * as RemoteData from "@/lib/remote-data"
 
 import * as BusinessList from "@/components/business/list"
@@ -10,7 +8,6 @@ import * as BusinessList from "@/components/business/list"
 import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import { ButtonBadge, ButtonScrollTop } from "@/components/button"
-import { getWithTag } from "@/utils/business"
 
 export function Businesses() {
   const [count, setCount] = useState(5)
