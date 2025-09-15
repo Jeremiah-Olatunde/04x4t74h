@@ -31,7 +31,7 @@ export function Search() {
 
   function onSubmit(formValues: FormValues) {
     const params = new URLSearchParams(formValues)
-    setLocation(`/results?${params}`)
+    setLocation(`/search/results?${params}`)
   }
 
   return (

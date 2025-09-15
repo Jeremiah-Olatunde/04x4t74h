@@ -11,28 +11,50 @@ import { ButtonBadge, ButtonScrollTop, ButtonSort } from "@/components/button"
 import { useSearchParams } from "wouter"
 import { search } from "@/utils/business"
 
-import * as Header from "@/components/header/header-c"
+import { HeaderWithControls as Header } from "@/components/header"
 import { LinkFilter } from "@/components/link"
 
 export function Results() {
   const [count, setCount] = useState(5)
+
   const [params] = useSearchParams()
+  const term = params.get("term") ?? ""
+  const categories = params.getAll("category")
+  const tags = params.getAll("tag")
+  const amenities = params.getAll("amenity")
+  const cities = params.getAll("city")
 
   const remoteData = useBusinessAllCache()
-
-  const term = params.get("term") ?? ""
-
   const businesses = RemoteData.map(remoteData, (businesses) => {
     const term = params.get("term") ?? ""
-    return search(businesses, term)
+    const filteredSearch = search(businesses, term).filter((business) => {
+      const hasCategories =
+        categories.length === 0 ||
+        categories.includes(business.businessCategory)
+
+      const hasTags =
+        tags.length === 0 || tags.some((tag) => business.tags.includes(tag))
+
+      const hasAmenities =
+        amenities.length === 0 ||
+        amenities.some((amenity) => business.amenities.includes(amenity))
+
+      const hasCities = cities.length === 0 || cities.includes(business.city)
+
+      return hasCategories && hasTags && hasAmenities && hasCities
+    })
+    return filteredSearch
   })
+
+  const filterCount =
+    categories.length + tags.length + amenities.length + cities.length
 
   return (
     <section className="min-h-screen">
       <Topbar />
       <ButtonScrollTop />
 
-      <section className="px-6">
+      <section className="flex flex-col gap-6 px-6">
         <div className="flex flex-col gap-2">
           <Breadcrumbs.Root>
             <Breadcrumbs.Crumb href="/search">Search</Breadcrumbs.Crumb>
@@ -66,14 +88,41 @@ export function Results() {
               </Header.Subtitle>
             </Header.Content>
             <Header.Controls>
-              <LinkFilter href="/search/results/filter" />
+              <LinkFilter
+                href={`/search/results/filter?${params.toString()}`}
+              />
               <ButtonSort />
             </Header.Controls>
           </Header.Root>
         </div>
 
-        <div className="h-6" />
-
+        {filterCount !== 0 && (
+          <div className="p-4 rounded-xl bg-neutral-50 border-1 border-neutral-100">
+            <div>
+              <div className="font-sora font-semibold text-sm text-neutral-600">
+                Filters ({filterCount})
+              </div>
+              <div className="h-4" />
+              <div className="flex flex-row flex-wrap gap-2">
+                {[...categories, ...tags, ...amenities, ...cities].map(
+                  (item) => {
+                    console.log(item)
+                    return (
+                      <div
+                        className="
+                      capitalize font-sora text-xs text-neutral-400
+                      border-1 border-neutral-200 bg-neutral-100 px-3 py-2 rounded-xl 
+                    "
+                      >
+                        {item}
+                      </div>
+                    )
+                  },
+                )}
+              </div>
+            </div>
+          </div>
+        )}
         {RemoteData.fold3(businesses, {
           onFailure: (error): React.ReactNode => {
             throw error
@@ -90,8 +139,6 @@ export function Results() {
           },
         })}
 
-        <div className="h-6" />
-
         <ButtonBadge
           color="neutral"
           size="md"
@@ -101,7 +148,7 @@ export function Results() {
           Show More
         </ButtonBadge>
 
-        <div className="h-6" />
+        <div />
       </section>
     </section>
   )

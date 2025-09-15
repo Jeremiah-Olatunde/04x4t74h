@@ -46,6 +46,11 @@ export function getCategories(businesses: Businesses): readonly string[] {
   return get("businessCategory", businesses)
 }
 
+export function getAmenities(businesses: Businesses): readonly string[] {
+  const items = businesses.flatMap((business) => business.amenities)
+  return new Set(items).values().toArray()
+}
+
 export function getTags(businesses: Businesses): readonly string[] {
   const items = businesses.flatMap((business) => business.tags)
   return new Set(items).values().toArray()

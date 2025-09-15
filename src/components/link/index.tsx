@@ -3,7 +3,13 @@ import { Link as LinkWouter } from "wouter"
 
 import { Badge, type BadgeVariantProps } from "../badge"
 import { Pill, type PillVariantProps } from "@/components/pill"
-import { ChevronLeftIcon, ListFilterIcon } from "lucide-react"
+import {
+  CheckCheckIcon,
+  CheckIcon,
+  ChevronLeftIcon,
+  FunnelPlusIcon,
+  ListFilterIcon,
+} from "lucide-react"
 
 type LinkTextProps = Record<"children" | "href", string>
 
@@ -70,6 +76,18 @@ export function LinkFilter({ href }: LinkFilterProps) {
       <div className="flex gap-1 items-center justify-center">
         Filter
         <ListFilterIcon className="size-3" />
+      </div>
+    </LinkBadge>
+  )
+}
+
+type LinkApplyProps = { href: string }
+export function LinkApply({ href }: LinkApplyProps) {
+  return (
+    <LinkBadge href={href} size="sm" color="purple">
+      <div className="flex gap-1 items-center justify-center">
+        Apply
+        <FunnelPlusIcon className="size-3" />
       </div>
     </LinkBadge>
   )

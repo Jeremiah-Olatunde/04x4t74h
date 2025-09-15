@@ -10,10 +10,11 @@ import { Pill, type PillVariantProps } from "@/components/pill"
 import {
   ArrowUpAZIcon,
   ArrowUpIcon,
-  ChevronLeftIcon,
+  FunnelPlusIcon,
   HeartIcon,
   ListFilterIcon,
   Share2Icon,
+  XIcon,
 } from "lucide-react"
 
 type ButtonBadgeProps = ComponentProps<"button"> & BadgeVariantProps
@@ -24,13 +25,13 @@ export function ButtonBadge({
   size,
   type,
   className,
-  onClick,
+  ...props
 }: PropsWithChildren<ButtonBadgeProps>) {
   return (
     <button
       type={type}
-      onClick={onClick}
       className={`w-full cursor-pointer ${className}`}
+      {...props}
     >
       <Badge color={color} size={size}>
         {children}
@@ -144,6 +145,30 @@ export function ButtonSort({}: ButtonSortProps) {
       <div className="flex gap-1 items-center justify-center">
         Sort
         <ArrowUpAZIcon className="size-3" />
+      </div>
+    </ButtonBadge>
+  )
+}
+
+type ButtonResetProps = {} & ComponentProps<"button">
+export function ButtonReset({ ...props }: ButtonResetProps) {
+  return (
+    <ButtonBadge {...props} size="sm" color="red">
+      <div className="flex gap-1 items-center justify-center">
+        Reset
+        <XIcon className="size-4" />
+      </div>
+    </ButtonBadge>
+  )
+}
+
+type ButtonApplyProps = {} & ComponentProps<"button">
+export function ButtonApply({ ...props }: ButtonApplyProps) {
+  return (
+    <ButtonBadge {...props} size="sm" color="purple">
+      <div className="flex gap-1 items-center justify-center">
+        Apply
+        <FunnelPlusIcon className="size-3" />
       </div>
     </ButtonBadge>
   )
