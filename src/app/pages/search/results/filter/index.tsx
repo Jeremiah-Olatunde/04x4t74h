@@ -92,7 +92,7 @@ export function Filter() {
                   {group.map((item) => (
                     <OptionItem
                       type="radio"
-                      group="tag"
+                      group="category"
                       value={item}
                       key={item}
                       defaultChecked={categories.includes(item)}
