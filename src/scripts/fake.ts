@@ -13,12 +13,16 @@ export function amenities(range: Range): readonly string[] {
 
 export function categories(range: Range): readonly string[] {
   const count = faker.number.int(range)
-  return Array(count).fill(0).map(faker.company.buzzNoun)
+  return Array(count)
+    .fill(0)
+    .map(() => faker.company.buzzNoun())
 }
 
 export function cities(range: Range): readonly string[] {
   const count = faker.number.int(range)
-  return Array(count).fill(0).map(faker.location.city)
+  return Array(count)
+    .fill(0)
+    .map(() => faker.location.city())
 }
 
 export function paymentOptions(): readonly string[] {
@@ -28,17 +32,23 @@ export function paymentOptions(): readonly string[] {
 
 export function streets(range: Range): readonly string[] {
   const count = faker.number.int(range)
-  return Array(count).fill(0).map(faker.location.street)
+  return Array(count)
+    .fill(0)
+    .map(() => faker.location.street())
 }
 
 export function tags(range: Range): readonly string[] {
   const count = faker.number.int(range)
-  return Array(count).fill(0).map(faker.lorem.word)
+  return Array(count)
+    .fill(0)
+    .map(() => faker.lorem.word())
 }
 
 export function towns(range: Range): readonly string[] {
   const count = faker.number.int(range)
-  return Array(count).fill(count).map(faker.location.county)
+  return Array(count)
+    .fill(count)
+    .map(() => faker.location.county())
 }
 
 type Config = Readonly<{
@@ -72,13 +82,13 @@ export function businessesWithReviewsAndServices(
       city: config.city,
       description: faker.lorem.paragraph(),
       id: faker.string.uuid(),
-      logo: "/images/business.jpg",
-      // logo: faker.image.urlPicsumPhotos({
-      //   width: faker.number.int({ min: 300, max: 600 }),
-      //   height: faker.number.int({ min: 300, max: 600 }),
-      //   blur: 0,
-      //   grayscale: false,
-      // }),
+      // logo: "/images/business.jpg",
+      logo: faker.image.urlPicsumPhotos({
+        width: faker.number.int({ min: 300, max: 600 }),
+        height: faker.number.int({ min: 300, max: 600 }),
+        blur: 0,
+        grayscale: false,
+      }),
       name: faker.company.name(),
       openingHours: [
         { opens: "T09:00:00Z", closes: "T09:00:00Z", dayOfWeek: "MONDAY" },
