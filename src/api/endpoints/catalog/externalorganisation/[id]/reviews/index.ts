@@ -7,7 +7,6 @@ import {
   Unauthorized,
 } from "@/lib/errors/api"
 import { sleep } from "@/utils"
-import { id } from "zod/locales"
 
 type ReviewData = {
   reviewBody: string
@@ -15,7 +14,7 @@ type ReviewData = {
 }
 
 export async function createReview(
-  _id: string,
+  id: string,
   _reviewData: ReviewData,
 ): Promise<void> {
   await sleep(Math.random() * 1000)

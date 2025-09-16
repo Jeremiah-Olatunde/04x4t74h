@@ -18,7 +18,7 @@ import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { LinkText } from "@/components/link"
-import { ButtonLike, ButtonScrollTop, ButtonShare } from "@/components/button"
+import { ButtonScrollTop, ButtonShare } from "@/components/button"
 import { Topbar } from "@/components/topbar"
 
 export function Business() {

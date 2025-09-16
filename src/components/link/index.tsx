@@ -3,13 +3,7 @@ import { Link as LinkWouter } from "wouter"
 
 import { Badge, type BadgeVariantProps } from "../badge"
 import { Pill, type PillVariantProps } from "@/components/pill"
-import {
-  CheckCheckIcon,
-  CheckIcon,
-  ChevronLeftIcon,
-  FunnelPlusIcon,
-  ListFilterIcon,
-} from "lucide-react"
+import { ChevronLeftIcon, FunnelPlusIcon, ListFilterIcon } from "lucide-react"
 
 type LinkTextProps = Record<"children" | "href", string>
 
