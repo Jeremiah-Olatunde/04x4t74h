@@ -13,12 +13,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      Array: path.resolve(__dirname, "./src/lib/fp-ts/Array.ts"),
-      Boolean: path.resolve(__dirname, "./src/lib/fp-ts/Boolean.ts"),
-      DOM: path.resolve(__dirname, "./src/lib/fp-ts/DOM.ts"),
-      Function: path.resolve(__dirname, "./src/lib/fp-ts/Function.ts"),
-      IOOption: path.resolve(__dirname, "./src/lib/fp-ts/IOOption.ts"),
-      Option: path.resolve(__dirname, "./src/lib/fp-ts/Option.ts"),
     },
   },
 })
