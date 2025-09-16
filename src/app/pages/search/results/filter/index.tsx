@@ -90,23 +90,13 @@ export function Filter() {
               return (
                 <OptionList>
                   {group.map((item) => (
-                    <label
-                      className="
-        option-item
-        border-1 border-neutral-100 bg-neutral-50 px-3 py-2 rounded-xl font-sora font-medium text-xs capitalize text-neutral-400
-        has-checked:bg-primary/5 has-checked:border-primary has-checked:text-primary 
-      "
-                    >
-                      {item}
-                      <input
-                        value={item}
-                        type="radio"
-                        id={item}
-                        name={"category"}
-                        defaultChecked={categories.includes(item)}
-                        hidden
-                      />
-                    </label>
+                    <OptionItem
+                      type="radio"
+                      group="tag"
+                      value={item}
+                      key={item}
+                      defaultChecked={categories.includes(item)}
+                    />
                   ))}
                 </OptionList>
               )
@@ -127,6 +117,7 @@ export function Filter() {
                 <OptionList>
                   {group.map((item) => (
                     <OptionItem
+                      type="checkbox"
                       group="tag"
                       value={item}
                       key={item}
@@ -152,6 +143,7 @@ export function Filter() {
                 <OptionList>
                   {group.map((item) => (
                     <OptionItem
+                      type="checkbox"
                       group="amenity"
                       value={item}
                       key={item}
@@ -177,6 +169,7 @@ export function Filter() {
                 <OptionList>
                   {group.map((item) => (
                     <OptionItem
+                      type="checkbox"
                       group="city"
                       value={item}
                       key={item}
@@ -220,10 +213,12 @@ function OptionList({ children }: PropsWithChildren<{}>) {
 function OptionItem({
   group,
   value,
+  type,
   defaultChecked,
 }: {
   group: string
   value: string
+  type: "radio" | "checkbox"
   defaultChecked: boolean
 }) {
   return (
@@ -237,7 +232,7 @@ function OptionItem({
       {value}
       <input
         value={value}
-        type="checkbox"
+        type={type}
         id={value}
         name={group}
         defaultChecked={defaultChecked}
