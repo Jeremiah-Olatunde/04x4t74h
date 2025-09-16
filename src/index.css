@@ -1,20 +1,6 @@
 @import "tailwindcss";
-
-@font-face {
-  font-family: Sora;
-  font-style: normal;
-  font-display: swap;
-  font-weight: 100 900;
-  src: url("/fonts/Sora/Sora-VariableFont_wght.ttf");
-}
-
-@font-face {
-  font-family: Fredoka;
-  font-style: normal;
-  font-display: swap;
-  font-weight: 100 900;
-  src: url("/fonts/Fredoka/Fredoka-VariableFont_wdth,wght.ttf");
-}
+@import "@fontsource/fredoka";
+@import "@fontsource-variable/sora";
 
 @theme {
   --color-primary: #6d28d9;
@@ -22,8 +8,8 @@
 
   --text-xxs: 10px;
 
-  --font-sora: Sora;
-  --font-fredoka: Fredoka;
+  --font-sora: "Sora Variable", sans-serif;
+  --font-fredoka: "Fredoka", system-ui;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
