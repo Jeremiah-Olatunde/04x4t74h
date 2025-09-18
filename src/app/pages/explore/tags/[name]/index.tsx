@@ -6,11 +6,13 @@ import { PathParameterError } from "@/lib/errors/ui"
 import * as RemoteData from "@/lib/remote-data"
 
 import * as BusinessList from "@/components/business/list"
+import { HeaderWithControls as Header } from "@/components/header"
 
 import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
-import { ButtonBadge, ButtonScrollTop } from "@/components/button"
+import { ButtonBadge, ButtonScrollTop, ButtonSort } from "@/components/button"
 import { getWithTag } from "@/utils/business"
+import { LinkFilter } from "@/components/link"
 
 export function Tag() {
   const { name } = useParams()
@@ -48,33 +50,33 @@ export function Tag() {
             </Breadcrumbs.Crumb>
           </Breadcrumbs.Root>
 
-          <BusinessList.Header.Root
-            handleFilter={() => {}}
-            handleSort={() => {}}
-          >
-            <BusinessList.Header.Header>
-              <BusinessList.Header.Title>{name}</BusinessList.Header.Title>
-              <BusinessList.Header.Subtitle>
-                {RemoteData.fold3(businesses, {
-                  onFailure: (error): ReactNode => {
-                    throw error
-                  },
-                  onNone: (): ReactNode => <BusinessList.Header.Skeleton />,
+          <Header.Root>
+            <Header.Content>
+              <Header.Title>{name}</Header.Title>
+              <Header.Subtitle>
+                {RemoteData.fold3Unsafe(businesses, {
+                  onNone: (): ReactNode => <Header.Skeleton.Subtitle />,
                   onSuccess: (businesses): ReactNode => {
                     return (
                       <>
                         <span className="font-semibold">
                           {businesses.length}
                         </span>
-                        <span> businesses tagged under </span>
+                        <span> businesses under the </span>
                         <span className="font-semibold capitalize">{name}</span>
+                        <span> category</span>
                       </>
                     )
                   },
                 })}
-              </BusinessList.Header.Subtitle>
-            </BusinessList.Header.Header>
-          </BusinessList.Header.Root>
+              </Header.Subtitle>
+            </Header.Content>
+
+            <Header.Controls>
+              <LinkFilter href={`#`} />
+              <ButtonSort />
+            </Header.Controls>
+          </Header.Root>
         </div>
 
         <div className="h-6" />

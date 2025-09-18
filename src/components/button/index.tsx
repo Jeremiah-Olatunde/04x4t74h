@@ -13,9 +13,12 @@ import {
   FunnelPlusIcon,
   HeartIcon,
   ListFilterIcon,
+  EyeIcon,
+  EyeOffIcon,
   Share2Icon,
   XIcon,
 } from "lucide-react"
+import { Icon } from "@/components/icon"
 
 type ButtonBadgeProps = ComponentProps<"button"> & BadgeVariantProps
 

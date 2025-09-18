@@ -7,7 +7,9 @@ import * as BusinessList from "@/components/business/list"
 
 import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
-import { ButtonBadge, ButtonScrollTop } from "@/components/button"
+import { ButtonBadge, ButtonScrollTop, ButtonSort } from "@/components/button"
+import { HeaderWithControls as Header } from "@/components/header"
+import { LinkFilter } from "@/components/link"
 
 export function Businesses() {
   const [count, setCount] = useState(5)
@@ -29,18 +31,12 @@ export function Businesses() {
             </Breadcrumbs.Crumb>
           </Breadcrumbs.Root>
 
-          <BusinessList.Header.Root
-            handleFilter={() => {}}
-            handleSort={() => {}}
-          >
-            <BusinessList.Header.Header>
-              <BusinessList.Header.Title>Businesses</BusinessList.Header.Title>
-              <BusinessList.Header.Subtitle>
-                {RemoteData.fold3(businesses, {
-                  onFailure: (error): ReactNode => {
-                    throw error
-                  },
-                  onNone: (): ReactNode => <BusinessList.Header.Skeleton />,
+          <Header.Root>
+            <Header.Content>
+              <Header.Title>Businesses</Header.Title>
+              <Header.Subtitle>
+                {RemoteData.fold3Unsafe(businesses, {
+                  onNone: (): ReactNode => <Header.Skeleton.Subtitle />,
                   onSuccess: (businesses): ReactNode => {
                     return (
                       <>
@@ -52,9 +48,14 @@ export function Businesses() {
                     )
                   },
                 })}
-              </BusinessList.Header.Subtitle>
-            </BusinessList.Header.Header>
-          </BusinessList.Header.Root>
+              </Header.Subtitle>
+            </Header.Content>
+
+            <Header.Controls>
+              <LinkFilter href={`#`} />
+              <ButtonSort />
+            </Header.Controls>
+          </Header.Root>
         </div>
 
         <div className="h-6" />

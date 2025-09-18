@@ -1,2 +1,2 @@
-export * from "./header-a"
-export * as HeaderWithControls from "./header-c"
+export * as HeaderCentered from "./centered"
+export * as HeaderWithControls from "./with-controls"

@@ -1,34 +1,22 @@
 import { useParams } from "wouter"
+import { useState, type ReactNode } from "react"
+import { Controller, useForm } from "react-hook-form"
 
 import { BadRequest } from "@/lib/errors/api"
 import { PathParameterError } from "@/lib/errors/ui"
 
+import { HeaderCentered as Header } from "@/components/header"
+
 import { useBusinessOneCache } from "@/hooks/business"
 import type { BusinessLite } from "@/types/business"
 import * as RemoteData from "@/lib/remote-data"
-import { useState, type ReactNode } from "react"
 import { Icon } from "@/components/icon"
-import {
-  MapPinIcon,
-  ClockIcon,
-  PiggyBankIcon,
-  StarIcon,
-  LoaderCircleIcon,
-  CheckCheckIcon,
-} from "lucide-react"
-import {
-  Field,
-  FieldErrors,
-  FieldLabel,
-  FieldTextArea,
-  Form,
-  FormGroup,
-} from "@/components/form-v2"
 
-import { Controller, useForm } from "react-hook-form"
-import { ButtonBadge } from "@/components/button"
+import { MapPinIcon, ClockIcon, PiggyBankIcon, StarIcon } from "lucide-react"
+
+import * as Form from "@/components/form"
+
 import { createReview } from "@/api/endpoints/catalog/externalorganisation/[id]/reviews"
-import { InvalidData, ReviewCreated } from "@/components/form-v2/banner"
 import { useErrorBoundary } from "react-error-boundary"
 import { Topbar } from "@/components/topbar"
 
@@ -44,22 +32,13 @@ export function ReviewCreate() {
   }
 
   return (
-    <section className="min-h-svh">
+    <section className="h-screen flex flex-col gap-6">
       <Topbar />
 
-      <header className="px-6 flex flex-col items-center gap-1">
-        <h1>
-          <span className="font-sora text-xl font-bold text-neutral-600">
-            Leave a Review
-          </span>
-        </h1>
-
-        <p className="font-sora text-sm text-neutral-400">
-          Share and shape the community.
-        </p>
-      </header>
-
-      <div className="h-6" />
+      <Header.Root>
+        <Header.Title>Leave a Review</Header.Title>
+        <Header.Subtitle>Share and shape the community</Header.Subtitle>
+      </Header.Root>
 
       <ReviewCreateForm businessId={businessId} />
     </section>
@@ -129,24 +108,17 @@ function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
   }
 
   return (
-    <Form
+    <Form.Root
       onSubmit={handleSubmit(onSubmit)}
-      className="px-6 grow-1 flex flex-col"
+      className="px-6 grow flex flex-col"
     >
-      <FormGroup name="create-review">
-        {banner === "ReviewCreated" && <ReviewCreated />}
-        {banner === "InvalidData" && <InvalidData />}
+      <Form.Group.Root name="create-review">
+        {banner === "ReviewCreated" && <Form.Banner.ReviewCreated />}
+        {banner === "InvalidData" && <Form.Banner.InvalidData />}
 
-        {RemoteData.fold3(remoteData, {
-          onFailure: (error): ReactNode => {
-            throw error
-          },
-          onNone: (): ReactNode => {
-            return <BusinessDetailsSkeleton />
-          },
-          onSuccess: (business): ReactNode => {
-            return <BusinessDetails business={business} />
-          },
+        {RemoteData.fold3Unsafe(remoteData, {
+          onNone: (): ReactNode => <BusinessDetailsSkeleton />,
+          onSuccess: (b): ReactNode => <BusinessDetails business={b} />,
         })}
 
         <Controller
@@ -165,8 +137,10 @@ function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
             const errors = errorMap.filter((e) => typeof e === "string")
 
             return (
-              <Field>
-                <FieldLabel htmlFor={field.name}>Leave a rating</FieldLabel>
+              <Form.Field.Root>
+                <Form.Field.Label htmlFor={field.name}>
+                  Leave a rating
+                </Form.Field.Label>
 
                 <input
                   {...field}
@@ -204,8 +178,8 @@ function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
                     {field.value}.0
                   </span>
                 </div>
-                <FieldErrors errors={errors} />
-              </Field>
+                <Form.Field.Errors errors={errors} />
+              </Form.Field.Root>
             )
           }}
         />
@@ -228,53 +202,31 @@ function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
             const errors = errorMap.filter((e) => typeof e === "string")
 
             return (
-              <Field>
-                <FieldLabel htmlFor={field.name}>Write your review</FieldLabel>
-                <FieldTextArea
+              <Form.Field.Root>
+                <Form.Field.Label htmlFor={field.name}>
+                  Write your review
+                </Form.Field.Label>
+                <Form.Control.TextArea
                   {...field}
                   id={field.name}
                   autoComplete="off"
                   color={fieldState.invalid ? "red" : "neutral"}
                   placeholder="Write your review"
                 />
-                <FieldErrors errors={errors} />
-              </Field>
+                <Form.Field.Errors errors={errors} />
+              </Form.Field.Root>
             )
           }}
         />
 
         {RemoteData.fold(status, {
-          onInitial: (): ReactNode => {
-            return (
-              <ButtonBadge type="submit" color="purple" size="lg">
-                Share your experience!
-              </ButtonBadge>
-            )
-          },
-          onPending: (): ReactNode => {
-            return (
-              <ButtonBadge type="button" color="purple" size="lg">
-                <LoaderCircleIcon className="animate-spin size-5" />
-              </ButtonBadge>
-            )
-          },
-          onFailure: (): ReactNode => {
-            return (
-              <ButtonBadge type="submit" color="purple" size="lg">
-                Share your experience!
-              </ButtonBadge>
-            )
-          },
-          onSuccess: (): ReactNode => {
-            return (
-              <ButtonBadge type="button" color="purple" size="lg">
-                <CheckCheckIcon className="size-5" />
-              </ButtonBadge>
-            )
-          },
+          onInitial: (): ReactNode => <Form.Button.ShareYourExperience />,
+          onPending: (): ReactNode => <Form.Button.Pending />,
+          onFailure: (): ReactNode => <Form.Button.TryAgain />,
+          onSuccess: (): ReactNode => <Form.Button.Success />,
         })}
-      </FormGroup>
-    </Form>
+      </Form.Group.Root>
+    </Form.Root>
   )
 }
 

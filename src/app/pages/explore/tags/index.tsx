@@ -6,7 +6,7 @@ import { Topbar } from "@/components/topbar"
 import * as BusinessGroup from "@/components/business/group"
 import * as RemoteData from "@/lib/remote-data"
 import * as Breadcrumbs from "@/components/breadcrumbs"
-import * as Header from "@/components/header"
+import { HeaderCentered as Header } from "@/components/header"
 import { LinkBadge } from "@/components/link"
 import { groupByTag } from "@/utils/business"
 

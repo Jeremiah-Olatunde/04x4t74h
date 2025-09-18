@@ -6,11 +6,13 @@ import { PathParameterError } from "@/lib/errors/ui"
 import * as RemoteData from "@/lib/remote-data"
 
 import * as BusinessList from "@/components/business/list"
+import { HeaderWithControls as Header } from "@/components/header"
 
 import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
-import { ButtonBadge, ButtonScrollTop } from "@/components/button"
+import { ButtonBadge, ButtonScrollTop, ButtonSort } from "@/components/button"
 import { getInTown } from "@/utils/business"
+import { LinkFilter } from "@/components/link"
 
 export function Town() {
   const { town, city } = useParams()
@@ -60,18 +62,12 @@ export function Town() {
             </Breadcrumbs.Crumb>
           </Breadcrumbs.Root>
 
-          <BusinessList.Header.Root
-            handleFilter={() => {}}
-            handleSort={() => {}}
-          >
-            <BusinessList.Header.Header>
-              <BusinessList.Header.Title>{town}</BusinessList.Header.Title>
-              <BusinessList.Header.Subtitle>
-                {RemoteData.fold3(businesses, {
-                  onFailure: (error): ReactNode => {
-                    throw error
-                  },
-                  onNone: (): ReactNode => <BusinessList.Header.Skeleton />,
+          <Header.Root>
+            <Header.Content>
+              <Header.Title>{town}</Header.Title>
+              <Header.Subtitle>
+                {RemoteData.fold3Unsafe(businesses, {
+                  onNone: (): ReactNode => <Header.Skeleton.Subtitle />,
                   onSuccess: (businesses): ReactNode => {
                     return (
                       <>
@@ -84,9 +80,14 @@ export function Town() {
                     )
                   },
                 })}
-              </BusinessList.Header.Subtitle>
-            </BusinessList.Header.Header>
-          </BusinessList.Header.Root>
+              </Header.Subtitle>
+            </Header.Content>
+
+            <Header.Controls>
+              <LinkFilter href={`#`} />
+              <ButtonSort />
+            </Header.Controls>
+          </Header.Root>
         </div>
 
         <div className="h-6" />

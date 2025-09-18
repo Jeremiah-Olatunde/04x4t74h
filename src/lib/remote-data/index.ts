@@ -93,3 +93,19 @@ export const fold3 = <E, A, R>(
     onSuccess: (a: A) => R
   },
 ) => fold(fa, { ...f, onPending: f.onNone, onInitial: f.onNone })
+
+export const fold3Unsafe = <E, A, R>(
+  fa: RemoteData<E, A>,
+  f: {
+    onNone: () => R
+    onSuccess: (a: A) => R
+  },
+) =>
+  fold(fa, {
+    onPending: f.onNone,
+    onInitial: f.onNone,
+    onSuccess: f.onSuccess,
+    onFailure: (error) => {
+      throw error
+    },
+  })

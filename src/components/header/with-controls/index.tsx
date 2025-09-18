@@ -1,5 +1,7 @@
 import type { PropsWithChildren } from "react"
 
+export * as Skeleton from "./skeleton"
+
 type RootProps = {}
 export function Root({ children }: PropsWithChildren<RootProps>) {
   return (
@@ -44,11 +46,5 @@ export function Controls({ children }: PropsWithChildren<ControlsProps>) {
     <div className="flex flex-col justify-center items-center gap-1">
       {children}
     </div>
-  )
-}
-
-export function SubtitleSkeleton() {
-  return (
-    <span className="block h-4 w-60 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-xs" />
   )
 }

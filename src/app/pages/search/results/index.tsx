@@ -68,11 +68,8 @@ export function Results() {
             <Header.Content>
               <Header.Title>Search</Header.Title>
               <Header.Subtitle>
-                {RemoteData.fold3(businesses, {
-                  onFailure: (error): ReactNode => {
-                    throw error
-                  },
-                  onNone: (): ReactNode => <Header.SubtitleSkeleton />,
+                {RemoteData.fold3Unsafe(businesses, {
+                  onNone: (): ReactNode => <Header.Skeleton.Subtitle />,
                   onSuccess: (businesses): ReactNode => {
                     return (
                       <>

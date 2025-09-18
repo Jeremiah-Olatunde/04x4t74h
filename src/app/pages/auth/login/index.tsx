@@ -1,34 +1,16 @@
-import {
-  CheckCheck as IconCheckCheck,
-  LoaderCircle as IconLoaderCircle,
-} from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { useErrorBoundary } from "react-error-boundary"
 import { useLocation } from "wouter"
 
 import { BadRequest, Unauthorized } from "@/lib/errors/api"
+import * as RemoteData from "@/lib/remote-data"
 
-import {
-  Field,
-  FieldErrors,
-  FieldInput,
-  FieldLabel,
-  FieldPasswordToggle,
-  Form,
-  FormGroup,
-  FormGroupTitle,
-} from "@/components/form-v2"
-
-import {
-  LoginComplete,
-  InvalidData,
-  InvalidCredentials,
-} from "@/components/form-v2/banner"
+import * as Form from "@/components/form"
 
 import { LogoText } from "@/components/logo"
-import { ButtonBadge } from "@/components/button"
 import { LinkText } from "@/components/link"
+
 import { login } from "@/api/endpoints/auth/login"
 
 type FormValues = {
@@ -46,8 +28,8 @@ export function Login() {
   const { showBoundary } = useErrorBoundary()
   const [passwordVisible, setPasswordVisible] = useState(false)
 
-  type RemoteData = "Initial" | "Pending" | "Failure" | "Success"
-  const [status, setStatus] = useState<RemoteData>("Initial")
+  type Status = RemoteData.RemoteData<null, null>
+  const [status, setStatus] = useState<Status>(RemoteData.initial)
 
   type Banner = "LoginComplete" | "InvalidData" | "InvalidCredentials"
   const [banner, setBanner] = useState<null | Banner>(null)
@@ -60,23 +42,19 @@ export function Login() {
   })
 
   useEffect(() => {
-    if (status !== "Success") {
-      return
-    }
-
-    setTimeout(setLocation, 1000, "~/home")
+    RemoteData.map(status, () => setTimeout(setLocation, 1000, "~/home"))
   }, [status])
 
   async function onSubmit(formValues: FormValues) {
     setBanner(null)
-    setStatus("Pending")
+    setStatus(RemoteData.pending)
 
     try {
       await login(formValues)
-      setStatus("Success")
+      setStatus(RemoteData.success(null))
       setBanner("LoginComplete")
     } catch (error) {
-      setStatus("Failure")
+      setStatus(RemoteData.failure(null))
       if (error instanceof BadRequest) {
         const field = error.details.field
 
@@ -111,16 +89,18 @@ export function Login() {
 
       <div className="h-8" />
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormGroup name="login">
-          <FormGroupTitle
+      <Form.Root onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group.Root name="login">
+          <Form.Group.Title
             title="Log In"
             description="Welcome back! Please log in to continue"
           />
 
-          {banner === "LoginComplete" && <LoginComplete />}
-          {banner === "InvalidData" && <InvalidData />}
-          {banner === "InvalidCredentials" && <InvalidCredentials />}
+          {banner === "LoginComplete" && <Form.Banner.LoginComplete />}
+          {banner === "InvalidData" && <Form.Banner.InvalidData />}
+          {banner === "InvalidCredentials" && (
+            <Form.Banner.InvalidCredentials />
+          )}
 
           <Controller
             name="email"
@@ -140,9 +120,11 @@ export function Login() {
               const errors = errorMap.filter((e) => typeof e === "string")
 
               return (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Email Address</FieldLabel>
-                  <FieldInput
+                <Form.Field.Root>
+                  <Form.Field.Label htmlFor={field.name}>
+                    Email Address
+                  </Form.Field.Label>
+                  <Form.Control.Input
                     {...field}
                     id={field.name}
                     autoComplete="email"
@@ -150,8 +132,8 @@ export function Login() {
                     placeholder="Enter your email"
                     type="email"
                   />
-                  <FieldErrors errors={errors} />
-                </Field>
+                  <Form.Field.Errors errors={errors} />
+                </Form.Field.Root>
               )
             }}
           />
@@ -165,9 +147,11 @@ export function Login() {
               const errors = errorMap.filter((e) => typeof e === "string")
 
               return (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-                  <FieldInput
+                <Form.Field.Root>
+                  <Form.Field.Label htmlFor={field.name}>
+                    Password
+                  </Form.Field.Label>
+                  <Form.Control.Input
                     {...field}
                     id={field.name}
                     autoComplete="current-password"
@@ -175,37 +159,30 @@ export function Login() {
                     placeholder="Enter your password"
                     color={fieldState.invalid ? "red" : "neutral"}
                   >
-                    <FieldPasswordToggle
+                    <Form.Button.TogglePassword
                       visible={passwordVisible}
                       onVisibleChange={setPasswordVisible}
                     />
-                  </FieldInput>
+                  </Form.Control.Input>
 
-                  <FieldErrors errors={errors} />
+                  <Form.Field.Errors errors={errors} />
 
                   <div className="flex justify-end">
                     <LinkText href="/auth/password/forgot">
                       Forgot Password?
                     </LinkText>
                   </div>
-                </Field>
+                </Form.Field.Root>
               )
             }}
           />
 
-          {status === "Pending" ? (
-            <ButtonBadge type="button" color="purple" size="lg">
-              <IconLoaderCircle className="animate-spin size-5" />
-            </ButtonBadge>
-          ) : status === "Success" ? (
-            <ButtonBadge type="button" color="purple" size="lg">
-              <IconCheckCheck className="size-5" />
-            </ButtonBadge>
-          ) : (
-            <ButtonBadge type="submit" color="purple" size="lg">
-              Submit
-            </ButtonBadge>
-          )}
+          {RemoteData.fold(status, {
+            onInitial: (): ReactNode => <Form.Button.Login />,
+            onPending: (): ReactNode => <Form.Button.Pending />,
+            onFailure: (): ReactNode => <Form.Button.TryAgain />,
+            onSuccess: (): ReactNode => null,
+          })}
 
           <div className="flex items-center justify-center gap-1">
             <span className="font-sora text-xs text-neutral-400">
@@ -214,8 +191,8 @@ export function Login() {
 
             <LinkText href="/auth/sign-up">Sign Up</LinkText>
           </div>
-        </FormGroup>
-      </Form>
+        </Form.Group.Root>
+      </Form.Root>
     </section>
   )
 }

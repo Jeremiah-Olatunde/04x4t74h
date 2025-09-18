@@ -1,39 +1,19 @@
 import { useLocation } from "wouter"
-import { useEffect, useState } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { useErrorBoundary } from "react-error-boundary"
-import {
-  CheckCheck as IconCheckCheck,
-  LoaderCircle as IconLoaderCircle,
-} from "lucide-react"
 
 import { AutoLoginError } from "@/lib/errors/ui"
 import { ApiError, BadRequest, Conflict } from "@/lib/errors/api"
 
 import { FlagNg } from "@/assets/icons/flag-ng"
-import { ButtonBadge } from "@/components/button"
-import {
-  Field,
-  FieldErrors,
-  FieldInput,
-  FieldLabel,
-  FieldPasswordToggle,
-  Form,
-  FormGroup,
-  FormGroupTitle,
-} from "@/components/form-v2"
+
+import * as Form from "@/components/form"
 
 import { LogoText } from "@/components/logo"
 import { LinkText } from "@/components/link"
 
-import {
-  EmailTaken,
-  InvalidData,
-  SignUpComplete,
-  PostSignUpLoginComplete,
-  PostSignUpLoginFailure,
-  TelephoneTaken,
-} from "@/components/form-v2/banner"
+import * as RemoteData from "@/lib/remote-data"
 
 import { login } from "@/api/endpoints/auth/login"
 import { register } from "@/api/endpoints/auth/register"
@@ -57,9 +37,9 @@ export function SignUp() {
   const { showBoundary } = useErrorBoundary()
   const [passwordVisible, setPasswordVisible] = useState(false)
 
-  type RemoteData = "Initial" | "Pending" | "Failure" | "Success"
-  const [statusSignUp, setStatusSignUp] = useState<RemoteData>("Initial")
-  const [statusLogin, setStatusLogin] = useState<RemoteData>("Initial")
+  type Status = RemoteData.RemoteData<null, null>
+  const [statusSignUp, setStatusSignUp] = useState<Status>(RemoteData.initial)
+  const [statusLogin, setStatusLogin] = useState<Status>(RemoteData.initial)
 
   type Banner =
     | "EmailTaken"
@@ -78,23 +58,22 @@ export function SignUp() {
   })
 
   useEffect(() => {
-    if (statusLogin === "Success") {
-      setTimeout(setLocation, 1000, "~/home")
-    }
+    RemoteData.map(statusLogin, () => setTimeout(setLocation, 1000, "~/home"))
   }, [statusLogin])
 
   async function onSubmit(formValues: FormValues) {
-    setStatusSignUp("Pending")
+    setBanner(null)
+    setStatusSignUp(RemoteData.pending)
 
     try {
       await register(formValues)
-      setStatusSignUp("Success")
+      setStatusSignUp(RemoteData.success(null))
       setBanner("SignUpComplete")
 
       try {
-        setStatusLogin("Pending")
+        setStatusLogin(RemoteData.pending)
         await login(formValues)
-        setStatusLogin("Success")
+        setStatusLogin(RemoteData.success(null))
         setBanner("PostSignUpLoginComplete")
       } catch (error) {
         if (error instanceof ApiError) {
@@ -104,7 +83,7 @@ export function SignUp() {
         throw error
       }
     } catch (error) {
-      setStatusSignUp("Failure")
+      setStatusSignUp(RemoteData.failure(null))
 
       if (error instanceof Conflict) {
         const field = error.details.field
@@ -154,16 +133,20 @@ export function SignUp() {
 
       <div className="h-8" />
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormGroup name="group-one">
-          <FormGroupTitle title="Sign In" description="Create an account!" />
+      <Form.Root onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group.Root name="group-one">
+          <Form.Group.Title title="Sign In" description="Create an account!" />
 
-          {banner === "EmailTaken" && <EmailTaken />}
-          {banner === "TelephoneTaken" && <TelephoneTaken />}
-          {banner === "SignUpComplete" && <SignUpComplete />}
-          {banner === "PostSignUpLoginComplete" && <PostSignUpLoginComplete />}
-          {banner === "PostSignUpLoginFailure" && <PostSignUpLoginFailure />}
-          {banner === "InvalidData" && <InvalidData />}
+          {banner === "EmailTaken" && <Form.Banner.EmailTaken />}
+          {banner === "TelephoneTaken" && <Form.Banner.TelephoneTaken />}
+          {banner === "SignUpComplete" && <Form.Banner.SignUpComplete />}
+          {banner === "PostSignUpLoginComplete" && (
+            <Form.Banner.PostSignUpLoginComplete />
+          )}
+          {banner === "PostSignUpLoginFailure" && (
+            <Form.Banner.PostSignUpLoginFailure />
+          )}
+          {banner === "InvalidData" && <Form.Banner.InvalidData />}
 
           <Controller
             name="name"
@@ -183,9 +166,11 @@ export function SignUp() {
               const errors = errorMap.filter((e) => typeof e === "string")
 
               return (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Full name</FieldLabel>
-                  <FieldInput
+                <Form.Field.Root>
+                  <Form.Field.Label htmlFor={field.name}>
+                    Full name
+                  </Form.Field.Label>
+                  <Form.Control.Input
                     {...field}
                     id={field.name}
                     autoComplete="name"
@@ -193,8 +178,8 @@ export function SignUp() {
                     placeholder="Enter your full name"
                     type="text"
                   />
-                  <FieldErrors errors={errors} />
-                </Field>
+                  <Form.Field.Errors errors={errors} />
+                </Form.Field.Root>
               )
             }}
           />
@@ -217,9 +202,11 @@ export function SignUp() {
               const errors = errorMap.filter((e) => typeof e === "string")
 
               return (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Email Address</FieldLabel>
-                  <FieldInput
+                <Form.Field.Root>
+                  <Form.Field.Label htmlFor={field.name}>
+                    Email Address
+                  </Form.Field.Label>
+                  <Form.Control.Input
                     {...field}
                     id={field.name}
                     autoComplete="email"
@@ -227,8 +214,8 @@ export function SignUp() {
                     placeholder="Enter your email"
                     type="email"
                   />
-                  <FieldErrors errors={errors} />
-                </Field>
+                  <Form.Field.Errors errors={errors} />
+                </Form.Field.Root>
               )
             }}
           />
@@ -251,9 +238,11 @@ export function SignUp() {
               const errors = errorMap.filter((e) => typeof e === "string")
 
               return (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Phone Number</FieldLabel>
-                  <FieldInput
+                <Form.Field.Root>
+                  <Form.Field.Label htmlFor={field.name}>
+                    Phone Number
+                  </Form.Field.Label>
+                  <Form.Control.Input
                     {...field}
                     id={field.name}
                     autoComplete="tel-national"
@@ -264,9 +253,9 @@ export function SignUp() {
                     <div className="cursor-pointer rounded-sm bg-neutral-200 px-1.5 py-0.5">
                       <FlagNg className="size-6" />
                     </div>
-                  </FieldInput>
-                  <FieldErrors errors={errors} />
-                </Field>
+                  </Form.Control.Input>
+                  <Form.Field.Errors errors={errors} />
+                </Form.Field.Root>
               )
             }}
           />
@@ -309,9 +298,11 @@ export function SignUp() {
               const errors = errorMap.filter((e) => typeof e === "string")
 
               return (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-                  <FieldInput
+                <Form.Field.Root>
+                  <Form.Field.Label htmlFor={field.name}>
+                    Password
+                  </Form.Field.Label>
+                  <Form.Control.Input
                     {...field}
                     id={field.name}
                     autoComplete="current-password"
@@ -319,31 +310,31 @@ export function SignUp() {
                     placeholder="Enter your password"
                     color={fieldState.invalid ? "red" : "neutral"}
                   >
-                    <FieldPasswordToggle
+                    <Form.Button.TogglePassword
                       visible={passwordVisible}
                       onVisibleChange={setPasswordVisible}
                     />
-                  </FieldInput>
+                  </Form.Control.Input>
 
-                  <FieldErrors errors={errors} />
-                </Field>
+                  <Form.Field.Errors errors={errors} />
+                </Form.Field.Root>
               )
             }}
           />
 
-          {statusSignUp === "Pending" || statusLogin === "Pending" ? (
-            <ButtonBadge type="button" color="purple" size="lg">
-              <IconLoaderCircle className="animate-spin size-5" />
-            </ButtonBadge>
-          ) : statusSignUp === "Success" || statusLogin === "Success" ? (
-            <ButtonBadge type="button" color="purple" size="lg">
-              <IconCheckCheck className="size-5" />
-            </ButtonBadge>
-          ) : (
-            <ButtonBadge type="submit" color="purple" size="lg">
-              Sign Up
-            </ButtonBadge>
-          )}
+          {RemoteData.fold(statusSignUp, {
+            onInitial: (): ReactNode => <Form.Button.SignUp />,
+            onPending: (): ReactNode => <Form.Button.Pending />,
+            onFailure: (): ReactNode => <Form.Button.TryAgain />,
+            onSuccess: (): ReactNode => null,
+          })}
+
+          {RemoteData.fold(statusLogin, {
+            onInitial: (): ReactNode => null,
+            onFailure: (): ReactNode => <Form.Button.TryAgain />,
+            onPending: (): ReactNode => <Form.Button.Pending />,
+            onSuccess: (): ReactNode => <Form.Button.Success />,
+          })}
 
           <div className="flex items-center justify-center gap-1">
             <span className="font-sora text-xs text-neutral-400">
@@ -352,8 +343,8 @@ export function SignUp() {
 
             <LinkText href="/auth/login">Login</LinkText>
           </div>
-        </FormGroup>
-      </Form>
+        </Form.Group.Root>
+      </Form.Root>
     </section>
   )
 }

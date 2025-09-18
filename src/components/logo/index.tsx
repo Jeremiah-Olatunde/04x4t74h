@@ -16,7 +16,7 @@ const text = (function () {
 
   const sm = tw``
   const md = tw`text-xl`
-  const lg = tw`text-3xl`
+  const lg = tw`text-2xl`
 
   const size = { sm, md, lg } as const
 
