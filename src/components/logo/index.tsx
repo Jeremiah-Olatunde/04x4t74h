@@ -6,9 +6,9 @@ import logoWhite from "@/assets/icons/logo-white.svg"
 import { tw } from "@/utils/tailwind"
 
 const text = (function () {
-  const base = tw`font-fredoka font-semibold capitalize`
+  const base = tw`font-fredoka font-bold capitalize`
 
-  const purple = tw`text-black`
+  const purple = tw`text-neutral-800`
   const white = tw`text-white`
   const primary = purple
 

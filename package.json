@@ -12,8 +12,8 @@
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.3",
     "@faker-js/faker": "^10.0.0",
+    "@fontsource-variable/fredoka": "^5.2.10",
     "@fontsource-variable/sora": "^5.2.7",
-    "@fontsource/fredoka": "^5.2.9",
     "@hookform/resolvers": "^5.2.2",
     "class-variance-authority": "^0.7.1",
     "fuse.js": "^7.1.0",
