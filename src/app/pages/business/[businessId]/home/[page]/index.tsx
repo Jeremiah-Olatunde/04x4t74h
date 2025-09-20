@@ -38,32 +38,32 @@ export function Business() {
 
   return (
     <section className="min-h-screen">
-      <Topbar />
+      <Scroll.Auto.Top />
       <Scroll.Button.Top />
 
-      <Scroll.Auto.Top>
-        {RemoteData.fold3(remoteData, {
-          onNone: (): ReactNode => {
-            return (
-              <>
-                <HeroSkeleton id={businessId} />
-                <KakashiSkeleton id={businessId} />
-              </>
-            )
-          },
-          onFailure: (error): ReactNode => {
-            throw error
-          },
-          onSuccess: (business): ReactNode => {
-            return (
-              <>
-                <Hero business={business} />
-                <Kakashi business={business} />
-              </>
-            )
-          },
-        })}
-      </Scroll.Auto.Top>
+      <Topbar />
+
+      {RemoteData.fold3(remoteData, {
+        onNone: (): ReactNode => {
+          return (
+            <>
+              <HeroSkeleton id={businessId} />
+              <KakashiSkeleton id={businessId} />
+            </>
+          )
+        },
+        onFailure: (error): ReactNode => {
+          throw error
+        },
+        onSuccess: (business): ReactNode => {
+          return (
+            <>
+              <Hero business={business} />
+              <Kakashi business={business} />
+            </>
+          )
+        },
+      })}
     </section>
   )
 }

@@ -34,6 +34,8 @@ export function ReviewCreate() {
 
   return (
     <section className="h-screen flex flex-col gap-6">
+      <Scroll.Auto.Top />
+
       <Topbar />
 
       <Header.Root>
@@ -41,9 +43,7 @@ export function ReviewCreate() {
         <Header.Subtitle>Share and shape the community</Header.Subtitle>
       </Header.Root>
 
-      <Scroll.Auto.Top>
-        <ReviewCreateForm businessId={businessId} />
-      </Scroll.Auto.Top>
+      <ReviewCreateForm businessId={businessId} />
     </section>
   )
 }

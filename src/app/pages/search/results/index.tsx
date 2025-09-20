@@ -52,103 +52,102 @@ export function Results() {
 
   return (
     <section className="min-h-screen">
-      <Topbar />
+      <Scroll.Auto.Top />
       <Scroll.Button.Top />
 
-      <Scroll.Auto.Top>
-        <section className="flex flex-col gap-6 px-6">
-          <div className="flex flex-col gap-2">
-            <Breadcrumbs.Root>
-              <Breadcrumbs.Crumb href="/search">Search</Breadcrumbs.Crumb>
-              <Breadcrumbs.Divider />
-              <Breadcrumbs.Crumb href="#" active>
-                Results
-              </Breadcrumbs.Crumb>
-            </Breadcrumbs.Root>
+      <Topbar />
+      <section className="flex flex-col gap-6 px-6">
+        <div className="flex flex-col gap-2">
+          <Breadcrumbs.Root>
+            <Breadcrumbs.Crumb href="/search">Search</Breadcrumbs.Crumb>
+            <Breadcrumbs.Divider />
+            <Breadcrumbs.Crumb href="#" active>
+              Results
+            </Breadcrumbs.Crumb>
+          </Breadcrumbs.Root>
 
-            <Header.Root>
-              <Header.Content>
-                <Header.Title>Search</Header.Title>
-                <Header.Subtitle>
-                  {RemoteData.fold3Unsafe(businesses, {
-                    onNone: (): ReactNode => <Header.Skeleton.Subtitle />,
-                    onSuccess: (businesses): ReactNode => {
-                      return (
-                        <>
-                          <span className="font-semibold">
-                            {businesses.length}
-                          </span>
-                          <span> businesses matching </span>
-                          <span className="italic font-semibold">"{term}"</span>
-                        </>
-                      )
-                    },
-                  })}
-                </Header.Subtitle>
-              </Header.Content>
+          <Header.Root>
+            <Header.Content>
+              <Header.Title>Search</Header.Title>
+              <Header.Subtitle>
+                {RemoteData.fold3Unsafe(businesses, {
+                  onNone: (): ReactNode => <Header.Skeleton.Subtitle />,
+                  onSuccess: (businesses): ReactNode => {
+                    return (
+                      <>
+                        <span className="font-semibold">
+                          {businesses.length}
+                        </span>
+                        <span> businesses matching </span>
+                        <span className="italic font-semibold">"{term}"</span>
+                      </>
+                    )
+                  },
+                })}
+              </Header.Subtitle>
+            </Header.Content>
 
-              <Header.Control.Root>
-                <Header.Control.Filter href="#" />
-                <Header.Control.Sort href="#" />
-              </Header.Control.Root>
-            </Header.Root>
-          </div>
+            <Header.Control.Root>
+              <Header.Control.Filter href="#" />
+              <Header.Control.Sort href="#" />
+            </Header.Control.Root>
+          </Header.Root>
+        </div>
 
-          {filterCount !== 0 && (
-            <div className="p-4 rounded-xl bg-neutral-50 border-1 border-neutral-100">
-              <div>
-                <div className="font-sora font-semibold text-sm text-neutral-600">
-                  Filters ({filterCount})
-                </div>
-                <div className="h-4" />
-                <div className="flex flex-row flex-wrap gap-2">
-                  {[...categories, ...tags, ...amenities, ...cities].map(
-                    (item) => {
-                      console.log(item)
-                      return (
-                        <div
-                          className="
+        {filterCount !== 0 && (
+          <div className="p-4 rounded-xl bg-neutral-50 border-1 border-neutral-100">
+            <div>
+              <div className="font-sora font-semibold text-sm text-neutral-600">
+                Filters ({filterCount})
+              </div>
+              <div className="h-4" />
+              <div className="flex flex-row flex-wrap gap-2">
+                {[...categories, ...tags, ...amenities, ...cities].map(
+                  (item) => {
+                    console.log(item)
+                    return (
+                      <div
+                        className="
                       capitalize font-sora text-xs text-neutral-400
                       border-1 border-neutral-200 bg-neutral-100 px-3 py-2 rounded-xl 
                     "
-                        >
-                          {item}
-                        </div>
-                      )
-                    },
-                  )}
-                </div>
+                      >
+                        {item}
+                      </div>
+                    )
+                  },
+                )}
               </div>
             </div>
-          )}
-          {RemoteData.fold3(businesses, {
-            onFailure: (error): React.ReactNode => {
-              throw error
-            },
-            onNone: (): React.ReactNode => <BusinessList.Skeleton />,
-            onSuccess: (businesses): React.ReactNode => {
-              return (
-                <BusinessList.List>
-                  {businesses.slice(0, count).map((b) => {
-                    return <BusinessList.Card key={b.id} business={b} />
-                  })}
-                </BusinessList.List>
-              )
-            },
-          })}
+          </div>
+        )}
+        {RemoteData.fold3(businesses, {
+          onFailure: (error): React.ReactNode => {
+            throw error
+          },
+          onNone: (): React.ReactNode => <BusinessList.Skeleton />,
+          onSuccess: (businesses): React.ReactNode => {
+            return (
+              <BusinessList.List>
+                {businesses.slice(0, count).map((b) => {
+                  return <BusinessList.Card key={b.id} business={b} />
+                })}
+              </BusinessList.List>
+            )
+          },
+        })}
 
-          <ButtonBadge
-            color="neutral"
-            size="md"
-            type="button"
-            onClick={() => setCount(count + 5)}
-          >
-            Show More
-          </ButtonBadge>
+        <ButtonBadge
+          color="neutral"
+          size="md"
+          type="button"
+          onClick={() => setCount(count + 5)}
+        >
+          Show More
+        </ButtonBadge>
 
-          <div />
-        </section>
-      </Scroll.Auto.Top>
+        <div />
+      </section>
     </section>
   )
 }

@@ -1,6 +1,6 @@
-import { type PropsWithChildren, useEffect } from "react"
+import { useEffect } from "react"
 
-export function Top({ children }: PropsWithChildren<{}>) {
+export function Top() {
   useEffect(() => scrollTo(0, 0), [])
-  return <>{children}</>
+  return null
 }

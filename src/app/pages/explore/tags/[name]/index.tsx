@@ -35,8 +35,10 @@ export function Tag() {
 
   return (
     <section className="min-h-screen">
-      <Topbar />
+      <Scroll.Auto.Top />
       <Scroll.Button.Top />
+
+      <Topbar />
 
       <section className="px-6">
         <div className="flex flex-col gap-2">

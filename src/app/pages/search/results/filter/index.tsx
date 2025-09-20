@@ -35,8 +35,11 @@ export function Filter() {
 
   return (
     <section className="min-h-screen">
-      <Topbar />
+      <Scroll.Auto.Top />
       <Scroll.Button.Top />
+
+      <Topbar />
+
       <div className="h-6" />
 
       <form
