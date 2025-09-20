@@ -6,13 +6,12 @@ import { PathParameterError } from "@/lib/errors/ui"
 import * as RemoteData from "@/lib/remote-data"
 
 import * as BusinessList from "@/components/business/list"
-import { HeaderWithControls as Header } from "@/components/header"
+import { WithControls as Header } from "@/components/header"
 
 import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
-import { ButtonBadge, ButtonScrollTop, ButtonSort } from "@/components/button"
+import { ButtonBadge, ButtonScrollTop } from "@/components/button"
 import { getWithTag } from "@/utils/business"
-import { LinkFilter } from "@/components/link"
 
 export function Tag() {
   const { name } = useParams()
@@ -72,10 +71,10 @@ export function Tag() {
               </Header.Subtitle>
             </Header.Content>
 
-            <Header.Controls>
-              <LinkFilter href={`#`} />
-              <ButtonSort />
-            </Header.Controls>
+            <Header.Control.Root>
+              <Header.Control.Filter href="#" />
+              <Header.Control.Sort href="#" />
+            </Header.Control.Root>
           </Header.Root>
         </div>
 

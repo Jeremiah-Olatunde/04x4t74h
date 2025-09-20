@@ -5,8 +5,6 @@ import { Link as LinkWouter } from "wouter"
 import type { Business } from "@/types/business"
 import { Icon } from "@/components/icon"
 
-export * as Header from "./header"
-
 type CardProps = { business: Business }
 
 export function Card({ business }: CardProps) {

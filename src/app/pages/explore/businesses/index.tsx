@@ -7,9 +7,8 @@ import * as BusinessList from "@/components/business/list"
 
 import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
-import { ButtonBadge, ButtonScrollTop, ButtonSort } from "@/components/button"
-import { HeaderWithControls as Header } from "@/components/header"
-import { LinkFilter } from "@/components/link"
+import { ButtonBadge, ButtonScrollTop } from "@/components/button"
+import { WithControls as Header } from "@/components/header"
 
 export function Businesses() {
   const [count, setCount] = useState(5)
@@ -51,10 +50,10 @@ export function Businesses() {
               </Header.Subtitle>
             </Header.Content>
 
-            <Header.Controls>
-              <LinkFilter href={`#`} />
-              <ButtonSort />
-            </Header.Controls>
+            <Header.Control.Root>
+              <Header.Control.Filter href="#" />
+              <Header.Control.Sort href="#" />
+            </Header.Control.Root>
           </Header.Root>
         </div>
 

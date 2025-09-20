@@ -1,8 +1,8 @@
 import type { PropsWithChildren, ReactNode } from "react"
 
-import { ButtonApply, ButtonReset, ButtonScrollTop } from "@/components/button"
+import { ButtonScrollTop } from "@/components/button"
 import { Topbar } from "@/components/topbar"
-import { HeaderWithControls as Header } from "@/components/header"
+import { WithControls as Header } from "@/components/header"
 
 import { useBusinessAllCache } from "@/hooks/business"
 import * as RemoteData from "@/lib/remote-data"
@@ -59,21 +59,11 @@ export function Filter() {
               <span className="italic font-semibold">"{term}"</span>
             </Header.Subtitle>
           </Header.Content>
-          <Header.Controls>
-            <ButtonApply type="submit" />
-            <ButtonReset
-              type="button"
-              onClick={() => {
-                document
-                  .querySelectorAll(".option-item>input")
-                  .forEach((item) => {
-                    if (item instanceof HTMLInputElement) {
-                      item.checked = false
-                    }
-                  })
-              }}
-            />
-          </Header.Controls>
+
+          <Header.Control.Root>
+            <Header.Control.Apply href="#" />
+            <Header.Control.Reset href="#" />
+          </Header.Control.Root>
         </Header.Root>
 
         <div />

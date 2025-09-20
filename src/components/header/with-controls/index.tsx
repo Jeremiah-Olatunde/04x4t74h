@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react"
 
+export * as Control from "./control"
 export * as Skeleton from "./skeleton"
 
 type RootProps = {}
@@ -37,14 +38,5 @@ export function Subtitle({ children }: PropsWithChildren<SubtitleProps>) {
     <p className="font-sora text-xs text-neutral-400 truncate w-full">
       {children}
     </p>
-  )
-}
-
-type ControlsProps = {}
-export function Controls({ children }: PropsWithChildren<ControlsProps>) {
-  return (
-    <div className="flex flex-col justify-center items-center gap-1">
-      {children}
-    </div>
   )
 }

@@ -7,12 +7,11 @@ import * as BusinessList from "@/components/business/list"
 
 import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
-import { ButtonBadge, ButtonScrollTop, ButtonSort } from "@/components/button"
+import { ButtonBadge, ButtonScrollTop } from "@/components/button"
 import { useSearchParams } from "wouter"
 import { search } from "@/utils/business"
 
-import { HeaderWithControls as Header } from "@/components/header"
-import { LinkFilter } from "@/components/link"
+import { WithControls as Header } from "@/components/header"
 
 export function Results() {
   const [count, setCount] = useState(5)
@@ -84,12 +83,11 @@ export function Results() {
                 })}
               </Header.Subtitle>
             </Header.Content>
-            <Header.Controls>
-              <LinkFilter
-                href={`/search/results/filter?${params.toString()}`}
-              />
-              <ButtonSort />
-            </Header.Controls>
+
+            <Header.Control.Root>
+              <Header.Control.Filter href="#" />
+              <Header.Control.Sort href="#" />
+            </Header.Control.Root>
           </Header.Root>
         </div>
 

@@ -5,7 +5,7 @@ import { ButtonScrollTop } from "@/components/button"
 import { Topbar } from "@/components/topbar"
 
 import * as Breadcrumbs from "@/components/breadcrumbs"
-import { HeaderCentered as Header } from "@/components/header"
+import { Centered as Header } from "@/components/header"
 
 export { Businesses } from "./businesses"
 export { Tags } from "./tags"

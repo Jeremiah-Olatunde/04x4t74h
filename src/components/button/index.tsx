@@ -7,15 +7,7 @@ import {
 
 import { Badge, type BadgeVariantProps } from "@/components/badge"
 import { Pill, type PillVariantProps } from "@/components/pill"
-import {
-  ArrowUpAZIcon,
-  ArrowUpIcon,
-  FunnelPlusIcon,
-  HeartIcon,
-  ListFilterIcon,
-  Share2Icon,
-  XIcon,
-} from "lucide-react"
+import { ArrowUpIcon, HeartIcon, Share2Icon } from "lucide-react"
 
 type ButtonBadgeProps = ComponentProps<"button"> & BadgeVariantProps
 
@@ -123,53 +115,5 @@ export function ButtonScrollTop() {
         <ArrowUpIcon className="text-white size-6" />
       </button>
     </div>
-  )
-}
-
-type ButtonFilterProps = {} & ComponentProps<"button">
-export function ButtonFilter({}: ButtonFilterProps) {
-  return (
-    <ButtonBadge size="sm" color="purple">
-      <div className="flex gap-1 items-center justify-center">
-        Filter
-        <ListFilterIcon className="size-3" />
-      </div>
-    </ButtonBadge>
-  )
-}
-
-type ButtonSortProps = {} & ComponentProps<"button">
-export function ButtonSort({}: ButtonSortProps) {
-  return (
-    <ButtonBadge size="sm" color="white">
-      <div className="flex gap-1 items-center justify-center">
-        Sort
-        <ArrowUpAZIcon className="size-3" />
-      </div>
-    </ButtonBadge>
-  )
-}
-
-type ButtonResetProps = {} & ComponentProps<"button">
-export function ButtonReset({ ...props }: ButtonResetProps) {
-  return (
-    <ButtonBadge {...props} size="sm" color="red">
-      <div className="flex gap-1 items-center justify-center">
-        Reset
-        <XIcon className="size-4" />
-      </div>
-    </ButtonBadge>
-  )
-}
-
-type ButtonApplyProps = {} & ComponentProps<"button">
-export function ButtonApply({ ...props }: ButtonApplyProps) {
-  return (
-    <ButtonBadge {...props} size="sm" color="purple">
-      <div className="flex gap-1 items-center justify-center">
-        Apply
-        <FunnelPlusIcon className="size-3" />
-      </div>
-    </ButtonBadge>
   )
 }
