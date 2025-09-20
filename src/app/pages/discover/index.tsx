@@ -4,7 +4,9 @@ import * as RemoteData from "@/lib/remote-data"
 import { useBusinessAllCache } from "@/hooks/business"
 
 import { GetRecommendations } from "@/components/card"
-import { ButtonBadge, ButtonScrollTop } from "@/components/button"
+import { ButtonBadge } from "@/components/button"
+
+import * as Scroll from "@/components/scroll"
 import * as BusinessGroup from "@/components/business/group"
 
 import * as Hero from "./hero"
@@ -27,7 +29,7 @@ export function Discover() {
 
   return (
     <section className="relative flex flex-col">
-      <ButtonScrollTop />
+      <Scroll.Button.Top />
 
       <Hero.Root>
         <div className="flex justify-between items-center">

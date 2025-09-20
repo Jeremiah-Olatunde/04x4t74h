@@ -1,6 +1,6 @@
 import type { PropsWithChildren, ReactNode } from "react"
 
-import { ButtonScrollTop } from "@/components/button"
+import * as Scroll from "@/components/scroll"
 import { Topbar } from "@/components/topbar"
 import { WithControls as Header } from "@/components/header"
 
@@ -36,7 +36,7 @@ export function Filter() {
   return (
     <section className="min-h-screen">
       <Topbar />
-      <ButtonScrollTop />
+      <Scroll.Button.Top />
       <div className="h-6" />
 
       <form

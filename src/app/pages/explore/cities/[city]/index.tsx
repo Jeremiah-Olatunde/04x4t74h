@@ -1,11 +1,12 @@
 import { useState } from "react"
 
 import { useBusinessAllCache } from "@/hooks/business"
-import { ButtonBadge, ButtonScrollTop } from "@/components/button"
+import { ButtonBadge } from "@/components/button"
 import { Topbar } from "@/components/topbar"
 import * as BusinessGroup from "@/components/business/group"
 import * as RemoteData from "@/lib/remote-data"
 import * as Breadcrumbs from "@/components/breadcrumbs"
+import * as Scroll from "@/components/scroll"
 import { Centered as Header } from "@/components/header"
 import { LinkBadge } from "@/components/link"
 import { getInCity, groupByTown } from "@/utils/business"
@@ -34,7 +35,7 @@ export function City() {
 
   return (
     <section className="relative flex flex-col">
-      <ButtonScrollTop />
+      <Scroll.Button.Top />
       <Topbar />
 
       <section className="p-6 pt-0 flex flex-col gap-4">

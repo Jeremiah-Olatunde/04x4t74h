@@ -1,10 +1,10 @@
 import { Link as LinkWouter } from "wouter"
 import { ArrowRightIcon } from "lucide-react"
 
-import { ButtonScrollTop } from "@/components/button"
 import { Topbar } from "@/components/topbar"
 
 import * as Breadcrumbs from "@/components/breadcrumbs"
+import * as Scroll from "@/components/scroll"
 import { Centered as Header } from "@/components/header"
 
 export { Businesses } from "./businesses"
@@ -20,7 +20,7 @@ export function Explore() {
   return (
     <section className="">
       <Topbar />
-      <ButtonScrollTop />
+      <Scroll.Button.Top />
 
       <section className="p-6 pt-0 flex flex-col gap-4">
         <div className="flex flex-col justify-center items-center gap-2">

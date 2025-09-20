@@ -18,8 +18,10 @@ import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { LinkText } from "@/components/link"
-import { ButtonScrollTop, ButtonShare } from "@/components/button"
+import { ButtonShare } from "@/components/button"
 import { Topbar } from "@/components/topbar"
+
+import * as Scroll from "@/components/scroll"
 
 export function Business() {
   const { businessId } = useParams()
@@ -37,29 +39,31 @@ export function Business() {
   return (
     <section className="min-h-screen">
       <Topbar />
-      <ButtonScrollTop />
+      <Scroll.Button.Top />
 
-      {RemoteData.fold3(remoteData, {
-        onNone: (): ReactNode => {
-          return (
-            <>
-              <HeroSkeleton id={businessId} />
-              <KakashiSkeleton id={businessId} />
-            </>
-          )
-        },
-        onFailure: (error): ReactNode => {
-          throw error
-        },
-        onSuccess: (business): ReactNode => {
-          return (
-            <>
-              <Hero business={business} />
-              <Kakashi business={business} />
-            </>
-          )
-        },
-      })}
+      <Scroll.Auto.Top>
+        {RemoteData.fold3(remoteData, {
+          onNone: (): ReactNode => {
+            return (
+              <>
+                <HeroSkeleton id={businessId} />
+                <KakashiSkeleton id={businessId} />
+              </>
+            )
+          },
+          onFailure: (error): ReactNode => {
+            throw error
+          },
+          onSuccess: (business): ReactNode => {
+            return (
+              <>
+                <Hero business={business} />
+                <Kakashi business={business} />
+              </>
+            )
+          },
+        })}
+      </Scroll.Auto.Top>
     </section>
   )
 }

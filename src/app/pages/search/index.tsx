@@ -5,7 +5,8 @@ import { Input } from "@base-ui-components/react/input"
 import { Controller, useForm } from "react-hook-form"
 import { SearchIcon, SlidersHorizontalIcon } from "lucide-react"
 
-import { ButtonScrollTop } from "@/components/button"
+import * as Scroll from "@/components/scroll"
+
 import { Topbar } from "@/components/topbar"
 import { Pill } from "@/components/pill"
 
@@ -36,7 +37,7 @@ export function Search() {
 
   return (
     <section className="relative flex flex-col min-h-svh">
-      <ButtonScrollTop />
+      <Scroll.Button.Top />
       <Topbar />
 
       <section className="p-6 pt-0 flex flex-col gap-4">

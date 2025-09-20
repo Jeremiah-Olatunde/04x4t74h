@@ -7,7 +7,8 @@ import * as BusinessList from "@/components/business/list"
 
 import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
-import { ButtonBadge, ButtonScrollTop } from "@/components/button"
+import * as Scroll from "@/components/scroll"
+import { ButtonBadge } from "@/components/button"
 import { WithControls as Header } from "@/components/header"
 
 export function Businesses() {
@@ -18,7 +19,7 @@ export function Businesses() {
   return (
     <section className="min-h-screen">
       <Topbar />
-      <ButtonScrollTop />
+      <Scroll.Button.Top />
 
       <section className="px-6">
         <div className="flex flex-col gap-2">

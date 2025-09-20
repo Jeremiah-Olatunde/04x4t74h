@@ -10,7 +10,8 @@ import { WithControls as Header } from "@/components/header"
 
 import { Topbar } from "@/components/topbar"
 import * as Breadcrumbs from "@/components/breadcrumbs"
-import { ButtonBadge, ButtonScrollTop } from "@/components/button"
+import * as Scroll from "@/components/scroll"
+import { ButtonBadge } from "@/components/button"
 import { getWithTag } from "@/utils/business"
 
 export function Tag() {
@@ -35,7 +36,7 @@ export function Tag() {
   return (
     <section className="min-h-screen">
       <Topbar />
-      <ButtonScrollTop />
+      <Scroll.Button.Top />
 
       <section className="px-6">
         <div className="flex flex-col gap-2">

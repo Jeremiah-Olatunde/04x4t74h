@@ -11,6 +11,7 @@ import { useBusinessOneCache } from "@/hooks/business"
 import type { BusinessLite } from "@/types/business"
 import * as RemoteData from "@/lib/remote-data"
 import { Icon } from "@/components/icon"
+import * as Scroll from "@/components/scroll"
 
 import { MapPinIcon, ClockIcon, PiggyBankIcon, StarIcon } from "lucide-react"
 
@@ -40,7 +41,9 @@ export function ReviewCreate() {
         <Header.Subtitle>Share and shape the community</Header.Subtitle>
       </Header.Root>
 
-      <ReviewCreateForm businessId={businessId} />
+      <Scroll.Auto.Top>
+        <ReviewCreateForm businessId={businessId} />
+      </Scroll.Auto.Top>
     </section>
   )
 }
