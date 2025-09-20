@@ -41,7 +41,7 @@ type SliderProps = {}
 export function Slider({ children }: PropsWithChildren<SliderProps>) {
   return (
     <ScrollArea.Root>
-      <ScrollArea.Viewport className="snap-x snap-mandatory flex gap-2 !overflow-y-hidden">
+      <ScrollArea.Viewport className="snap-x snap-mandatory flex gap-2">
         <ScrollArea.Content className="contents">
           <ul className="contents">{children}</ul>
         </ScrollArea.Content>
@@ -59,7 +59,7 @@ export function Card({ business }: CardProps) {
   })
 
   return (
-    <li>
+    <li className="snap-start">
       <article className="size-60 relative rounded-xl border border-neutral-100">
         <LinkWouter href={`/business/${business.id}/home/menu`}>
           <div className="flex flex-col h-full w-full">
