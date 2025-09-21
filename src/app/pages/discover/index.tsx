@@ -1,23 +1,26 @@
 import { useState, type ReactNode } from "react"
 
-import * as RemoteData from "@/lib/remote-data"
 import { useBusinessAllCache } from "@/hooks/business"
+import * as RemoteData from "@/lib/remote-data"
 
 import { GetRecommendations } from "@/components/card"
-import { ButtonBadge } from "@/components/button"
 
 import * as Scroll from "@/components/scroll"
-import * as BusinessGroup from "@/components/business/group"
-
+import * as Group from "@/components/group"
+import * as GroupList from "@/components/group-list"
+import * as Card from "@/components/business/card"
 import * as Hero from "./hero"
+
 import { Menu } from "@/components/menu"
+
 import { getCities, getInCity, groupByTag } from "@/utils/business"
+
+export { Recommendations } from "./recommendations"
 
 export function Discover() {
   const remoteData = useBusinessAllCache()
 
   const [city, setCity] = useState<string>()
-
   const [tagCount, setTagCount] = useState(5)
 
   const data = RemoteData.map(remoteData, (businesses) => {
@@ -33,22 +36,15 @@ export function Discover() {
 
       <Hero.Root>
         <div className="flex justify-between items-center">
-          {RemoteData.fold3(data, {
-            onNone: (): ReactNode => {
-              return <Hero.SelectCitySkeleton />
-            },
-            onFailure: (error): ReactNode => {
-              throw error
-            },
-            onSuccess: ({ cities }): ReactNode => {
-              return (
-                <Hero.SelectCity
-                  city={city ?? cities[0]}
-                  cities={cities}
-                  handleCityChange={setCity}
-                />
-              )
-            },
+          {RemoteData.fold3Unsafe(data, {
+            onNone: (): ReactNode => <Hero.SelectCitySkeleton />,
+            onSuccess: ({ cities }): ReactNode => (
+              <Hero.SelectCity
+                city={city ?? cities[0]}
+                cities={cities}
+                handleCityChange={setCity}
+              />
+            ),
           })}
 
           <Menu color="white" />
@@ -59,53 +55,64 @@ export function Discover() {
         <Hero.Content />
       </Hero.Root>
 
-      <section className="p-6">
+      <section className="p-4">
         <GetRecommendations />
 
-        <div className="h-8" />
+        <div className="h-6" />
 
-        <div className="flex flex-col gap-8">
-          {RemoteData.fold3(data, {
-            onFailure: (error): React.ReactNode => {
-              throw error
-            },
+        <GroupList.Root>
+          {RemoteData.fold3Unsafe(data, {
             onNone: (): React.ReactNode => {
-              return Array(5)
-                .fill(0)
-                .map((_, index) => <BusinessGroup.Skeleton key={index} />)
+              return [0, 1, 2, 3, 4].map((i) => {
+                return (
+                  <GroupList.Group key={i}>
+                    <Group.Root>
+                      <Group.Header>
+                        <Group.Skeleton.Title />
+                        <Group.Control.Skeleton.ViewMore />
+                      </Group.Header>
+
+                      <Group.List>
+                        {[0, 1, 2, 3, 4].map((i) => (
+                          <Group.Item key={i}>
+                            <Card.Skeleton.Small />
+                          </Group.Item>
+                        ))}
+                      </Group.List>
+                    </Group.Root>
+                  </GroupList.Group>
+                )
+              })
             },
             onSuccess: ({ byTag }): React.ReactNode => {
               return byTag.slice(0, tagCount).map(([tag, businesses]) => {
                 return (
-                  <BusinessGroup.Root key={tag}>
-                    <BusinessGroup.Header>
-                      <BusinessGroup.Title title={tag} />
-                      <BusinessGroup.Link href={`/explore/tags/${tag}`} />
-                    </BusinessGroup.Header>
+                  <GroupList.Group key={tag}>
+                    <Group.Root>
+                      <Group.Header>
+                        <Group.Title title={tag} />
+                        <Group.Control.ViewMore href={`/explore/tags/${tag}`} />
+                      </Group.Header>
 
-                    <BusinessGroup.Slider>
-                      {businesses.slice(0, 5).map((b) => (
-                        <BusinessGroup.Card key={b.id} business={b} />
-                      ))}
-                    </BusinessGroup.Slider>
-                  </BusinessGroup.Root>
+                      <Group.List>
+                        {businesses.slice(0, 5).map((b) => (
+                          <Group.Item key={b.id}>
+                            <Card.Small business={b} />
+                          </Group.Item>
+                        ))}
+                      </Group.List>
+                    </Group.Root>
+                  </GroupList.Group>
                 )
               })
             },
           })}
 
-          <ButtonBadge
-            color="neutral"
-            size="md"
-            type="button"
+          <GroupList.Control.ShowMore
             onClick={() => setTagCount(tagCount + 5)}
-          >
-            Show More
-          </ButtonBadge>
-        </div>
+          />
+        </GroupList.Root>
       </section>
     </section>
   )
 }
-
-export { Recommendations } from "./recommendations"
