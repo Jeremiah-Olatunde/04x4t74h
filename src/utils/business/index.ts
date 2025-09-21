@@ -1,9 +1,10 @@
-import type { Business } from "@/types/business"
+import type {
+  Businesses,
+  Cities,
+  BusinessesGrouped,
+  Towns,
+} from "@/types/business"
 import Fuse from "fuse.js"
-
-type Businesses = readonly Business[]
-type Towns = readonly string[]
-type Cities = readonly [string, Towns][]
 
 export function group<T>(
   items: readonly T[],
@@ -68,21 +69,19 @@ export function getCitiesWithTowns(bs: Businesses): Cities {
   return withTowns
 }
 
-type GroupedBusinesses = readonly (readonly [string, Businesses])[]
-
-export function groupByCity(businesses: Businesses): GroupedBusinesses {
+export function groupByCity(businesses: Businesses): BusinessesGrouped {
   return groupBy(businesses, "city")
 }
 
-export function groupByTown(businesses: Businesses): GroupedBusinesses {
+export function groupByTown(businesses: Businesses): BusinessesGrouped {
   return groupBy(businesses, "town")
 }
 
-export function groupByCategory(businesses: Businesses): GroupedBusinesses {
+export function groupByCategory(businesses: Businesses): BusinessesGrouped {
   return groupBy(businesses, "businessCategory")
 }
 
-export function groupByTag(businesses: Businesses): GroupedBusinesses {
+export function groupByTag(businesses: Businesses): BusinessesGrouped {
   const tags = getTags(businesses)
   return group(businesses, tags, (b, tag) => b.tags.includes(tag))
 }

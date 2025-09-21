@@ -46,3 +46,8 @@ export type Business = BusinessLite & {
   reviews: readonly Review[]
   services: readonly Service[]
 }
+
+export type Businesses = readonly Business[]
+export type BusinessesGrouped = readonly (readonly [string, Businesses])[]
+export type Towns = readonly string[]
+export type Cities = readonly [string, Towns][]
