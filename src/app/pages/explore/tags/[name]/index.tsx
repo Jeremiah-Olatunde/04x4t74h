@@ -83,10 +83,7 @@ export function Tag() {
 
         <div className="h-6" />
 
-        {RemoteData.fold3(businesses, {
-          onFailure: (error): React.ReactNode => {
-            throw error
-          },
+        {RemoteData.fold3Unsafe(businesses, {
           onNone: (): React.ReactNode => <BusinessList.Skeleton />,
           onSuccess: (businesses): React.ReactNode => {
             return (
