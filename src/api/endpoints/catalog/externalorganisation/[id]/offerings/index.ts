@@ -11,7 +11,7 @@ import type { Business } from "@/types/business"
 import { sleep } from "@/utils"
 
 export async function fetchBusinessOne(id: string): Promise<Business> {
-  const path = `/data/externalorganisation/${id}.json`
+  const path = `${import.meta.env.BASE_URL}/data/externalorganisation/${id}.json`
   const headers = { "Content-Type": "application/json" }
 
   const promise = fetch(path, { headers })
