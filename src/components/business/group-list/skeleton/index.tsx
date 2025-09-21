@@ -30,16 +30,16 @@ export function List() {
 }
 
 export function Nav({ length }: { length: number }) {
+  const max = 8
+  const min = 15
+  const textLength = min + Math.random() * (max - min)
+  const text = "-".repeat(textLength)
+
   return (
     <GroupList.Nav.Root>
       {Array(length)
         .fill(0)
         .map((_, i) => {
-          const max = 8
-          const min = 15
-          const textLength = min + Math.random() * (max - min)
-          const text = "-".repeat(textLength)
-
           return (
             <li key={i}>
               <div className="text-xs text-transparent p-1 h-6 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-sm">

@@ -1,12 +1,15 @@
 import { type ReactNode } from "react"
 
 import { useBusinessAllCache } from "@/hooks/business"
+
 import { Topbar } from "@/components/topbar"
+import { Centered as Header } from "@/components/header"
+
 import * as Business from "@/components/business"
 import * as RemoteData from "@/lib/remote-data"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import * as Scroll from "@/components/scroll"
-import { Centered as Header } from "@/components/header"
+
 import { groupByTag } from "@/utils/business"
 
 export function Tags() {
