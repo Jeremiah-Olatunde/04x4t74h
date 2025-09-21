@@ -2,7 +2,7 @@ import * as Card from "@/components/business/card"
 import * as Group from "@/components/group"
 import * as GroupList from "@/components/group-list"
 
-export default function () {
+export function List() {
   return (
     <GroupList.Root>
       {[0, 1, 2, 3, 4].map((i) => {
@@ -26,5 +26,28 @@ export default function () {
         )
       })}
     </GroupList.Root>
+  )
+}
+
+export function Nav({ length }: { length: number }) {
+  return (
+    <GroupList.Nav.Root>
+      {Array(length)
+        .fill(0)
+        .map((_, i) => {
+          const max = 8
+          const min = 15
+          const textLength = min + Math.random() * (max - min)
+          const text = "-".repeat(textLength)
+
+          return (
+            <li key={i}>
+              <div className="text-xs text-transparent p-1 h-6 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-sm">
+                {text}
+              </div>
+            </li>
+          )
+        })}
+    </GroupList.Nav.Root>
   )
 }

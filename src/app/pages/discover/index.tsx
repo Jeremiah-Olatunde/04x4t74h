@@ -57,10 +57,10 @@ export function Discover() {
         <div className="h-6" />
 
         {RemoteData.fold3Unsafe(data, {
-          onNone: (): ReactNode => <Business.Skeleton.GroupList />,
-          onSuccess: ({ grouped }): ReactNode => (
-            <Business.GroupList list={grouped} />
-          ),
+          onNone: (): ReactNode => <Business.GroupList.Skeleton.List />,
+          onSuccess: ({ grouped }): ReactNode => {
+            return <Business.GroupList.List groups={grouped} />
+          },
         })}
       </section>
     </section>
