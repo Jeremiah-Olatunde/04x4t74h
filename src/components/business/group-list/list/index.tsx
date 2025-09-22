@@ -1,31 +1,34 @@
 import { useState } from "react"
 
-import type { BusinessesGrouped } from "@/types/business"
+import type { Businesses } from "@/types/business"
 
 import * as Card from "@/components/business/card"
 import * as Group from "@/components/group"
 import * as GroupList from "@/components/group-list"
 
-type Props = { groups: BusinessesGrouped }
-export function List({ groups }: Props) {
+type ListProps = { items: readonly (readonly [string, string, Businesses])[] }
+
+export function List({ items }: ListProps) {
   const increment = 5
   const [show, setShow] = useState(5)
 
   return (
     <GroupList.Root>
-      {groups.slice(0, show).map(([name, businesses]) => {
+      {items.slice(0, show).map(([name, href, businesses]) => {
         return (
           <GroupList.Group key={name}>
             <Group.Root>
               <Group.Header>
                 <Group.Title title={name} />
-                <Group.Control.ViewMore href={`/explore/tags/${name}`} />
+                <Group.Control.ViewMore href={href} />
               </Group.Header>
 
               <Group.List>
                 {businesses.slice(0, show).map((b) => (
                   <Group.Item key={b.id}>
-                    <Card.Small business={b} />
+                    <div className="size-60">
+                      <Card.Small business={b} />
+                    </div>
                   </Group.Item>
                 ))}
               </Group.List>

@@ -1,6 +1,6 @@
 export function Small() {
   return (
-    <div className="size-60 relative rounded-xl border border-neutral-100">
+    <div className="h-full w-full relative rounded-xl border border-neutral-100">
       <div className="flex flex-col h-full w-full">
         <div className="rounded-t-xl grow-1 bg-neutral-100 border-b-1 border-neutral-200 animate-pulse"></div>
 

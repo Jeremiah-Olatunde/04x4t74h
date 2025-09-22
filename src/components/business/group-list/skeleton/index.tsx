@@ -17,7 +17,9 @@ export function List() {
               <Group.List>
                 {[0, 1, 2, 3, 4].map((i) => (
                   <Group.Item key={i}>
-                    <Card.Skeleton.Small />
+                    <div className="size-60">
+                      <Card.Skeleton.Small />
+                    </div>
                   </Group.Item>
                 ))}
               </Group.List>
@@ -25,6 +27,8 @@ export function List() {
           </GroupList.Group>
         )
       })}
+
+      <GroupList.Control.Skeleton.ShowMore />
     </GroupList.Root>
   )
 }
@@ -42,7 +46,7 @@ export function Nav({ length }: { length: number }) {
         .map((_, i) => {
           return (
             <li key={i}>
-              <div className="text-xs text-transparent p-1 h-6 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-sm">
+              <div className="text-xs text-transparent p-1 bg-neutral-100 border-1 border-neutral-200 animate-pulse rounded-sm">
                 {text}
               </div>
             </li>

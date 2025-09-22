@@ -12,7 +12,7 @@ export function Small({ business }: SmallProps) {
   })
 
   return (
-    <article className="size-60 relative rounded-xl border border-neutral-100">
+    <article className="w-full h-full relative rounded-xl border border-neutral-100">
       <LinkWouter href={`/business/${business.id}/home/menu`}>
         <div className="flex flex-col h-full w-full">
           <div className="rounded-t-xl grow-1 min-h-0 w-full bg-neutral-50">
@@ -24,8 +24,8 @@ export function Small({ business }: SmallProps) {
           </div>
 
           <div className="p-4 pt-2">
-            <div className="flex flex-row justify-between items-center">
-              <p className="text-xxs font-sora text-neutral-400 font-light">
+            <div className="flex flex-row justify-between items-center gap-2">
+              <p className="text-xxs font-sora text-neutral-400 font-light truncate">
                 (N15,000 to unlimited)
               </p>
 

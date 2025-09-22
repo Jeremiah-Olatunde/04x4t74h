@@ -66,14 +66,15 @@ export function City() {
             )
           },
           onSuccess: ({ groups }): ReactNode => {
-            const items = groups.map(([name]) => {
-              return [name, `/explore/cities/${city}/${name}/`] as const
+            const items = groups.map(([name, businesses]) => {
+              const href = `/explore/cities/${city}/${name}/`
+              return [name, href, businesses] as const
             })
 
             return (
               <>
                 <Business.GroupList.Nav items={items} />
-                <Business.GroupList.List groups={groups} />
+                <Business.GroupList.List items={items} />
               </>
             )
           },

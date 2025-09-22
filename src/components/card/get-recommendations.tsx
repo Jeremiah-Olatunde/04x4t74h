@@ -20,7 +20,7 @@ export function GetRecommendations() {
 
         <div className="shrink-0 flex justify-center items-center">
           <img
-            src={`${import.meta.env.BASE_URL}/images/thumbs-up-compressed.webp`}
+            src={`${import.meta.env.BASE_URL}images/thumbs-up-compressed.webp`}
             alt="thumbs up"
             className="size-16"
           />

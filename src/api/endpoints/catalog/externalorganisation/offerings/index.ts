@@ -9,7 +9,7 @@ import type { Business } from "@/types/business"
 import { sleep } from "@/utils"
 
 export async function fetchBusinessAll(): Promise<readonly Business[]> {
-  const path = `${import.meta.env.BASE_URL}/data/externalorganisation.json`
+  const path = `${import.meta.env.BASE_URL}data/externalorganisation.json`
   const headers = { "Content-Type": "application/json" }
 
   const promise = fetch(path, { headers })

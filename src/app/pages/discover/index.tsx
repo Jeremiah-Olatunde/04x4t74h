@@ -22,8 +22,8 @@ export function Discover() {
   const data = RemoteData.map(remoteData, (businesses) => {
     const cities = getCities(businesses)
     const filtered = getInCity(businesses, city ?? cities[0])
-    const grouped = groupByTag(filtered)
-    return { cities, grouped }
+    const groups = groupByTag(filtered)
+    return { cities, groups }
   })
 
   return (
@@ -57,9 +57,15 @@ export function Discover() {
         <div className="h-6" />
 
         {RemoteData.fold3Unsafe(data, {
-          onNone: (): ReactNode => <Business.GroupList.Skeleton.List />,
-          onSuccess: ({ grouped }): ReactNode => {
-            return <Business.GroupList.List groups={grouped} />
+          onNone: (): ReactNode => {
+            return <Business.GroupList.Skeleton.List />
+          },
+          onSuccess: ({ groups }): ReactNode => {
+            const items = groups.map(([name, businesses]) => {
+              return [name, `/explore/tags/${name}`, businesses] as const
+            })
+
+            return <Business.GroupList.List items={items} />
           },
         })}
       </section>

@@ -53,14 +53,14 @@ export function Categories() {
             )
           },
           onSuccess: ({ groups }): ReactNode => {
-            const items = groups.map(([name]) => {
-              return [name, `/explore/categories/${name}`] as const
+            const items = groups.map(([name, businesses]) => {
+              return [name, `/explore/categories/${name}`, businesses] as const
             })
 
             return (
               <>
                 <Business.GroupList.Nav items={items} />
-                <Business.GroupList.List groups={groups} />
+                <Business.GroupList.List items={items} />
               </>
             )
           },

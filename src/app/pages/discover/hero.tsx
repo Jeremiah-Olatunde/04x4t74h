@@ -13,7 +13,7 @@ export function Root({ children }: PropsWithChildren<HeroProps>) {
   return (
     <header className="relative rounded-b-2xl bg-primary">
       <img
-        src={`${import.meta.env.BASE_URL}/images/bg-guest-compressed.webp`}
+        src={`${import.meta.env.BASE_URL}images/bg-guest-compressed.webp`}
         className="h-full w-full object-cover absolute top-0 left-0 blur-[2px] rounded-b-2xl"
       />
       <div className="relative rounded-b-2xl p-6">{children}</div>

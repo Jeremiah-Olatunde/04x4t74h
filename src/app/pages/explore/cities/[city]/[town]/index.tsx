@@ -1,23 +1,21 @@
-import { useState, type ReactNode } from "react"
+import { type ReactNode } from "react"
 import { useParams } from "wouter"
 
 import { useBusinessAllCache } from "@/hooks/business"
 import { PathParameterError } from "@/lib/errors/ui"
 import * as RemoteData from "@/lib/remote-data"
 
-import * as BusinessList from "@/components/business/list"
-import { WithControls as Header } from "@/components/header"
-
-import { Topbar } from "@/components/topbar"
+import * as Business from "@/components/business"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import * as Scroll from "@/components/scroll"
-import { ButtonBadge } from "@/components/button"
+
+import { Topbar } from "@/components/topbar"
+import { WithControls as Header } from "@/components/header"
+
 import { getInTown } from "@/utils/business"
 
 export function Town() {
   const { town, city } = useParams()
-
-  const [count, setCount] = useState(5)
 
   if (town === undefined) {
     const tag = "missing"
@@ -43,10 +41,11 @@ export function Town() {
 
   return (
     <section className="min-h-screen">
-      <Topbar />
       <Scroll.Button.Top />
 
-      <section className="px-6">
+      <Topbar />
+
+      <section className="px-4">
         <div className="flex flex-col gap-2">
           <Breadcrumbs.Root>
             <Breadcrumbs.Crumb href="/explore">Explore</Breadcrumbs.Crumb>
@@ -92,34 +91,14 @@ export function Town() {
 
         <div className="h-6" />
 
-        {RemoteData.fold3(businesses, {
-          onFailure: (error): React.ReactNode => {
-            throw error
+        {RemoteData.fold3Unsafe(businesses, {
+          onNone: (): React.ReactNode => {
+            return <Business.CardGrid.Skeleton.Grid />
           },
-          onNone: (): React.ReactNode => <BusinessList.Skeleton />,
           onSuccess: (businesses): React.ReactNode => {
-            return (
-              <BusinessList.List>
-                {businesses.slice(0, count).map((b) => {
-                  return <BusinessList.Card key={b.id} business={b} />
-                })}
-              </BusinessList.List>
-            )
+            return <Business.CardGrid.Grid businesses={businesses} />
           },
         })}
-
-        <div className="h-6" />
-
-        <ButtonBadge
-          color="neutral"
-          size="md"
-          type="button"
-          onClick={() => setCount(count + 5)}
-        >
-          Show More
-        </ButtonBadge>
-
-        <div className="h-6" />
       </section>
     </section>
   )

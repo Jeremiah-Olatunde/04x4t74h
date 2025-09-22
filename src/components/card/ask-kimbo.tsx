@@ -25,7 +25,7 @@ export function AskKimbo() {
 
       <div className="basis-1/3 flex justify-center items-center">
         <img
-          src={`${import.meta.env.BASE_URL}/images/kimbo.png`}
+          src={`${import.meta.env.BASE_URL}images/kimbo.png`}
           alt="kimbo"
           className="size-24 "
         />
