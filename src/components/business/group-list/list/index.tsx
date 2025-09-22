@@ -37,7 +37,9 @@ export function List({ items }: ListProps) {
         )
       })}
 
-      <GroupList.Control.ShowMore onClick={() => setShow(show + increment)} />
+      {show < items.length && (
+        <GroupList.Control.ShowMore onClick={() => setShow(show + increment)} />
+      )}
     </GroupList.Root>
   )
 }

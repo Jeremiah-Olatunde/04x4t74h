@@ -64,11 +64,13 @@ export function Results() {
             </Header.Content>
 
             <Header.Control.Root>
-              <Header.Control.Filter href="#" />
+              <Header.Control.Filter href="/search/results/filter" />
               <Header.Control.Sort href="#" />
             </Header.Control.Root>
           </Header.Root>
         </div>
+
+        <div className="h-6" />
 
         {RemoteData.fold3Unsafe(businesses, {
           onNone: (): React.ReactNode => {

@@ -49,7 +49,7 @@ export function Small({ business }: SmallProps) {
 
             <address className="flex justify-start items-center gap-1">
               <MapPinIcon className="text-neutral-400 size-3" />
-              <span className="text-xxs font-sora  text-neutral-400 font-light not-italic">
+              <span className="text-xxs font-sora  text-neutral-400 font-light not-italic truncate">
                 {business.town}, {business.city}
               </span>
             </address>

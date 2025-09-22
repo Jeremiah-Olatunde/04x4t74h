@@ -17,6 +17,7 @@ export function Grid() {
         })}
       </Root>
       <ShowMore />
+      <div />
     </div>
   )
 }

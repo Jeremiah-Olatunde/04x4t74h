@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import type { PropsWithChildren } from "react"
 
-const base = tw`whitespace-nowrap w-full flex items-center justify-center font-sora font-semibold capitalize cursor-pointer border-1 border-transparent gap-1`
+const base = tw`whitespace-nowrap w-full flex items-center justify-center gap-1 font-sora font-semibold capitalize cursor-pointer border-1 border-transparent`
 
 const red = tw`bg-red-600 text-white`
 const purple = tw`bg-primary text-white`

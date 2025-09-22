@@ -11,7 +11,7 @@ import type { PropsWithChildren } from "react"
 type ControlsProps = {}
 export function Root({ children }: PropsWithChildren<ControlsProps>) {
   return (
-    <div className="flex flex-col justify-center items-center gap-1">
+    <div className="flex flex-col justify-center items-stretch gap-1">
       {children}
     </div>
   )
