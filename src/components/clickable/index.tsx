@@ -10,6 +10,7 @@ interface ClickableButtonProps extends ComponentPropsWithoutRef<"button"> {
 
 interface ClickableLinkProps extends ComponentPropsWithoutRef<"a"> {
   as: "link"
+  replace?: boolean
 }
 
 type ClickableProps = ClickableButtonProps | ClickableLinkProps

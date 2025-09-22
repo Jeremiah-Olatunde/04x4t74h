@@ -14,8 +14,6 @@ export function Grid({ businesses }: GridProps) {
   const increment = 4
   const [show, setShow] = useState(8)
 
-  console.log(businesses.length, show)
-
   return (
     <div className="flex flex-col gap-4">
       <Root>

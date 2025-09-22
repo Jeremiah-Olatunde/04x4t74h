@@ -6,7 +6,7 @@ type TopbarProps = {}
 export function Topbar({}: TopbarProps) {
   return (
     <div>
-      <section className="w-full p-6 grid grid-cols-3">
+      <section className="w-full py-6 px-4 grid grid-cols-3">
         <button
           type="button"
           className="flex gap-1 items-center"

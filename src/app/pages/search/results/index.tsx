@@ -18,9 +18,7 @@ export function Results() {
   const term = params.get("term") ?? ""
 
   const remoteData = useBusinessAllCache()
-
   const businesses = RemoteData.map(remoteData, (businesses) => {
-    const term = params.get("term") ?? ""
     const filteredSearch = search(businesses, term)
     return filteredSearch
   })
@@ -55,7 +53,7 @@ export function Results() {
                           {businesses.length}
                         </span>
                         <span> businesses matching </span>
-                        <span className="italic font-semibold">"{term}"</span>
+                        <span className="font-semibold">"{term}"</span>
                       </>
                     )
                   },
@@ -64,7 +62,9 @@ export function Results() {
             </Header.Content>
 
             <Header.Control.Root>
-              <Header.Control.Filter href="/search/results/filter" />
+              <Header.Control.Filters
+                href={`/search/results/filters?${params.toString()}`}
+              />
               <Header.Control.Sort href="#" />
             </Header.Control.Root>
           </Header.Root>

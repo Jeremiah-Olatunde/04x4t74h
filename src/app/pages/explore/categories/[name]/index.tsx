@@ -75,7 +75,7 @@ export function Category() {
             </Header.Content>
 
             <Header.Control.Root>
-              <Header.Control.Filter href="#" />
+              <Header.Control.Filters href="#" />
               <Header.Control.Sort href="#" />
             </Header.Control.Root>
           </Header.Root>

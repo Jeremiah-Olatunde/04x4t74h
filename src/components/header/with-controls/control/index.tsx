@@ -27,18 +27,18 @@ export function Sort({ href }: SortProps) {
   )
 }
 
-type LinkFilterProps = { href: string }
-export function Filter({ href }: LinkFilterProps) {
+type FiltersProps = { href: string }
+export function Filters({ href }: FiltersProps) {
   return (
     <Clickable.Badge as="link" href={href} size="sm" color="purple">
-      <span>Filter</span>
+      <span>Filters</span>
       <ListFilterIcon className="size-3" />
     </Clickable.Badge>
   )
 }
 
-type LinkApplyProps = { href: string }
-export function Apply({ href }: LinkApplyProps) {
+type ApplyProps = { href: string }
+export function Apply({ href }: ApplyProps) {
   return (
     <Clickable.Badge as="link" href={href} size="sm" color="purple">
       <span>Apply</span>
@@ -47,10 +47,10 @@ export function Apply({ href }: LinkApplyProps) {
   )
 }
 
-type ButtonResetProps = { href: string }
-export function Reset({ ...props }: ButtonResetProps) {
+type ResetProps = { href: string }
+export function Reset({ ...props }: ResetProps) {
   return (
-    <Clickable.Badge as="link" {...props} size="sm" color="red">
+    <Clickable.Badge as="link" {...props} replace={true} size="sm" color="red">
       <span>Reset</span>
       <XIcon className="size-4" />
     </Clickable.Badge>

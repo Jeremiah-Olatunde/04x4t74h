@@ -86,7 +86,7 @@ export function Router() {
 
         <Route path="/search" component={Search.Search} />
         <Route path="/search/results" component={Search.Results} />
-        <Route path="/search/results/filter" component={Search.Filter} />
+        <Route path="/search/results/filters" component={Search.Filters} />
 
         <Route>page not found</Route>
       </Switch>

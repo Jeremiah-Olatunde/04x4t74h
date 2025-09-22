@@ -53,7 +53,8 @@ export function towns(range: Range): readonly string[] {
 
 type Config = Readonly<{
   amenities: readonly string[]
-  categories: readonly string[]
+  category: string
+  subcategories: readonly string[]
   city: string
   street: string
   tags: readonly string[]
@@ -77,8 +78,8 @@ export function businessesWithReviewsAndServices(
     .fill(0)
     .map(() => ({
       amenities: faker.helpers.arrayElements(config.amenities),
-      businessCategory: faker.helpers.arrayElement(config.categories),
-      businessSubCategory: [],
+      category: config.category,
+      subcategory: faker.helpers.arrayElement(config.subcategories),
       city: config.city,
       description: faker.lorem.paragraph(),
       id: faker.string.uuid(),

@@ -3,6 +3,8 @@ import type {
   Cities,
   BusinessesGrouped,
   Towns,
+  GroupTree,
+  Business,
 } from "@/types/business"
 import Fuse from "fuse.js"
 
@@ -43,8 +45,54 @@ export function getTowns(businesses: Businesses): readonly string[] {
   return get("town", businesses)
 }
 
+export function getTownsInCity(
+  businesses: Businesses,
+  city: string,
+): readonly string[] {
+  const all = getCitiesWithTowns(businesses)
+  const found = all.find(([c]) => c === city)
+  return found ? found[1] : []
+}
+
 export function getCategories(businesses: Businesses): readonly string[] {
-  return get("businessCategory", businesses)
+  return get("category", businesses)
+}
+
+export function getPaymentOptions(businesses: Businesses): readonly string[] {
+  const items = businesses.flatMap((business) => business.paymentOptions)
+  return new Set(items).values().toArray()
+}
+
+export function getSubcategories(businesses: Businesses): readonly string[] {
+  return get("subcategory", businesses)
+}
+
+export function getCategoriesWithSubcategories(
+  bs: Businesses,
+): GroupTree<string> {
+  const category = getCategories(bs)
+  const byCategory = group(
+    bs,
+    category,
+    (b, category) => b.category === category,
+  )
+
+  const withSubcategory: GroupTree<string> = byCategory.map(
+    ([category, bs]) => {
+      const subcategory: readonly string[] = getSubcategories(bs)
+      return [category, subcategory] as const
+    },
+  )
+
+  return withSubcategory
+}
+
+export function getSubcategoriesInCategory(
+  bs: Businesses,
+  category: string,
+): readonly string[] {
+  const businesses = getInCategory(bs, category)
+  return getSubcategories(businesses)
 }
 
 export function getAmenities(businesses: Businesses): readonly string[] {
@@ -62,7 +110,7 @@ export function getCitiesWithTowns(bs: Businesses): Cities {
   const byCity = group(bs, cities, (b, city) => b.city === city)
 
   const withTowns: Cities = byCity.map(([city, bs]) => {
-    const towns: Towns = bs.map((b) => b.town)
+    const towns: Towns = getTowns(bs)
     return [city, towns] as const
   })
 
@@ -78,7 +126,7 @@ export function groupByTown(businesses: Businesses): BusinessesGrouped {
 }
 
 export function groupByCategory(businesses: Businesses): BusinessesGrouped {
-  return groupBy(businesses, "businessCategory")
+  return groupBy(businesses, "category")
 }
 
 export function groupByTag(businesses: Businesses): BusinessesGrouped {
@@ -122,4 +170,31 @@ export function search(businesses: Businesses, term: string): Businesses {
   const results = fuse.search(term)
 
   return results.map((result) => result.item)
+}
+
+export function inCity(business: Business, city: string): boolean {
+  return business.city === city
+}
+
+export function inCategory(business: Business, category: string): boolean {
+  return business.category === category
+}
+
+export function inSubcategory(
+  business: Business,
+  subcategory: string,
+): boolean {
+  return business.subcategory === subcategory
+}
+
+export function hasAmenity(business: Business, amenity: string) {
+  return business.amenities.includes(amenity)
+}
+
+export function hasTag(business: Business, tag: string) {
+  return business.tags.includes(tag)
+}
+
+export function hasPaymentOption(business: Business, paymentOption: string) {
+  return business.paymentOptions.includes(paymentOption)
 }

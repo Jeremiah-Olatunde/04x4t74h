@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker"
 import * as fake from "./fake.ts"
 
 import fs from "node:fs"
@@ -10,7 +11,10 @@ type Cities = readonly (readonly [string, Towns])[]
 
 function generateBusinesses() {
   const amenities = fake.amenities({ min: 10, max: 20 })
-  const categories = fake.categories({ min: 5, max: 10 })
+  const categories = fake.categories({ min: 4, max: 8 }).map((category) => {
+    const subcategories = fake.categories({ min: 3, max: 5 })
+    return [category, subcategories] as const
+  })
   const paymentOptions = fake.paymentOptions()
   const tags = fake.tags({ min: 20, max: 30 })
 
@@ -27,9 +31,11 @@ function generateBusinesses() {
     return towns.flatMap(([town, streets]) => {
       return streets.flatMap((street) => {
         const range = { min: 0, max: 2 }
+        const [category, subcategories] = faker.helpers.arrayElement(categories)
         return fake.businesses(range, {
           amenities,
-          categories,
+          category,
+          subcategories,
           city,
           paymentOptions,
           street,

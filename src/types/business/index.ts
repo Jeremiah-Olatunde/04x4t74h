@@ -26,8 +26,8 @@ type WeeklySchedule = readonly [
 
 export type BusinessLite = Readonly<{
   amenities: readonly string[]
-  businessCategory: string
-  businessSubCategory: readonly string[]
+  category: string
+  subcategory: string
   city: string
   description: string
   id: string
@@ -48,6 +48,10 @@ export type Business = BusinessLite & {
 }
 
 export type Businesses = readonly Business[]
-export type BusinessesGrouped = readonly (readonly [string, Businesses])[]
+export type BusinessesGrouped = GroupTree<Business>
 export type Towns = readonly string[]
-export type Cities = readonly [string, Towns][]
+export type Cities = GroupTree<string>
+
+export type GroupLeaf<T> = T
+export type GroupNode<T> = readonly [string, readonly GroupLeaf<T>[]]
+export type GroupTree<T> = readonly GroupNode<T>[]
