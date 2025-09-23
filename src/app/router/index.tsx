@@ -14,6 +14,8 @@ import * as Search from "@/app/pages/search"
 import { Login } from "@/app/pages/auth/login"
 import { PasswordForgot } from "@/app/pages/auth/password/forgot"
 import { SignUp } from "@/app/pages/auth/sign-up"
+import Zod from "zod/v4"
+import { Placeholder } from "@/components/placeholder"
 
 export function Router() {
   const [_, setLocation] = useLocation()
@@ -43,6 +45,16 @@ export function Router() {
               Oops, looks like something unexpected went wrong. Don’t worry—it
               happens sometimes. A quick refresh of the page might just fix it.
             </Http>
+          )
+        }
+
+        if (error instanceof Zod.ZodError) {
+          return (
+            <Placeholder
+              title="Invalid Payload"
+              subtitle="The payload received doesn’t match the expected format."
+              text={Zod.prettifyError(error)}
+            />
           )
         }
 

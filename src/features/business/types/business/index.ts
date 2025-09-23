@@ -29,7 +29,7 @@ type OperatingWindow = Readonly<Record<"opens" | "closes", string>>
 type DailySchedule<D extends DayOfWeek> = Readonly<
   OperatingWindow & Record<"dayOfWeek", D>
 >
-type WeeklySchedule = readonly [
+export type WeeklySchedule = readonly [
   DailySchedule<"MONDAY">,
   DailySchedule<"TUESDAY">,
   DailySchedule<"WEDNESDAY">,
@@ -54,7 +54,6 @@ export type BusinessLite = Readonly<{
   telephone: string
   tags: Readonly<Set<string>>
   town: string
-  openingHours: WeeklySchedule
 }>
 
 export type Business = BusinessLite & {

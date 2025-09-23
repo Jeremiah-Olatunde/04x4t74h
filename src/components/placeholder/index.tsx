@@ -8,6 +8,7 @@ type PlaceholderProps = {
   subtitle: string
   text: string
 }
+
 export function Placeholder({ title, subtitle, text }: PlaceholderProps) {
   return (
     <Root>
