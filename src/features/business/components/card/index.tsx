@@ -1,7 +1,7 @@
 import { Link as LinkWouter } from "wouter"
 import { MapPinIcon, StarIcon } from "lucide-react"
 
-import type { Business } from "@/types/business"
+import type { Business } from "@/features/business/types"
 
 type SmallProps = { business: Business }
 

@@ -1,13 +1,12 @@
 import { useState } from "react"
 
-import type { Businesses } from "@/types/business"
-
 import * as GL from "@/components/group-list"
 
 import { Group } from "@/features/business/components/group"
+import type { Business } from "@/features/business/types"
 
 type GroupListProps = {
-  items: readonly (readonly [string, string, Businesses])[]
+  items: readonly (readonly [string, string, readonly Business[]])[]
 }
 
 export function GroupList({ items }: GroupListProps) {

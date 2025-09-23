@@ -1,7 +1,7 @@
 export type Filter = Readonly<{
-  category: null | [category: string, subcategory: null | string]
-  location: null | [city: string, town: readonly string[]]
-  tags: string[]
-  amenities: string[]
-  paymentOptions: string[]
+  category: null | readonly [category: string, subcategory: null | string]
+  location: null | readonly [city: string, town: Readonly<Set<string>>]
+  tags: Readonly<Set<string>>
+  amenities: Readonly<Set<string>>
+  paymentOptions: Readonly<Set<string>>
 }>

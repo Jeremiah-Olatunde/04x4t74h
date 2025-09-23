@@ -40,7 +40,7 @@ type WeeklySchedule = readonly [
 ]
 
 export type BusinessLite = Readonly<{
-  amenities: readonly string[]
+  amenities: Readonly<Set<string>>
   category: string
   subcategory: string
   city: string
@@ -48,11 +48,11 @@ export type BusinessLite = Readonly<{
   id: string
   logo: string
   name: string
-  paymentOptions: readonly string[]
+  paymentOptions: Readonly<Set<string>>
   rating: number
   street: string
   telephone: string
-  tags: readonly string[]
+  tags: Readonly<Set<string>>
   town: string
   openingHours: WeeklySchedule
 }>
