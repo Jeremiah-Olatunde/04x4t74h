@@ -24,25 +24,25 @@ export function filter(
         return false
       }
 
-      if (towns.size !== 0 && !towns.has(business.town)) {
+      if (towns.length !== 0 && !towns.includes(business.town)) {
         return false
       }
     }
 
-    if (filter.tags.size !== 0 && filter.tags.isDisjointFrom(business.tags)) {
+    if (filter.tags.length !== 0 && filter.tags.some(business.tags.includes)) {
       return false
     }
 
     if (
-      filter.amenities.size !== 0 &&
-      filter.amenities.isDisjointFrom(business.amenities)
+      filter.amenities.length !== 0 &&
+      filter.amenities.some(business.amenities.includes)
     ) {
       return false
     }
 
     if (
-      filter.paymentOptions.size !== 0 &&
-      filter.paymentOptions.isDisjointFrom(business.paymentOptions)
+      filter.paymentOptions.length !== 0 &&
+      filter.paymentOptions.some(business.paymentOptions.includes)
     ) {
       return false
     }

@@ -16,15 +16,15 @@ export const Business = Zod.object({
   city: Zod.string(),
   logo: Zod.string(),
   rating: Zod.number(),
-  amenities: Zod.array(Zod.string())
-    .refine(hasNoDuplicates, { message: "Duplicate values found" })
-    .transform((value) => new Set(value)),
-  paymentOptions: Zod.array(Zod.string())
-    .refine(hasNoDuplicates, { message: "Duplicate values found" })
-    .transform((value) => new Set(value)),
-  tags: Zod.array(Zod.string())
-    .refine(hasNoDuplicates, { message: "Duplicate values found" })
-    .transform((value) => new Set(value)),
+  amenities: Zod.array(Zod.string()).refine(hasNoDuplicates, {
+    message: "Duplicate values found",
+  }),
+  paymentOptions: Zod.array(Zod.string()).refine(hasNoDuplicates, {
+    message: "Duplicate values found",
+  }),
+  tags: Zod.array(Zod.string()).refine(hasNoDuplicates, {
+    message: "Duplicate values found",
+  }),
   reviews: Zod.array(
     Zod.object({
       id: Zod.uuid(),
