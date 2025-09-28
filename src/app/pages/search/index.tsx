@@ -1,4 +1,4 @@
-import { useLocation } from "wouter"
+import { Link as LinkWouter, useLocation, useSearchParams } from "wouter"
 import { Form } from "@base-ui-components/react/form"
 import { Field } from "@base-ui-components/react/field"
 import { Input } from "@base-ui-components/react/input"
@@ -9,19 +9,26 @@ import * as Scroll from "@/components/scroll"
 
 import { Topbar } from "@/components/topbar"
 import { Pill } from "@/components/pill"
+import { useEffect } from "react"
 
+export * from "./filter"
 export * from "./results"
-export * from "./results/filter"
+export { Filters as ResultsFilters } from "./results/filter"
 
 type FormValues = { term: string }
-const defaultValues: FormValues = { term: "" }
 
 export function Search() {
   const [, setLocation] = useLocation()
+  const [params, setParams] = useSearchParams()
+
+  const term = params.get("term") ?? ""
+
+  const defaultValues: FormValues = { term }
 
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormValues>({
     criteriaMode: "all",
@@ -30,10 +37,18 @@ export function Search() {
     defaultValues,
   })
 
-  function onSubmit(formValues: FormValues) {
-    const params = new URLSearchParams(formValues)
-    setLocation(`/search/results?${params}`)
-  }
+  useEffect(() => {
+    const { unsubscribe } = watch(({ term }) => {
+      if (term === undefined) {
+        return
+      }
+
+      const clone = new URLSearchParams(params)
+      clone.set("term", term)
+      setParams(clone)
+    })
+    return () => unsubscribe()
+  }, [watch])
 
   return (
     <section className="relative flex flex-col min-h-svh">
@@ -51,7 +66,9 @@ export function Search() {
               has-focus:shadow-md/10 has-focus:border-neutral-400 has-focus:outline-primary
               ${Object.entries(errors).length !== 0 && "!border-red-200 outline-transparent has-focus:outline-red-600"}
           `}
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(() =>
+            setLocation(`/search/results?${params.toString()}`),
+          )}
         >
           <ButtonSearch />
           <Controller
@@ -95,7 +112,7 @@ export function Search() {
               )
             }}
           />
-          <ButtonFilter handleClick={() => {}} />
+          <ButtonFilter href={`/search/filters?${params.toString()}`} />
         </Form>
       </section>
     </section>
@@ -113,15 +130,14 @@ function ButtonSearch() {
   )
 }
 
-type ButtonFilterProps = { handleClick: () => void }
-function ButtonFilter({ handleClick }: ButtonFilterProps) {
+type ButtonFilterProps = { href: string }
+function ButtonFilter({ href }: ButtonFilterProps) {
   return (
-    <button
-      type="button"
-      onClick={handleClick}
+    <LinkWouter
+      href={href}
       className="h-full rounded-full aspect-square bg-neutral-200/50 flex items-center justify-center"
     >
       <SlidersHorizontalIcon className="size-5 text-primary stroke-3" />
-    </button>
+    </LinkWouter>
   )
 }
