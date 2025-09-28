@@ -7,10 +7,10 @@ import * as RemoteData from "@/lib/remote-data"
 
 import * as Business from "@/components/business"
 import * as Breadcrumbs from "@/components/breadcrumbs"
+import * as Header from "@/components/header"
 import * as Scroll from "@/components/scroll"
 
 import { Topbar } from "@/components/topbar"
-import { WithControls as Header } from "@/components/header"
 
 import { getInTown } from "@/utils/business"
 
@@ -21,7 +21,7 @@ export function Town() {
     const tag = "missing"
     const details = { tag } as const
     const parameter = "town"
-    const schema = "/cities/:city/:town"
+    const schema = "/discover/cities/:city/:town"
     throw new PathParameterError(parameter, schema, details)
   }
 
@@ -29,7 +29,7 @@ export function Town() {
     const tag = "missing"
     const details = { tag } as const
     const parameter = "city"
-    const schema = "/cities/:city/:town"
+    const schema = "/discover/cities/:city/:town"
     throw new PathParameterError(parameter, schema, details)
   }
 
@@ -45,18 +45,20 @@ export function Town() {
 
       <Topbar />
 
-      <section className="px-4">
+      <section className="p-4 flex flex-col gap-10">
         <div className="flex flex-col gap-2">
           <Breadcrumbs.Root>
-            <Breadcrumbs.Crumb href="/explore">Explore</Breadcrumbs.Crumb>
+            <Breadcrumbs.Crumb href="/discover">Discover</Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />
-            <Breadcrumbs.Crumb href="/explore/cities">Cities</Breadcrumbs.Crumb>
+            <Breadcrumbs.Crumb href="/discover/cities">
+              Cities
+            </Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />
-            <Breadcrumbs.Crumb href={`/explore/cities/${city}`}>
+            <Breadcrumbs.Crumb href={`/discover/cities/${city}`}>
               {city}
             </Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />
-            <Breadcrumbs.Crumb href={`/explore/cities/${city}/${town}`} active>
+            <Breadcrumbs.Crumb href={`/discover/cities/${city}/${town}`} active>
               {town}
             </Breadcrumbs.Crumb>
           </Breadcrumbs.Root>
@@ -88,8 +90,6 @@ export function Town() {
             </Header.Control.Root>
           </Header.Root>
         </div>
-
-        <div className="h-6" />
 
         {RemoteData.fold3Unsafe(businesses, {
           onNone: (): React.ReactNode => {

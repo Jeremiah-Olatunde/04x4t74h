@@ -5,7 +5,7 @@ import * as Filter from "@/features/business/components/filter"
 
 import { Topbar } from "@/components/topbar"
 import * as Scroll from "@/components/scroll"
-import { WithControls as Header } from "@/components/header"
+import * as Header from "@/components/header"
 
 export function Filters() {
   const [searchParams] = useSearchParams()

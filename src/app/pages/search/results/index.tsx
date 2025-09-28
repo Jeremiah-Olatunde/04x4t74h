@@ -9,7 +9,7 @@ import * as Breadcrumbs from "@/components/breadcrumbs"
 import * as Scroll from "@/components/scroll"
 
 import { Topbar } from "@/components/topbar"
-import { WithControls as Header } from "@/components/header"
+import * as Header from "@/components/header"
 
 import { search } from "@/utils/business"
 
@@ -30,11 +30,9 @@ export function Results() {
 
       <Topbar />
 
-      <section className="px-4">
-        <div className="flex flex-col gap-2">
+      <section className="p-4 flex flex-col gap-10">
+        <div className="flex flex-col items-center gap-2">
           <Breadcrumbs.Root>
-            <Breadcrumbs.Crumb href="/search">Search</Breadcrumbs.Crumb>
-            <Breadcrumbs.Divider />
             <Breadcrumbs.Crumb href="#" active>
               Results
             </Breadcrumbs.Crumb>
@@ -52,8 +50,9 @@ export function Results() {
                         <span className="font-semibold">
                           {businesses.length}
                         </span>
-                        <span> businesses matching </span>
+                        <span> results for </span>
                         <span className="font-semibold">"{term}"</span>
+                        <span> matching filters </span>
                       </>
                     )
                   },
@@ -69,8 +68,6 @@ export function Results() {
             </Header.Control.Root>
           </Header.Root>
         </div>
-
-        <div className="h-6" />
 
         {RemoteData.fold3Unsafe(businesses, {
           onNone: (): React.ReactNode => {

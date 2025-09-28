@@ -1,6 +1,8 @@
 import { type ReactNode } from "react"
+import { useParams } from "wouter"
 
 import { useBusinessAllCache } from "@/hooks/business"
+import { PathParameterError } from "@/lib/errors/ui"
 import * as RemoteData from "@/lib/remote-data"
 
 import * as Business from "@/components/business"
@@ -8,10 +10,26 @@ import * as Breadcrumbs from "@/components/breadcrumbs"
 import * as Scroll from "@/components/scroll"
 
 import { Topbar } from "@/components/topbar"
-import { WithControls as Header } from "@/components/header"
+import * as Header from "@/components/header"
 
-export function Businesses() {
-  const businesses = useBusinessAllCache()
+import { getInCategory } from "@/utils/business"
+
+export function Category() {
+  const { name } = useParams()
+
+  if (name === undefined) {
+    const tag = "missing"
+    const details = { tag } as const
+    const parameter = "name"
+    const schema = "/categories/:name"
+    throw new PathParameterError(parameter, schema, details)
+  }
+
+  const remoteData = useBusinessAllCache()
+
+  const businesses = RemoteData.map(remoteData, (businesses) => {
+    return getInCategory(businesses, name)
+  })
 
   return (
     <section className="min-h-screen">
@@ -20,19 +38,17 @@ export function Businesses() {
 
       <Topbar />
 
-      <section className="px-4">
-        <div className="flex flex-col gap-2">
+      <section className="p-4">
+        <div className="flex flex-col gap-2 justify-center items-center">
           <Breadcrumbs.Root>
-            <Breadcrumbs.Crumb href="/explore">Explore</Breadcrumbs.Crumb>
-            <Breadcrumbs.Divider />
-            <Breadcrumbs.Crumb href="/explore/businesses" active>
-              Businesses
+            <Breadcrumbs.Crumb href="#" active>
+              Category
             </Breadcrumbs.Crumb>
           </Breadcrumbs.Root>
 
           <Header.Root>
             <Header.Content>
-              <Header.Title>Businesses</Header.Title>
+              <Header.Title>{name}</Header.Title>
               <Header.Subtitle>
                 {RemoteData.fold3Unsafe(businesses, {
                   onNone: (): ReactNode => <Header.Skeleton.Subtitle />,
@@ -42,7 +58,9 @@ export function Businesses() {
                         <span className="font-semibold">
                           {businesses.length}
                         </span>
-                        <span> businesses on Plazzaa </span>
+                        <span> businesses in </span>
+                        <span className="font-semibold capitalize">{name}</span>
+                        <span> matching filters</span>
                       </>
                     )
                   },
@@ -57,7 +75,7 @@ export function Businesses() {
           </Header.Root>
         </div>
 
-        <div className="h-6" />
+        <div className="h-10" />
 
         {RemoteData.fold3Unsafe(businesses, {
           onNone: (): React.ReactNode => {

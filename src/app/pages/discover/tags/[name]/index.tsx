@@ -10,7 +10,7 @@ import * as Breadcrumbs from "@/components/breadcrumbs"
 import * as Scroll from "@/components/scroll"
 
 import { Topbar } from "@/components/topbar"
-import { WithControls as Header } from "@/components/header"
+import * as Header from "@/components/header"
 
 import { getWithTag } from "@/utils/business"
 
@@ -21,7 +21,7 @@ export function Tag() {
     const tag = "missing"
     const details = { tag } as const
     const parameter = "name"
-    const schema = "/tags/:name"
+    const schema = "/discover/tags/:name"
     throw new PathParameterError(parameter, schema, details)
   }
 
@@ -38,15 +38,11 @@ export function Tag() {
 
       <Topbar />
 
-      <section className="px-4">
-        <div className="flex flex-col gap-2">
+      <section className="px-4 py-4">
+        <div className="flex flex-col gap-2 items-center">
           <Breadcrumbs.Root>
-            <Breadcrumbs.Crumb href="/explore">Explore</Breadcrumbs.Crumb>
-            <Breadcrumbs.Divider />
-            <Breadcrumbs.Crumb href="/explore/tags">Tags</Breadcrumbs.Crumb>
-            <Breadcrumbs.Divider />
             <Breadcrumbs.Crumb href="#" active>
-              {name}
+              Tag
             </Breadcrumbs.Crumb>
           </Breadcrumbs.Root>
 
@@ -62,9 +58,9 @@ export function Tag() {
                         <span className="font-semibold">
                           {businesses.length}
                         </span>
-                        <span> businesses under the </span>
+                        <span> businesses under </span>
                         <span className="font-semibold capitalize">{name}</span>
-                        <span> category</span>
+                        <span> matching filters</span>
                       </>
                     )
                   },
@@ -79,7 +75,7 @@ export function Tag() {
           </Header.Root>
         </div>
 
-        <div className="h-6" />
+        <div className="h-10" />
 
         {RemoteData.fold3Unsafe(businesses, {
           onNone: (): React.ReactNode => {
