@@ -11,7 +11,7 @@ import type { PropsWithChildren } from "react"
 type ControlsProps = {}
 export function Root({ children }: PropsWithChildren<ControlsProps>) {
   return (
-    <div className="flex flex-col justify-center items-stretch gap-1">
+    <div className="flex flex-row justify-center items-center gap-1">
       {children}
     </div>
   )
@@ -50,7 +50,13 @@ export function Apply({ href }: ApplyProps) {
 type ResetProps = { href: string }
 export function Reset({ ...props }: ResetProps) {
   return (
-    <Clickable.Badge as="link" {...props} replace={true} size="sm" color="red">
+    <Clickable.Badge
+      as="link"
+      {...props}
+      replace={true}
+      size="sm"
+      color="white"
+    >
       <span>Reset</span>
       <XIcon className="size-4" />
     </Clickable.Badge>

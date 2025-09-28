@@ -8,7 +8,6 @@ import { Unexpected, Http } from "@/components/error"
 import { Business } from "@/app/pages/business/[businessId]/home/[page]"
 import { ReviewCreate } from "@/app/pages/business/[businessId]/reviews/create"
 
-import * as Explore from "@/app/pages/explore"
 import * as Discover from "@/app/pages/discover"
 import * as Search from "@/app/pages/search"
 import { Login } from "@/app/pages/auth/login"
@@ -70,19 +69,20 @@ export function Router() {
           component={Discover.Recommendations}
         />
 
-        <Route path="/explore" component={Explore.Explore} />
+        <Route path="/discover/businesses" component={Discover.Businesses} />
 
-        <Route path="/explore/businesses" component={Explore.Businesses} />
+        <Route path="/discover/tags" component={Discover.Tags} />
+        <Route path="/discover/tags/:name" component={Discover.Tag} />
 
-        <Route path="/explore/tags" component={Explore.Tags} />
-        <Route path="/explore/tags/:name" component={Explore.Tag} />
+        <Route path="/discover/categories" component={Discover.Categories} />
+        <Route
+          path="/discover/categories/:name"
+          component={Discover.Category}
+        />
 
-        <Route path="/explore/cities" component={Explore.Cities} />
-        <Route path="/explore/cities/:city" component={Explore.City} />
-        <Route path="/explore/cities/:city/:town" component={Explore.Town} />
-
-        <Route path="/explore/categories" component={Explore.Categories} />
-        <Route path="/explore/categories/:name" component={Explore.Category} />
+        <Route path="/discover/cities" component={Discover.Cities} />
+        <Route path="/discover/cities/:city" component={Discover.City} />
+        <Route path="/discover/cities/:city/:town" component={Discover.Town} />
 
         <Route path="/business/:businessId/home/:page" component={Business} />
         <Route
@@ -98,7 +98,11 @@ export function Router() {
 
         <Route path="/search" component={Search.Search} />
         <Route path="/search/results" component={Search.Results} />
-        <Route path="/search/results/filters" component={Search.Filters} />
+        <Route path="/search/filters" component={Search.Filters} />
+        <Route
+          path="/search/results/filters"
+          component={Search.ResultsFilters}
+        />
 
         <Route>page not found</Route>
       </Switch>

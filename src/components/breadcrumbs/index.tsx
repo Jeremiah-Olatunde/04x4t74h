@@ -6,7 +6,7 @@ export function Root({ children }: PropsWithChildren<{}>) {
   return (
     <nav>
       <ul>
-        <div className="bg-neutral-50 rounded-s-full rounded-e-full py-1 px-2 w-min flex gap-1 items-center justify-center">
+        <div className="bg-neutral-50 rounded-s-full rounded-e-full py-1 px-3 w-min flex gap-1 items-center justify-center">
           {children}
         </div>
       </ul>
@@ -21,7 +21,7 @@ export function Crumb({ active, children, href }: CrumbProps) {
       <LinkWouter href={href}>
         <div
           className={`
-        font-sora font-semibold text-xxs capitalize whitespace-nowrap
+        font-sora font-bold text-xxs capitalize whitespace-nowrap
         ${active ? "text-primary" : "text-neutral-400"}
       `}
         >

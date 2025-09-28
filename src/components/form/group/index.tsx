@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react"
 
-import { Centered as Header } from "@/components/header"
+import * as Header from "@/components/header"
 
 type RootProps = { name: string }
 export function Root({ name, children }: PropsWithChildren<RootProps>) {
