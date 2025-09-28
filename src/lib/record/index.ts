@@ -26,5 +26,5 @@ export function groupBy<
 
 export function get<K extends keyof V, V>(key: K, values: readonly V[]) {
   const items = values.map((value) => value[key])
-  return new Set(items).values().toArray()
+  return new Set(items.flat(1)).values().toArray()
 }
