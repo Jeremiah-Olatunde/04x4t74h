@@ -4,7 +4,7 @@ import { useSearchParams } from "wouter"
 import { useBusinessAllCache } from "@/hooks/business"
 
 import * as RemoteData from "@/lib/remote-data"
-import * as Business from "@/components/business"
+import * as Business from "@/features/business/components"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import * as Scroll from "@/components/scroll"
 
@@ -14,19 +14,23 @@ import * as Header from "@/components/header"
 import { search } from "@/utils/business"
 
 import { Chips } from "@/features/business/components/filter"
-import * as Url from "@/features/business/lib/url"
+import { Url, Filter } from "@/features/business/lib"
 
 export function Results() {
   const [params] = useSearchParams()
-  const term = params.get("term") ?? ""
+  const term = params.get("term")
+
+  if (term === "" || term === null) {
+    throw new Error("[search] term can be neither empty nor null")
+  }
+
+  const filters = Url.enumerate(params)
 
   const remoteData = useBusinessAllCache()
   const businesses = RemoteData.map(remoteData, (businesses) => {
-    const filteredSearch = search(businesses, term)
-    return filteredSearch
+    const searched = search(businesses, term)
+    return Filter.apply(Filter.fromParams(params), searched)
   })
-
-  const chips = Url.enumerate(params)
 
   return (
     <section className="min-h-screen">
@@ -74,14 +78,14 @@ export function Results() {
           </Header.Root>
         </div>
 
-        <Chips chips={chips} />
+        <Chips chips={filters} />
 
         {RemoteData.fold3Unsafe(businesses, {
           onNone: (): React.ReactNode => {
-            return <Business.CardGrid.Skeleton.Grid />
+            return <Business.Skeleton.CardGrid />
           },
           onSuccess: (businesses): React.ReactNode => {
-            return <Business.CardGrid.Grid businesses={businesses} />
+            return <Business.CardGrid businesses={businesses} />
           },
         })}
       </section>

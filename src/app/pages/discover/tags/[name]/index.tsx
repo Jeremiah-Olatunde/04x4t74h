@@ -5,7 +5,7 @@ import { useBusinessAllCache } from "@/hooks/business"
 import { PathParameterError } from "@/lib/errors/ui"
 import * as RemoteData from "@/lib/remote-data"
 
-import * as Business from "@/components/business"
+import * as Business from "@/features/business/components"
 import * as Breadcrumbs from "@/components/breadcrumbs"
 import * as Scroll from "@/components/scroll"
 
@@ -15,7 +15,7 @@ import * as Header from "@/components/header"
 import { getWithTag } from "@/utils/business"
 
 import { Chips } from "@/features/business/components/filter"
-import * as Url from "@/features/business/lib/url"
+import { Url, Filter } from "@/features/business/lib"
 
 export function Tag() {
   const { name } = useParams()
@@ -32,7 +32,8 @@ export function Tag() {
   const remoteData = useBusinessAllCache()
 
   const businesses = RemoteData.map(remoteData, (businesses) => {
-    return getWithTag(businesses, name)
+    const filterate = getWithTag(businesses, name)
+    return Filter.apply(Filter.fromParams(params), filterate)
   })
 
   const chips = Url.enumerate(params)
@@ -91,10 +92,10 @@ export function Tag() {
 
         {RemoteData.fold3Unsafe(businesses, {
           onNone: (): React.ReactNode => {
-            return <Business.CardGrid.Skeleton.Grid />
+            return <Business.Skeleton.CardGrid />
           },
           onSuccess: (businesses): React.ReactNode => {
-            return <Business.CardGrid.Grid businesses={businesses} />
+            return <Business.CardGrid businesses={businesses} />
           },
         })}
       </section>
