@@ -18,7 +18,6 @@ import { Icon } from "@/components/icon"
 import type { Service } from "@/types/service"
 import type { Review } from "@/types/review"
 import { LinkText } from "@/components/link"
-import { ButtonShare } from "@/components/button"
 import { Topbar } from "@/components/topbar"
 
 import * as Scroll from "@/components/scroll"
@@ -110,35 +109,33 @@ type HeroProps = {
   business: Business
 }
 
-class BusinessSharingError extends Error {}
-
 function Hero({ business }: HeroProps) {
   return (
     <section className="flex flex-col gap-6 px-6">
       <div className="h-62 rounded-xl grow-1 bg-neutral-50 relative">
         <div className="p-2 flex flex-row gap-1 absolute top-0 right-0">
-          <ButtonShare
-            onClick={() => {
-              const text = `Discover ${business.name} in ${business.town}, ${business.city} with Plazzaa.`
-              const url = `https://plazzaa.com/business/${business.id}/home/menu`
-              const title = `${business.name} on Plazzaa`
-              const shareData = { text, title, url }
-
-              if (navigator.canShare?.()) {
-                navigator
-                  .share(shareData)
-                  .then(() => {
-                    console.log("sharing successful")
-                  })
-                  .catch((cause) => {
-                    const message = "Unable to share business"
-                    throw new BusinessSharingError(message, { cause })
-                  })
-              } else {
-                console.log("sharing not available")
-              }
-            }}
-          />
+          {/* <ButtonShare */}
+          {/*   onClick={() => { */}
+          {/*     const text = `Discover ${business.name} in ${business.town}, ${business.city} with Plazzaa.` */}
+          {/*     const url = `https://plazzaa.com/business/${business.id}/home/menu` */}
+          {/*     const title = `${business.name} on Plazzaa` */}
+          {/*     const shareData = { text, title, url } */}
+          {/**/}
+          {/*     if (navigator.canShare?.()) { */}
+          {/*       navigator */}
+          {/*         .share(shareData) */}
+          {/*         .then(() => { */}
+          {/*           console.log("sharing successful") */}
+          {/*         }) */}
+          {/*         .catch((cause) => { */}
+          {/*           const message = "Unable to share business" */}
+          {/*           throw new BusinessSharingError(message, { cause }) */}
+          {/*         }) */}
+          {/*     } else { */}
+          {/*       console.log("sharing not available") */}
+          {/*     } */}
+          {/*   }} */}
+          {/* /> */}
           {/* <ButtonLike active={false} /> */}
         </div>
         <img
@@ -168,7 +165,7 @@ function Hero({ business }: HeroProps) {
               Open
             </span>
             <span className="font-sora text-xs text-neutral-400">
-              07:00 &mdash; 21:00
+              09:00 &mdash; 17:00
             </span>
           </li>
           <li className="flex flex-row gap-2 items-center">
@@ -216,6 +213,7 @@ function KakashiSkeleton({ id }: KakashiSkeletonProps) {
   const isMenu = page === "menu"
   const isReviews = page === "reviews"
   const isInfo = page === "info"
+  const isPromos = page === "promos"
 
   if (page === undefined) {
     const tag = "missing"
@@ -225,7 +223,7 @@ function KakashiSkeleton({ id }: KakashiSkeletonProps) {
     throw new PathParameterError(parameter, schema, details)
   }
 
-  if (!(isMenu || isReviews || isInfo)) {
+  if (!(isMenu || isReviews || isInfo || isPromos)) {
     const value = page
     const tag = "invalid"
     const details = { tag, value } as const
@@ -249,17 +247,26 @@ function KakashiSkeleton({ id }: KakashiSkeletonProps) {
           >
             Menu
           </Tabs.Tab>
+
           <Tabs.Tab
             value="reviews"
             className={`font-sora text-neutral-400 text-xs ${page === "reviews" && "font-semibold text-neutral-700"}`}
           >
             Reviews
           </Tabs.Tab>
+
           <Tabs.Tab
             value="info"
             className={`font-sora text-neutral-400 text-xs ${page === "info" && "font-semibold text-neutral-700"}`}
           >
             Information
+          </Tabs.Tab>
+
+          <Tabs.Tab
+            value="promos"
+            className={`font-sora text-neutral-400 text-xs ${page === "promos" && "font-semibold text-neutral-700"}`}
+          >
+            Promos
           </Tabs.Tab>
         </Tabs.List>
 
@@ -273,6 +280,10 @@ function KakashiSkeleton({ id }: KakashiSkeletonProps) {
 
         <Tabs.Panel value="info">
           <InfoSkeleton />
+        </Tabs.Panel>
+
+        <Tabs.Panel value="promos">
+          <PromosTab />
         </Tabs.Panel>
       </Tabs.Root>
     </section>
@@ -288,6 +299,7 @@ function Kakashi({ business }: KakashiProps) {
   const isMenu = page === "menu"
   const isReviews = page === "reviews"
   const isInfo = page === "info"
+  const isPromos = page === "promos"
 
   if (page === undefined) {
     const tag = "missing"
@@ -297,7 +309,7 @@ function Kakashi({ business }: KakashiProps) {
     throw new PathParameterError(parameter, schema, details)
   }
 
-  if (!(isMenu || isReviews || isInfo)) {
+  if (!(isMenu || isReviews || isInfo || isPromos)) {
     const value = page
     const tag = "invalid"
     const details = { tag, value } as const
@@ -322,17 +334,26 @@ function Kakashi({ business }: KakashiProps) {
           >
             Menu
           </Tabs.Tab>
+
           <Tabs.Tab
             value="reviews"
             className={`font-sora text-neutral-400 text-xs ${page === "reviews" && "font-semibold text-neutral-700"}`}
           >
             Reviews
           </Tabs.Tab>
+
           <Tabs.Tab
             value="info"
             className={`font-sora text-neutral-400 text-xs ${page === "info" && "font-semibold text-neutral-700"}`}
           >
             Information
+          </Tabs.Tab>
+
+          <Tabs.Tab
+            value="promos"
+            className={`font-sora text-neutral-400 text-xs ${page === "promos" && "font-semibold text-neutral-700"}`}
+          >
+            Promos
           </Tabs.Tab>
         </Tabs.List>
 
@@ -346,6 +367,10 @@ function Kakashi({ business }: KakashiProps) {
 
         <Tabs.Panel value="info">
           <InfoTab telephone={business.telephone} />
+        </Tabs.Panel>
+
+        <Tabs.Panel value="promos">
+          <PromosTab />
         </Tabs.Panel>
       </Tabs.Root>
     </section>
@@ -611,5 +636,17 @@ function InfoTab({ telephone }: InfoTabProps) {
         </div>
       </div>
     </section>
+  )
+}
+
+export function PromosTab() {
+  return (
+    <p className="p-6 font-sora text-neutral-500 text-sm">
+      A dedicated Promotions tab where you’ll be able to browse time-limited
+      offers from businesses. These promotions will highlight discounted deals,
+      seasonal specials, and exclusive packages, each available for a set
+      duration. Once live, this space will serve as your go-to hub for
+      discovering savings across food, beauty, nightlife, and more
+    </p>
   )
 }
