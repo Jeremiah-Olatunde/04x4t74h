@@ -18,7 +18,10 @@ export function Filters() {
       <Form.Form>
         <Form.Header.Root>
           <Form.Header.Back />
-          <Form.Header.Title term={term ?? ""} />
+          <Form.Header.Content.Root>
+            <span>Filtering search for </span>
+            <span className="font-semibold">"{term}"</span>
+          </Form.Header.Content.Root>
           <Form.Header.Apply href={`${base}/?${params.toString()}`} />
         </Form.Header.Root>
 

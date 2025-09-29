@@ -73,11 +73,19 @@ export function Router() {
 
         <Route path="/discover/tags" component={Discover.Tags} />
         <Route path="/discover/tags/:name" component={Discover.Tag} />
+        <Route
+          path="/discover/tags/:name/filters"
+          component={Discover.TagFilters}
+        />
 
         <Route path="/discover/categories" component={Discover.Categories} />
         <Route
           path="/discover/categories/:name"
           component={Discover.Category}
+        />
+        <Route
+          path="/discover/categories/:name/filters"
+          component={Discover.CategoryFilters}
         />
 
         <Route path="/discover/cities" component={Discover.Cities} />

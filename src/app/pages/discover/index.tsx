@@ -15,13 +15,18 @@ import { getCities, getInCity, groupByTag } from "@/utils/business"
 export { Recommendations } from "./recommendations"
 
 export { Businesses } from "./businesses"
+
 export { Tags } from "./tags"
 export { Tag } from "./tags/[name]"
+export { Filters as TagFilters } from "./tags/[name]/filters"
+
 export { Cities } from "./cities"
 export { City } from "./cities/[city]"
 export { Town } from "./cities/[city]/[town]"
+
 export { Categories } from "./categories"
 export { Category } from "./categories/[name]"
+export { Filters as CategoryFilters } from "./categories/[name]/filters"
 
 export function Discover() {
   const remoteData = useBusinessAllCache()

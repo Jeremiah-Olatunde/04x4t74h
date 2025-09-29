@@ -4,6 +4,8 @@ import { Link as LinkWouter } from "wouter"
 
 import * as Clickable from "@/components/clickable"
 
+export * as Content from "./content"
+
 type RootProps = {}
 export function Root({ children }: PropsWithChildren<RootProps>) {
   return (
@@ -39,21 +41,6 @@ export function Apply({ href }: ApplyProps) {
       >
         Apply
       </LinkWouter>
-    </div>
-  )
-}
-
-type TitleProps = { term: string }
-export function Title({ term }: TitleProps) {
-  return (
-    <div className="flex flex-col justify-center items-center">
-      <span className="font-sora text-neutral-600 text-lg font-bold">
-        Filters
-      </span>
-      <span className="font-sora text-neutral-400 text-xs text-center">
-        Filtering results for
-        <span className="font-medium"> "{term}"</span>
-      </span>
     </div>
   )
 }

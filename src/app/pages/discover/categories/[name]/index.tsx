@@ -1,5 +1,5 @@
 import { type ReactNode } from "react"
-import { useParams } from "wouter"
+import { useParams, useSearchParams } from "wouter"
 
 import { useBusinessAllCache } from "@/hooks/business"
 import { PathParameterError } from "@/lib/errors/ui"
@@ -16,6 +16,7 @@ import { getInCategory } from "@/utils/business"
 
 export function Category() {
   const { name } = useParams()
+  const [params] = useSearchParams()
 
   if (name === undefined) {
     const tag = "missing"
@@ -69,7 +70,9 @@ export function Category() {
             </Header.Content>
 
             <Header.Control.Root>
-              <Header.Control.Filters href="#" />
+              <Header.Control.Filters
+                href={`/discover/categories/${name}/filters?${params.toString()}`}
+              />
               <Header.Control.Sort href="#" />
             </Header.Control.Root>
           </Header.Root>
