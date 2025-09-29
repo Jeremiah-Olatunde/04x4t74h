@@ -31,6 +31,7 @@ export function Filters() {
           <Form.Header.Content.Root>
             <span>Filtering business with </span>
             <span className="capitalize font-semibold">{name}</span>
+            <span> tag</span>
           </Form.Header.Content.Root>
 
           <Form.Header.Apply href={`${base}/?${params.toString()}`} />
