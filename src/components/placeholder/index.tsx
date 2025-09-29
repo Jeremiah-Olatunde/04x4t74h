@@ -69,7 +69,7 @@ export function Content({ children }: ContentProps) {
 export function Back() {
   return (
     <div>
-      <ButtonBadge color="neutral" size="md">
+      <ButtonBadge color="neutral" size="md" onClick={() => history.back()}>
         Back
       </ButtonBadge>
     </div>
@@ -78,7 +78,7 @@ export function Back() {
 
 export function Home() {
   return (
-    <LinkBadge href="/discover/home" size="md" color="white">
+    <LinkBadge href="/discover" size="md" color="white">
       Home
     </LinkBadge>
   )
