@@ -50,7 +50,7 @@ export function TextArea({
   return (
     <div className={generateClasses({ color })}>
       <textarea
-        className="w-0 h-64 p-4 grow border-none font-sora text-xs text-neutral-600 outline-none placeholder:text-neutral-400"
+        className="w-0 h-56 p-4 grow border-none font-sora text-xs text-neutral-600 outline-none placeholder:text-neutral-400"
         {...rest}
       />
       {children && (

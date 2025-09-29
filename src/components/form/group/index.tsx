@@ -2,10 +2,14 @@ import type { PropsWithChildren } from "react"
 
 import * as Header from "@/components/header"
 
-type RootProps = { name: string }
-export function Root({ name, children }: PropsWithChildren<RootProps>) {
+type RootProps = { name: string; disabled?: boolean }
+export function Root({
+  name,
+  children,
+  disabled,
+}: PropsWithChildren<RootProps>) {
   return (
-    <fieldset name={name} className="contents">
+    <fieldset name={name} className="contents" disabled={disabled}>
       <div className="min-w-0 w-full flex flex-col gap-6 grow-1">
         {children}
       </div>

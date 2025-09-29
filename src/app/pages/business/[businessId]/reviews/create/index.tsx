@@ -150,6 +150,7 @@ function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
                   type="number"
                   id={field.name}
                   className="hidden"
+                  disabled={RemoteData.isSuccess(status)}
                 />
                 <div className="flex gap-4 items-center">
                   <ul className="flex gap-1">
@@ -215,6 +216,7 @@ function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
                   autoComplete="off"
                   color={fieldState.invalid ? "red" : "neutral"}
                   placeholder="Write your review"
+                  disabled={RemoteData.isSuccess(status)}
                 />
                 <Form.Field.Errors errors={errors} />
               </Form.Field.Root>
@@ -226,7 +228,9 @@ function ReviewCreateForm({ businessId }: ReviewCreateFormProps) {
           onInitial: (): ReactNode => <Form.Button.ShareYourExperience />,
           onPending: (): ReactNode => <Form.Button.Pending />,
           onFailure: (): ReactNode => <Form.Button.TryAgain />,
-          onSuccess: (): ReactNode => <Form.Button.Success />,
+          onSuccess: (): ReactNode => (
+            <Form.Button.Success onClick={() => history.back()} />
+          ),
         })}
       </Form.Group.Root>
     </Form.Root>

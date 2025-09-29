@@ -6,6 +6,7 @@ import {
   EyeOffIcon,
   LoaderCircleIcon,
 } from "lucide-react"
+import type { ComponentProps } from "react"
 
 type FieldPasswordToggleProps = {
   visible: boolean
@@ -54,9 +55,9 @@ export function SignUp() {
   )
 }
 
-export function TryAgain() {
+export function TryAgain({ ...props }: ComponentProps<"button">) {
   return (
-    <ButtonBadge type="submit" color="purple" size="lg">
+    <ButtonBadge {...props} type="submit" color="purple" size="lg">
       TryAgain
     </ButtonBadge>
   )
@@ -69,9 +70,9 @@ export function Pending() {
     </ButtonBadge>
   )
 }
-export function Success() {
+export function Success({ ...props }: ComponentProps<"button">) {
   return (
-    <ButtonBadge type="button" color="purple" size="lg">
+    <ButtonBadge {...props} type="button" color="purple" size="lg">
       <CheckCheckIcon className="size-5" />
     </ButtonBadge>
   )
