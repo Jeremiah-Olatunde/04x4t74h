@@ -48,8 +48,12 @@ export function Tag() {
       <section className="p-4 flex flex-col gap-6">
         <div className="flex flex-col gap-2 items-center">
           <Breadcrumbs.Root>
+            <Breadcrumbs.Crumb href="/discover">Discover</Breadcrumbs.Crumb>
+            <Breadcrumbs.Divider />
+            <Breadcrumbs.Crumb href="/discover/tags">Tags</Breadcrumbs.Crumb>
+            <Breadcrumbs.Divider />
             <Breadcrumbs.Crumb href="#" active>
-              Tag
+              {name}
             </Breadcrumbs.Crumb>
           </Breadcrumbs.Root>
 

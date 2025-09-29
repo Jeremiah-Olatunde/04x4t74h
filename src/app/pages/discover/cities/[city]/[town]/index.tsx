@@ -45,8 +45,8 @@ export function Town() {
 
       <Topbar />
 
-      <section className="p-4 flex flex-col gap-10">
-        <div className="flex flex-col gap-2">
+      <section className="p-4 flex flex-col gap-6">
+        <div className="flex flex-col items-center gap-2">
           <Breadcrumbs.Root>
             <Breadcrumbs.Crumb href="/discover">Discover</Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />
@@ -76,7 +76,10 @@ export function Town() {
                           {businesses.length}
                         </span>
                         <span> businesses in </span>
-                        <span className="font-semibold capitalize">{town}</span>
+                        <span className="font-semibold capitalize">
+                          {town},
+                        </span>
+                        <span> {city}</span>
                       </>
                     )
                   },
