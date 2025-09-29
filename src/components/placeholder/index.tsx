@@ -33,7 +33,7 @@ export function Root({ children }: PropsWithChildren<RootProps>) {
     <div className="h-screen flex flex-col">
       <Topbar />
 
-      <section className="grow flex flex-col gap-4 px-6 py-8 justify-center">
+      <section className="flex flex-col gap-4 px-6 py-8 justify-center">
         {children}
       </section>
     </div>
