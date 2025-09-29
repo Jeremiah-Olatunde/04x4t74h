@@ -13,6 +13,9 @@ import * as Header from "@/components/header"
 
 import { search } from "@/utils/business"
 
+import { Chips } from "@/features/business/components/filter"
+import * as Url from "@/features/business/lib/url"
+
 export function Results() {
   const [params] = useSearchParams()
   const term = params.get("term") ?? ""
@@ -23,6 +26,8 @@ export function Results() {
     return filteredSearch
   })
 
+  const chips = Url.enumerate(params)
+
   return (
     <section className="min-h-screen">
       <Scroll.Auto.Top />
@@ -30,7 +35,7 @@ export function Results() {
 
       <Topbar />
 
-      <section className="p-4 flex flex-col gap-10">
+      <section className="p-4 flex flex-col gap-6">
         <div className="flex flex-col items-center gap-2">
           <Breadcrumbs.Root>
             <Breadcrumbs.Crumb href="#" active>
@@ -68,6 +73,8 @@ export function Results() {
             </Header.Control.Root>
           </Header.Root>
         </div>
+
+        <Chips chips={chips} />
 
         {RemoteData.fold3Unsafe(businesses, {
           onNone: (): React.ReactNode => {

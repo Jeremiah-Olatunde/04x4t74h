@@ -34,7 +34,7 @@ export function TogglePassword({
 export function Login() {
   return (
     <ButtonBadge type="submit" color="purple" size="lg">
-      Sign Up
+      Login
     </ButtonBadge>
   )
 }

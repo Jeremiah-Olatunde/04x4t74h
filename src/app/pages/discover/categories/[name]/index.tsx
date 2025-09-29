@@ -13,6 +13,9 @@ import { Topbar } from "@/components/topbar"
 import * as Header from "@/components/header"
 
 import { getInCategory } from "@/utils/business"
+import { Chips } from "@/features/business/components/filter"
+
+import * as Url from "@/features/business/lib/url"
 
 export function Category() {
   const { name } = useParams()
@@ -32,6 +35,8 @@ export function Category() {
     return getInCategory(businesses, name)
   })
 
+  const chips = Url.enumerate(params)
+
   return (
     <section className="min-h-screen">
       <Scroll.Auto.Top />
@@ -39,7 +44,7 @@ export function Category() {
 
       <Topbar />
 
-      <section className="p-4">
+      <section className="p-4 flex flex-col gap-6">
         <div className="flex flex-col gap-2 justify-center items-center">
           <Breadcrumbs.Root>
             <Breadcrumbs.Crumb href="#" active>
@@ -78,7 +83,7 @@ export function Category() {
           </Header.Root>
         </div>
 
-        <div className="h-10" />
+        <Chips chips={chips} />
 
         {RemoteData.fold3Unsafe(businesses, {
           onNone: (): React.ReactNode => {

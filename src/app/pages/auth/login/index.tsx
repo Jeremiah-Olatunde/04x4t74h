@@ -42,7 +42,7 @@ export function Login() {
   })
 
   useEffect(() => {
-    RemoteData.map(status, () => setTimeout(setLocation, 1000, "~/home"))
+    RemoteData.map(status, () => setTimeout(setLocation, 1000, "~/discover"))
   }, [status])
 
   async function onSubmit(formValues: FormValues) {

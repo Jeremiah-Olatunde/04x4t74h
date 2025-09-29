@@ -58,3 +58,20 @@ export function reset(params: URLSearchParams): URLSearchParams {
   clone.delete("subcategory")
   return clone
 }
+
+export function enumerate(
+  params: URLSearchParams,
+): readonly (readonly [string, string])[] {
+  return [
+    "category",
+    "subcategory",
+    "tag",
+    "city",
+    "town",
+    "amenity",
+    "paymentOption",
+  ].flatMap((name) => {
+    const rename = name === "paymentOption" ? "payment" : name
+    return params.getAll(name).map((_) => [rename, _] as const)
+  })
+}

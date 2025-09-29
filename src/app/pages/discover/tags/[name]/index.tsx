@@ -14,6 +14,9 @@ import * as Header from "@/components/header"
 
 import { getWithTag } from "@/utils/business"
 
+import { Chips } from "@/features/business/components/filter"
+import * as Url from "@/features/business/lib/url"
+
 export function Tag() {
   const { name } = useParams()
   const [params] = useSearchParams()
@@ -32,6 +35,8 @@ export function Tag() {
     return getWithTag(businesses, name)
   })
 
+  const chips = Url.enumerate(params)
+
   return (
     <section className="min-h-screen">
       <Scroll.Auto.Top />
@@ -39,7 +44,7 @@ export function Tag() {
 
       <Topbar />
 
-      <section className="px-4 py-4">
+      <section className="p-4 flex flex-col gap-6">
         <div className="flex flex-col gap-2 items-center">
           <Breadcrumbs.Root>
             <Breadcrumbs.Crumb href="#" active>
@@ -61,7 +66,7 @@ export function Tag() {
                         </span>
                         <span> businesses under </span>
                         <span className="font-semibold capitalize">{name}</span>
-                        <span> matching filters</span>
+                        {0 < chips.length && <span> matching filters</span>}
                       </>
                     )
                   },
@@ -78,7 +83,7 @@ export function Tag() {
           </Header.Root>
         </div>
 
-        <div className="h-10" />
+        <Chips chips={chips} />
 
         {RemoteData.fold3Unsafe(businesses, {
           onNone: (): React.ReactNode => {

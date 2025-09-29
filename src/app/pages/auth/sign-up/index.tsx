@@ -58,7 +58,9 @@ export function SignUp() {
   })
 
   useEffect(() => {
-    RemoteData.map(statusLogin, () => setTimeout(setLocation, 1000, "~/home"))
+    RemoteData.map(statusLogin, () =>
+      setTimeout(setLocation, 1000, "~/discover"),
+    )
   }, [statusLogin])
 
   async function onSubmit(formValues: FormValues) {

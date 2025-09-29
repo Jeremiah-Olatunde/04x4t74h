@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 
 import * as RemoteData from "@/lib/remote-data"
 import * as Form from "@/components/filter"
+import * as Chips_ from "@/components/filter/chips"
 
 import * as Url from "@/features/business/lib/url"
 import { useBusinessAllCache } from "@/hooks/business"
@@ -191,4 +192,24 @@ export function Subcategories() {
       )
     },
   })
+}
+
+type ChipsProps = {
+  chips: readonly (readonly [string, string])[]
+}
+
+export function Chips({ chips }: ChipsProps) {
+  if (0 === chips.length) {
+    return null
+  }
+
+  return (
+    <Chips_.Root>
+      {chips.map(([name, value]) => {
+        return (
+          <Chips_.Chip key={`${name}:${value}`} name={name} value={value} />
+        )
+      })}
+    </Chips_.Root>
+  )
 }

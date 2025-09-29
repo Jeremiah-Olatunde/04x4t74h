@@ -1,15 +1,29 @@
-import { Link as LinkWouter, useLocation, useSearchParams } from "wouter"
+import { useEffect, type ReactNode } from "react"
+import { Link, Link as LinkWouter, useLocation, useSearchParams } from "wouter"
 import { Form } from "@base-ui-components/react/form"
 import { Field } from "@base-ui-components/react/field"
 import { Input } from "@base-ui-components/react/input"
 import { Controller, useForm } from "react-hook-form"
-import { SearchIcon, SlidersHorizontalIcon } from "lucide-react"
+import {
+  BedDoubleIcon,
+  EyeClosedIcon,
+  LandmarkIcon,
+  MartiniIcon,
+  MountainIcon,
+  SearchIcon,
+  SlidersHorizontalIcon,
+  UtensilsCrossedIcon,
+} from "lucide-react"
 
 import * as Scroll from "@/components/scroll"
 
 import { Topbar } from "@/components/topbar"
 import { Pill } from "@/components/pill"
-import { useEffect } from "react"
+import { Chips } from "@/features/business/components/filter"
+import * as Url from "@/features/business/lib/url"
+import * as RemoteData from "@/lib/remote-data"
+import { Query } from "@/features/business/lib"
+import { useBusinessAllCache } from "@/hooks/business"
 
 export * from "./filter"
 export * from "./results"
@@ -25,6 +39,13 @@ export function Search() {
 
   const defaultValues: FormValues = { term }
 
+  const remoteData = useBusinessAllCache()
+  const data = RemoteData.map(remoteData, (businesses) => {
+    const tags = Query.getTags(businesses)
+    const categories = Query.getCategories(businesses)
+    return { tags, categories }
+  })
+
   const {
     control,
     handleSubmit,
@@ -36,6 +57,8 @@ export function Search() {
     shouldUseNativeValidation: true,
     defaultValues,
   })
+
+  const chips = Url.enumerate(params)
 
   useEffect(() => {
     const { unsubscribe } = watch(({ term }) => {
@@ -55,7 +78,7 @@ export function Search() {
       <Scroll.Button.Top />
       <Topbar />
 
-      <section className="p-6 pt-0 flex flex-col gap-4">
+      <section className="p-6 pt-0 flex flex-col gap-6">
         <Form
           className={`
               h-12
@@ -114,6 +137,126 @@ export function Search() {
           />
           <ButtonFilter href={`/search/filters?${params.toString()}`} />
         </Form>
+
+        <Chips chips={chips} />
+
+        <div className="flex flex-col gap-10">
+          {RemoteData.fold3Unsafe(data, {
+            onNone: (): ReactNode => {
+              return (
+                <div className="flex flex-row gap-2 w-full overflow-x-scroll no-scrollbar">
+                  {Array(20)
+                    .fill(0)
+                    .map((_, index) => {
+                      const count = 5 + Math.floor(Math.random() * 8)
+                      const text = "x".repeat(count)
+                      return (
+                        <div key={index}>
+                          <div className="p-2 bg-neutral-50 border-1 border-neutral-100 rounded-lg">
+                            <div className="capitalize font-sora text-xxs text-transparent">
+                              {text}
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })}
+                </div>
+              )
+            },
+            onSuccess: ({ tags }): ReactNode => {
+              const items = tags.map((tag) => {
+                return [tag, `/discover/tags/${tag}`] as const
+              })
+
+              return (
+                <ul className="flex flex-row gap-2 w-full overflow-x-scroll no-scrollbar">
+                  {items.map(([name, href]) => {
+                    return (
+                      <li key={name}>
+                        <Link href={href}>
+                          <div className="p-2 bg-neutral-50 border-1 border-neutral-100 rounded-lg">
+                            <div className="capitalize font-sora text-xxs text-neutral-400">
+                              {name}
+                            </div>
+                          </div>
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              )
+            },
+          })}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <div className="capitalize font-sora text-sm font-medium text-neutral-600">
+            Categories
+          </div>
+
+          <div className="flex flex-col gap-10">
+            {RemoteData.fold3Unsafe(data, {
+              onNone: (): ReactNode => {
+                return (
+                  <div className="flex flex-row gap-2 w-full overflow-x-scroll no-scrollbar">
+                    {Array(20)
+                      .fill(0)
+                      .map((_, index) => {
+                        const count = 5 + Math.floor(Math.random() * 8)
+                        const text = "x".repeat(count)
+                        return (
+                          <div key={index}>
+                            <div className="flex gap-2 items-center p-4 bg-neutral-50 border-1 border-neutral-100 rounded-lg">
+                              <MountainIcon className="text-transparent size-4" />
+                              <div className="capitalize font-sora text-xs text-transparent">
+                                {text}
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
+                  </div>
+                )
+              },
+              onSuccess: ({ categories }): ReactNode => {
+                const items = categories.map((category) => {
+                  return [category, `/discover/categories/${category}`] as const
+                })
+
+                return (
+                  <ul className="flex flex-row gap-2 w-full overflow-x-scroll no-scrollbar">
+                    {items.map(([name, href]) => {
+                      const icons = [
+                        BedDoubleIcon,
+                        UtensilsCrossedIcon,
+                        EyeClosedIcon,
+                        MartiniIcon,
+                        MountainIcon,
+                        LandmarkIcon,
+                      ]
+
+                      const index = Math.floor(Math.random() * icons.length)
+                      const Icon = icons[index]
+
+                      return (
+                        <li key={name}>
+                          <Link href={href}>
+                            <div className="flex gap-2 items-center p-4 bg-neutral-50 border-1 border-neutral-100 rounded-lg">
+                              <Icon className="text-neutral-400 size-4" />
+                              <div className="capitalize font-sora text-xs text-neutral-400">
+                                {name}
+                              </div>
+                            </div>
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )
+              },
+            })}
+          </div>
+        </div>
       </section>
     </section>
   )
