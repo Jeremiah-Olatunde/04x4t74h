@@ -3,7 +3,6 @@ import { Dialog } from "@base-ui-components/react"
 import {
   ChartNoAxesGanttIcon,
   CompassIcon,
-  LogInIcon,
   SearchIcon,
   XIcon,
   type LucideIcon,
@@ -52,16 +51,16 @@ export function Menu({ color }: MenuProps) {
                 />
               </Navigation>
 
-              <div className="flex flex-row justify-between">
-                <LinkWouter href="/auth/login" className="w-full">
-                  <div className="grow flex gap-2 justify-center items-center text-neutral-500">
-                    <LogInIcon className="size-5" />
-                    <span className="font-sora font-medium text-sm">
-                      Log In
-                    </span>
-                  </div>
-                </LinkWouter>
-              </div>
+              {/* <div className="flex flex-row justify-between"> */}
+              {/*   <LinkWouter href="/auth/login" className="w-full"> */}
+              {/*     <div className="grow flex gap-2 justify-center items-center text-neutral-500"> */}
+              {/*       <LogInIcon className="size-5" /> */}
+              {/*       <span className="font-sora font-medium text-sm"> */}
+              {/*         Log In */}
+              {/*       </span> */}
+              {/*     </div> */}
+              {/*   </LinkWouter> */}
+              {/* </div> */}
             </div>
           </div>
         </Dialog.Popup>

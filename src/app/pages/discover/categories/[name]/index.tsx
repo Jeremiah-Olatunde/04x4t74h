@@ -64,9 +64,13 @@ export function Category() {
                         <span className="font-semibold">
                           {businesses.length}
                         </span>
-                        <span> businesses in </span>
+                        <span> businesses under </span>
                         <span className="font-semibold capitalize">{name}</span>
-                        <span> matching filters</span>
+                        {0 < chips.length ? (
+                          <span> matching filters</span>
+                        ) : (
+                          <span> category</span>
+                        )}
                       </>
                     )
                   },

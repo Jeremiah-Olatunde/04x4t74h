@@ -10,9 +10,9 @@ import { ReviewCreate } from "@/app/pages/business/[businessId]/reviews/create"
 
 import * as Discover from "@/app/pages/discover"
 import * as Search from "@/app/pages/search"
-import { Login } from "@/app/pages/auth/login"
 import { PasswordForgot } from "@/app/pages/auth/password/forgot"
-import { SignUp } from "@/app/pages/auth/sign-up"
+import { Login } from "@/app/pages/auth/login"
+import { ComingSoon as SignUp } from "@/app/pages/auth/sign-up"
 import Zod from "zod/v4"
 import { Placeholder } from "@/components/placeholder"
 

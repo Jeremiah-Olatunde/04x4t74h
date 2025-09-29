@@ -64,9 +64,13 @@ export function Tag() {
                         <span className="font-semibold">
                           {businesses.length}
                         </span>
-                        <span> businesses under </span>
+                        <span> businesses with </span>
                         <span className="font-semibold capitalize">{name}</span>
-                        {0 < chips.length && <span> matching filters</span>}
+                        {0 < chips.length ? (
+                          <span> matching filters</span>
+                        ) : (
+                          <span> tag</span>
+                        )}
                       </>
                     )
                   },

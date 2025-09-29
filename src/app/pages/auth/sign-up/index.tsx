@@ -12,6 +12,7 @@ import * as Form from "@/components/form"
 
 import { LogoText } from "@/components/logo"
 import { LinkText } from "@/components/link"
+import * as Placeholder from "@/components/placeholder"
 
 import * as RemoteData from "@/lib/remote-data"
 
@@ -30,6 +31,31 @@ const defaultValues: FormValues = {
   email: "",
   telephone: "",
   password: "",
+}
+
+export function ComingSoon() {
+  return (
+    <Placeholder.Root>
+      <Placeholder.Header>
+        <Placeholder.Title>Sign Up</Placeholder.Title>
+        <Placeholder.Subtitle>
+          Create an account on Plazzaa
+        </Placeholder.Subtitle>
+      </Placeholder.Header>
+
+      <Placeholder.Content>
+        Our sign-up experience isn’t quite ready yet, but it will be available
+        shortly. Soon you’ll be able to create an account, save your favorite
+        businesses, and unlock more personalized features. Check back soon — we
+        can’t wait to welcome you in.
+      </Placeholder.Content>
+
+      <div className="flex justify-start gap-1">
+        <Placeholder.Back />
+        <Placeholder.Home />
+      </div>
+    </Placeholder.Root>
+  )
 }
 
 export function SignUp() {

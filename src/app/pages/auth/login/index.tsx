@@ -10,6 +10,7 @@ import * as Form from "@/components/form"
 
 import { LogoText } from "@/components/logo"
 import { LinkText } from "@/components/link"
+import * as Placeholder from "@/components/placeholder"
 
 import { login } from "@/api/endpoints/auth/login"
 
@@ -21,6 +22,28 @@ type FormValues = {
 const defaultValues = {
   email: "",
   password: "",
+}
+
+export function ComingSoon() {
+  return (
+    <Placeholder.Root>
+      <Placeholder.Header>
+        <Placeholder.Title>Login</Placeholder.Title>
+        <Placeholder.Subtitle>Access your Plazzaa account</Placeholder.Subtitle>
+      </Placeholder.Header>
+
+      <Placeholder.Content>
+        We’re working on bringing secure account access to the platform. For
+        now, you can continue exploring without logging in. Check back soon to
+        sign in and unlock personalized features.
+      </Placeholder.Content>
+
+      <div className="flex justify-start gap-1">
+        <Placeholder.Back />
+        <Placeholder.Home />
+      </div>
+    </Placeholder.Root>
+  )
 }
 
 export function Login() {
