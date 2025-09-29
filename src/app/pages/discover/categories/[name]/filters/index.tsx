@@ -18,7 +18,6 @@ export function Filters() {
     throw new PathParameterError(parameter, schema, details)
   }
 
-  const term = params.get("term")
   const base = `/discover/categories/${name}`
 
   return (
@@ -37,7 +36,7 @@ export function Filters() {
           <Form.Header.Apply href={`${base}?${params.toString()}`} />
         </Form.Header.Root>
 
-        <Form.Reset href={`${base}/filters?term=${term ?? ""}`} />
+        <Form.Reset href={`${base}/filters`} />
 
         <Filter.Tags />
         <Filter.Cities />
