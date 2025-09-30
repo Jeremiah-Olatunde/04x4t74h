@@ -7,7 +7,7 @@ import * as Scroll from "@/components/scroll"
 
 export function Filters() {
   const [params] = useSearchParams()
-  const term = params.get("term") ?? ""
+  const term = params.get("term")
   const base = "/search"
 
   return (
@@ -19,13 +19,19 @@ export function Filters() {
         <Form.Header.Root>
           <Form.Header.Back />
           <Form.Header.Content.Root>
-            <span>Filtering search for </span>
-            <span className="font-semibold">"{term}"</span>
+            {term === null ? (
+              <span>Apply filters to your search </span>
+            ) : (
+              <>
+                <span>Filter search for </span>
+                <span className="font-semibold">"{term}"</span>
+              </>
+            )}
           </Form.Header.Content.Root>
           <Form.Header.Apply href={`${base}?${params.toString()}`} />
         </Form.Header.Root>
 
-        <Form.Reset href={`${base}/filters?term=${term}`} />
+        <Form.Reset href={`${base}/filters?term=${term ?? ""}`} />
 
         <Filter.Categories />
         <Filter.Subcategories />

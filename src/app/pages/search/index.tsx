@@ -230,7 +230,7 @@ export function Search() {
 
                 return (
                   <ul className="flex flex-row gap-2 w-full overflow-x-scroll no-scrollbar snap-x snap-mandatory">
-                    {items.map(([name, href]) => {
+                    {items.map(([name, href], index) => {
                       const icons = [
                         BedDoubleIcon,
                         UtensilsCrossedIcon,
@@ -240,8 +240,7 @@ export function Search() {
                         LandmarkIcon,
                       ]
 
-                      const index = Math.floor(Math.random() * icons.length)
-                      const Icon = icons[index]
+                      const Icon = icons[index % icons.length]
 
                       return (
                         <li key={name} className="snap-start">
