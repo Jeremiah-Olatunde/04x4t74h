@@ -50,6 +50,7 @@ export function Search() {
     control,
     handleSubmit,
     watch,
+    setFocus,
     formState: { errors },
   } = useForm<FormValues>({
     criteriaMode: "all",
@@ -61,6 +62,10 @@ export function Search() {
   const chips = Url.enumerate(params)
 
   useEffect(() => {
+    setFocus("term")
+  }, [setFocus])
+
+  useEffect(() => {
     const { unsubscribe } = watch(({ term }) => {
       if (term === undefined) {
         return
@@ -68,7 +73,7 @@ export function Search() {
 
       const clone = new URLSearchParams(params)
       clone.set("term", term)
-      setParams(clone)
+      setParams(clone, { replace: true })
     })
     return () => unsubscribe()
   }, [watch])
@@ -169,10 +174,10 @@ export function Search() {
               })
 
               return (
-                <ul className="flex flex-row gap-2 w-full overflow-x-scroll no-scrollbar">
+                <ul className="flex flex-row gap-2 w-full overflow-x-scroll no-scrollbar snap-x snap-mandatory">
                   {items.map(([name, href]) => {
                     return (
-                      <li key={name}>
+                      <li key={name} className="snap-start">
                         <Link href={href}>
                           <div className="p-2 bg-neutral-50 border-1 border-neutral-100 rounded-lg">
                             <div className="capitalize font-sora text-xxs text-neutral-400">
@@ -224,7 +229,7 @@ export function Search() {
                 })
 
                 return (
-                  <ul className="flex flex-row gap-2 w-full overflow-x-scroll no-scrollbar">
+                  <ul className="flex flex-row gap-2 w-full overflow-x-scroll no-scrollbar snap-x snap-mandatory">
                     {items.map(([name, href]) => {
                       const icons = [
                         BedDoubleIcon,
@@ -239,7 +244,7 @@ export function Search() {
                       const Icon = icons[index]
 
                       return (
-                        <li key={name}>
+                        <li key={name} className="snap-start">
                           <Link href={href}>
                             <div className="flex gap-2 items-center p-4 bg-neutral-50 border-1 border-neutral-100 rounded-lg">
                               <Icon className="text-neutral-400 size-4" />

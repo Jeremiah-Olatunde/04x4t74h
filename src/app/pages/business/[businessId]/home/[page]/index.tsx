@@ -249,17 +249,17 @@ function KakashiSkeleton({ id }: KakashiSkeletonProps) {
           </Tabs.Tab>
 
           <Tabs.Tab
-            value="reviews"
-            className={`font-sora text-neutral-400 text-xs ${page === "reviews" && "font-semibold text-neutral-700"}`}
-          >
-            Reviews
-          </Tabs.Tab>
-
-          <Tabs.Tab
             value="info"
             className={`font-sora text-neutral-400 text-xs ${page === "info" && "font-semibold text-neutral-700"}`}
           >
             Information
+          </Tabs.Tab>
+
+          <Tabs.Tab
+            value="reviews"
+            className={`font-sora text-neutral-400 text-xs ${page === "reviews" && "font-semibold text-neutral-700"}`}
+          >
+            Reviews
           </Tabs.Tab>
 
           <Tabs.Tab
@@ -336,17 +336,17 @@ function Kakashi({ business }: KakashiProps) {
           </Tabs.Tab>
 
           <Tabs.Tab
-            value="reviews"
-            className={`font-sora text-neutral-400 text-xs ${page === "reviews" && "font-semibold text-neutral-700"}`}
-          >
-            Reviews
-          </Tabs.Tab>
-
-          <Tabs.Tab
             value="info"
             className={`font-sora text-neutral-400 text-xs ${page === "info" && "font-semibold text-neutral-700"}`}
           >
             Information
+          </Tabs.Tab>
+
+          <Tabs.Tab
+            value="reviews"
+            className={`font-sora text-neutral-400 text-xs ${page === "reviews" && "font-semibold text-neutral-700"}`}
+          >
+            Reviews
           </Tabs.Tab>
 
           <Tabs.Tab
@@ -366,7 +366,10 @@ function Kakashi({ business }: KakashiProps) {
         </Tabs.Panel>
 
         <Tabs.Panel value="info">
-          <InfoTab telephone={business.telephone} />
+          <InfoTab
+            telephone={business.telephone}
+            description={business.description}
+          />
         </Tabs.Panel>
 
         <Tabs.Panel value="promos">
@@ -580,6 +583,15 @@ function formatDate(dateString: string): string {
 function InfoSkeleton() {
   return (
     <section className="px-8 py-6 flex flex-col gap-6">
+      <div>
+        <div className="flex flex-col gap-1">
+          <div className="w-full h-3.5 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+          <div className="w-full h-3.5 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+          <div className="w-full h-3.5 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+          <div className="w-1/2 h-3.5 bg-neutral-100 border-neutral-200 border-1 rounded-xs animate-pulse" />
+        </div>
+      </div>
+
       <header>
         <h2 className="font-sora text-neutral-700 font-medium">
           Contact Information
@@ -606,32 +618,36 @@ function InfoSkeleton() {
   )
 }
 
-type InfoTabProps = { telephone: string }
+type InfoTabProps = { telephone: string; description: string }
 
-function InfoTab({ telephone }: InfoTabProps) {
+function InfoTab({ telephone, description }: InfoTabProps) {
   return (
     <section className="px-8 py-6 flex flex-col gap-6">
-      <header>
-        <h2 className="font-sora text-neutral-700 font-medium">
-          Contact Information
-        </h2>
-        <p className="font-sora text-neutral-400 text-xs">
-          Get in touch or connect with us online
-        </p>
-      </header>
+      <p className="font-sora text-neutral-500 text-sm">{description}</p>
 
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-row gap-4 items-center">
-          <div className="bg-primary/10 rounded-xl p-3">
-            <PhoneIcon className="text-primary fill-primary size-4" />
-          </div>
-          <div className="flex flex-col gap-1 grow-1">
-            <span className="font-sora text-sm font-medium text-neutral-700">
-              Phone
-            </span>
-            <span className="font-sora text-neutral-400 text-xs">
-              {telephone}
-            </span>
+      <div className="flex flex-col gap-4">
+        <header>
+          <h2 className="font-sora text-neutral-700 font-medium">
+            Contact Information
+          </h2>
+          <p className="font-sora text-neutral-400 text-xs">
+            Get in touch or connect with us online
+          </p>
+        </header>
+
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-row gap-4 items-center">
+            <div className="bg-primary/10 rounded-xl p-3">
+              <PhoneIcon className="text-primary fill-primary size-4" />
+            </div>
+            <div className="flex flex-col gap-1 grow-1">
+              <span className="font-sora text-sm font-medium text-neutral-700">
+                Phone
+              </span>
+              <span className="font-sora text-neutral-400 text-xs">
+                {telephone}
+              </span>
+            </div>
           </div>
         </div>
       </div>

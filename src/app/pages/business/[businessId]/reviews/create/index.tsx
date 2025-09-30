@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form"
 import { BadRequest } from "@/lib/errors/api"
 import { PathParameterError } from "@/lib/errors/ui"
 
-import * as Header from "@/components/header"
+import * as Header from "@/components/header/centered"
 
 import { useBusinessOneCache } from "@/hooks/business"
 import type { BusinessLite } from "@/types/business"

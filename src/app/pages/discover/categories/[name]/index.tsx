@@ -46,7 +46,7 @@ export function Category() {
       <Topbar />
 
       <section className="p-4 flex flex-col gap-6">
-        <div className="flex flex-col gap-2 justify-center items-center">
+        <div className="flex flex-col gap-2">
           <Breadcrumbs.Root>
             <Breadcrumbs.Crumb href="/discover">Discover</Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />

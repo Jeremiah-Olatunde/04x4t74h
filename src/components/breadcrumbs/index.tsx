@@ -14,8 +14,13 @@ export function Root({ children }: PropsWithChildren<{}>) {
   )
 }
 
-type CrumbProps = { children: string; active?: boolean; href: string }
-export function Crumb({ active, children, href }: CrumbProps) {
+type CrumbProps = {
+  children: string
+  active?: boolean
+  collapse?: boolean
+  href: string
+}
+export function Crumb({ active, children, collapse, href }: CrumbProps) {
   return (
     <li>
       <LinkWouter href={href}>
@@ -25,7 +30,7 @@ export function Crumb({ active, children, href }: CrumbProps) {
         ${active ? "text-primary" : "text-neutral-400"}
       `}
         >
-          {children}
+          {collapse ? <span className="tracking-widest">...</span> : children}
         </div>
       </LinkWouter>
     </li>

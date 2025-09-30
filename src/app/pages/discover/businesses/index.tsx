@@ -21,7 +21,7 @@ export function Businesses() {
       <Topbar />
 
       <section className="px-4">
-        <div className="flex flex-col gap-2 items-center">
+        <div className="flex flex-col gap-2">
           <Breadcrumbs.Root>
             <Breadcrumbs.Crumb href="/discover">Discover</Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />

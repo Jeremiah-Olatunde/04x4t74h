@@ -46,11 +46,11 @@ export function Town() {
       <Topbar />
 
       <section className="p-4 flex flex-col gap-6">
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col gap-2">
           <Breadcrumbs.Root>
             <Breadcrumbs.Crumb href="/discover">Discover</Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />
-            <Breadcrumbs.Crumb href="/discover/cities">
+            <Breadcrumbs.Crumb href="/discover/cities" collapse>
               Cities
             </Breadcrumbs.Crumb>
             <Breadcrumbs.Divider />

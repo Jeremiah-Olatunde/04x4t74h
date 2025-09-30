@@ -3,7 +3,7 @@ import { type ReactNode } from "react"
 import { useBusinessAllCache } from "@/hooks/business"
 
 import { Topbar } from "@/components/topbar"
-import * as Header from "@/components/header"
+import * as Header from "@/components/header/centered"
 
 import * as Business from "@/components/business"
 import * as RemoteData from "@/lib/remote-data"

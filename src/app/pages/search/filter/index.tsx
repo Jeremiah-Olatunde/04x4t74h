@@ -7,7 +7,7 @@ import * as Scroll from "@/components/scroll"
 
 export function Filters() {
   const [params] = useSearchParams()
-  const term = params.get("term")
+  const term = params.get("term") ?? ""
   const base = "/search"
 
   return (

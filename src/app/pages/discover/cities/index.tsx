@@ -7,7 +7,7 @@ import { Topbar } from "@/components/topbar"
 import * as Business from "@/components/business"
 import * as RemoteData from "@/lib/remote-data"
 import * as Breadcrumbs from "@/components/breadcrumbs"
-import * as Header from "@/components/header"
+import * as Header from "@/components/header/centered"
 import * as Scroll from "@/components/scroll"
 
 import { groupByCity } from "@/utils/business"
