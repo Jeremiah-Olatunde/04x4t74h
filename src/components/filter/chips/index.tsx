@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react"
 
 export function Root({ children }: PropsWithChildren<{}>) {
   return (
-    <div className="flex flex-col gap-4 bg-neutral-50 rounded-xl p-4">
+    <div className="border-1 border-neutral-100 flex flex-col gap-4 bg-neutral-50 rounded-xl p-4">
       <div className="flex flex-row justify-between items-center">
         <div className="font-sora font-medium text-neutral-600 text-sm">
           Filters
