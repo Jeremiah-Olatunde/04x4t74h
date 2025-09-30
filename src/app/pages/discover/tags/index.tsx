@@ -43,12 +43,12 @@ export function Tags() {
           </Header.Root>
         </div>
 
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           {RemoteData.fold3Unsafe(data, {
             onNone: (): ReactNode => {
               return (
                 <>
-                  <Business.GroupList.Skeleton.Nav length={25} />
+                  <Business.GroupList.Skeleton.Nav length={5} />
                   <Business.GroupList.Skeleton.List />
                 </>
               )

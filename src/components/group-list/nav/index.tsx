@@ -5,7 +5,7 @@ type RootProps = {}
 export function Root({ children }: PropsWithChildren<RootProps>) {
   return (
     <nav>
-      <ul className="flex flex-row gap-2 overflow-x-scroll no-scrollbar w-full snap-mandatory snap-x">
+      <ul className="flex flex-row justify-center gap-2 flex-wrap  w-full">
         {children}
       </ul>
     </nav>
@@ -15,7 +15,7 @@ export function Root({ children }: PropsWithChildren<RootProps>) {
 type TabProps = { href: string }
 export function Tab({ children, href }: PropsWithChildren<TabProps>) {
   return (
-    <li className="snap-start">
+    <li>
       <LinkBadge href={href} size="sm" color="light">
         {children}
       </LinkBadge>

@@ -43,7 +43,7 @@ export function Categories() {
           </Header.Root>
         </div>
 
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           {RemoteData.fold3Unsafe(data, {
             onNone: (): ReactNode => {
               return (
